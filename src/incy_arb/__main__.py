@@ -50,6 +50,7 @@ def main() -> int:
     watch.add_argument("--output", type=Path, default=Path("data/ink-subblocks.jsonl"))
     watch.add_argument("--ws-url", default=ObserverConfig.websocket_url)
     watch.add_argument("--rpc-url", default=ObserverConfig.rpc_url)
+    watch.add_argument("--skip-receipt-verification", action="store_true", help="capture hashes only; logs remain unverified")
     inventory = subparsers.add_parser("inventory", help="write a pinned V2 and Slipstream pool inventory")
     inventory.add_argument("--output", type=Path, default=Path("data/ink-pools.json"))
     inventory.add_argument("--rpc-url", default=InventoryConfig.rpc_url)
@@ -140,7 +141,7 @@ def main() -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     try:
         if args.command == "observe":
-            result = asyncio.run(observe(ObserverConfig(args.ws_url, args.rpc_url, args.duration, args.output)))
+            result = asyncio.run(observe(ObserverConfig(args.ws_url, args.rpc_url, args.duration, args.output, not args.skip_receipt_verification)))
         elif args.command == "inventory":
             inventory_result = asyncio.run(
                 build_inventory(InventoryConfig(args.rpc_url, args.output, args.batch_size, args.max_stale_seconds))

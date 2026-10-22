@@ -1,0 +1,13 @@
+{
+  "chain_id": 57073,
+  "payloads": 19,
+  "verified_payloads": 19,
+  "receipts_verified_payloads": 19,
+  "checked_transactions": 69,
+  "checked_logs": 74,
+  "first_block": 59199202,
+  "last_block": 59199220,
+  "file": "verified-receipts-2026-10-22.jsonl.gz",
+  "sha256": "1f34ff4b7bfd1003a9210465c4383da643a93ea2f3c6b9b74430de85d33a76fa",
+  "raw_sha256": "32ffa184ccb98b8136b16fc2bb6f6558c7ce3ce355801cf39cda88f326838700"
+}
