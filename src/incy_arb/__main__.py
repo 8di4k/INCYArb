@@ -57,6 +57,8 @@ def main() -> int:
     v4 = subparsers.add_parser("v4-inventory", help="checkpointed discovery of PoolManager Initialize events")
     v4.add_argument("--output", type=Path, default=V4DiscoveryConfig.output)
     v4.add_argument("--max-pages", type=int, default=V4DiscoveryConfig.max_pages)
+    v4.add_argument("--timeout-seconds", type=float, default=V4DiscoveryConfig.timeout_seconds)
+    v4.add_argument("--attempts", type=int, default=V4DiscoveryConfig.attempts)
     v4.add_argument("--restart", action="store_true", help="discard the local cursor and start from the newest logs")
     universe = subparsers.add_parser("universe", help="apply explicit token and pool allowlists to an inventory")
     universe.add_argument("--inventory", type=Path, default=UniverseConfig.inventory)
@@ -134,7 +136,8 @@ def main() -> int:
             )
             result = {"output": str(args.output), "block_number": inventory_result["block_number"], "summary": inventory_result["summary"]}
         elif args.command == "v4-inventory":
-            v4_result = asyncio.run(discover_v4_pools(V4DiscoveryConfig(args.output, max_pages=args.max_pages, restart=args.restart)))
+            v4_result = asyncio.run(discover_v4_pools(V4DiscoveryConfig(args.output, max_pages=args.max_pages, restart=args.restart,
+                                                                                timeout_seconds=args.timeout_seconds, attempts=args.attempts)))
             result = {
                 "output": str(args.output),
                 "pages_scanned": v4_result["pages_scanned"],
