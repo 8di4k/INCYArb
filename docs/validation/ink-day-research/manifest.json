@@ -1,0 +1,30 @@
+{
+  "accounting-input.json.gz": {
+    "bytes": 9641616,
+    "sha256": "9dc9592e238fa0b8df4cfb3c3fea34fedd5f0432b9f1a31fcaa82490f485c19c"
+  },
+  "accounting-result.json.gz": {
+    "bytes": 1111786,
+    "sha256": "b098b5531ec5ffdbf37c0011ca1556154c89d3a02f2e242efe65733838bc2c34"
+  },
+  "index-evidence.json.gz": {
+    "bytes": 1443682,
+    "sha256": "93c56ff113295276018f92134d3ba540526dba9b1fd9c4b4475d4af865be852b"
+  },
+  "qualification-evidence.json.gz": {
+    "bytes": 111068,
+    "sha256": "29abfe3cc969fa6189f5ff5a61a650a35f7cbe1af576ca252076c28a09bbda54"
+  },
+  "sender-cashflows.json": {
+    "bytes": 79583,
+    "sha256": "83f07c9bba9cdf4cf538376201dd6042ad35595c63c64abb1b114a45d3a269b5"
+  },
+  "fresh-subblocks.jsonl.gz": {
+    "bytes": 46274,
+    "sha256": "dda585feaa6d0c3d75f6dc6ec82bdad36bfb8097d2d920f9dc03c5359a6d1b23"
+  },
+  "FlashAccountingProbe.sol": {
+    "bytes": 1506,
+    "sha256": "ad587383aaa105f9fe29c6d55079d279fd15387a36530929868c8182df21a4ca"
+  }
+}

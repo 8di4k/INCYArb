@@ -1,0 +1,1764 @@
+{
+  "chain_id": 57073,
+  "window": {
+    "chain_id": 57073,
+    "end_block": {
+      "baseFeePerGas": "0x10f",
+      "blobGasUsed": "0x9a010",
+      "difficulty": "0x0",
+      "excessBlobGas": "0x0",
+      "extraData": "0x01000000fa000000060000000000000000",
+      "gasLimit": "0x1c9c380",
+      "gasUsed": "0x85e56",
+      "hash": "0x21e1bc878606d62432ef3fd99388e77e9609b2890002fdd7743e3c49eb283eb0",
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "miner": "0x4200000000000000000000000000000000000011",
+      "mixHash": "0xe376f77bb5aca4003a7d9a32f81a49a6b1e7487606dad88d4d0f69c232d75c9d",
+      "nonce": "0x0000000000000000",
+      "number": "0x3877e2c",
+      "parentBeaconBlockRoot": "0x0ce42309504bb2fe1e6cb1dd00437b6e03c75f295f08c9870dbf390169903479",
+      "parentHash": "0x17520860050491c82baef89e4555be575e6605c5f2f89446865191eb6abb6ee6",
+      "receiptsRoot": "0x2be0aebd31d3abcb4d3a8a712fbd842bfdf5623b40241e6a973195eeb9e424fe",
+      "requestsHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+      "size": "0x10bb",
+      "stateRoot": "0x3c5e2f591099dc35b42fc56e5976de1763bbfd0f37381e4b79822f9fd7270e42",
+      "timestamp": "0x6ada9457",
+      "transactions": [
+        "0xefc403afef8dbc4859b2f707421616f078ed42285eb26c3b6e1a59c0b0a0b47e",
+        "0xefc8e6ed03bb361b900823395b0e77bb73a446eb0e16b2ec48f2ef6e2e89810d",
+        "0xd81e19c3f4b35a2a4780bb95d33c2fde93d4cb69a7f6c80a0d2e86307d8d1a77",
+        "0x8dd95096f166eca8578df60cd6c134480237c03ee7b27f5ca8167522931d46cc"
+      ],
+      "transactionsRoot": "0x4416f61e8dc77531b8701c2380c15612575dd7bf36b449064ed353a06f786e1d",
+      "uncles": [],
+      "withdrawals": [],
+      "withdrawalsRoot": "0x0fb30caeeaeb0a3cc2dbf22ec85d0a8a595df1a6d27e8c28c592f59c0968ae66"
+    },
+    "start_timestamp": 1792623319,
+    "end_timestamp": 1792709719,
+    "hours": 24,
+    "scope": "Nine preselected outer-recipient addresses from earlier short captures; not chain-wide bot discovery.",
+    "first_included_block": {
+      "baseFeePerGas": "0x11b",
+      "blobGasUsed": "0xa4740",
+      "difficulty": "0x0",
+      "excessBlobGas": "0x0",
+      "extraData": "0x01000000fa000000060000000000000000",
+      "gasLimit": "0x1c9c380",
+      "gasUsed": "0xd9dbc",
+      "hash": "0x98a7bb0a17aa53f40981ad0b28acc9d03360a8a220adcdf2f9a0b13135074b16",
+      "logsBloom": "0x0002000000000000000000000000000000000000000000000000000000000000100000000000800000100000000000000000100000000000000000004020000010000000000000000000080800010010400000024000000000000000000000000000000002000000000000000050080200002000000000000080001000000000000021000000000000000000000a00000000000000040000000000800000002002000820800008000000004000008000000000000000000040000000000000000000200200000010000004000000000000000000000000000000000000002000001a000000000000001008000000000000000000000000000001000400000080",
+      "miner": "0x4200000000000000000000000000000000000011",
+      "mixHash": "0x961a0e8a0163dd1ecb9cf89c7d4c04c90b975dd7beaa9118b3a9227dda4eb9ee",
+      "nonce": "0x0000000000000000",
+      "number": "0x3862cac",
+      "parentBeaconBlockRoot": "0xb9b95c025a1a74544b985413df1a32ca624004027e91b16baac02db2dd091b54",
+      "parentHash": "0x7cdaa89cd86a3e58b7db6d32a722c710ff31622511dc8c5e4e000b220275f899",
+      "receiptsRoot": "0xd2db03257798a6590b61c419626e9bacf5e9c7c6e231c483fb73fbb480e9b556",
+      "requestsHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+      "size": "0x1168",
+      "stateRoot": "0x49ddf416b7d24f41d7816ca464a183764a1400d660b0257d79306410956ce195",
+      "timestamp": "0x6ad942d7",
+      "transactions": [
+        "0xb9ef57cde4c3d863fce057f5e3a43cef183ee6b10d8ddd3aa7d269817be80c57",
+        "0x6c90a396da206cf15533697da302ec33ac68773df0dabedf4b2a2458c4e05065",
+        "0x02fdb0daa59670458663eabc2a55ae0c2baaa003765ddf727411f03fba339126",
+        "0x654818135aa91a3d44c8a3b3e2cf72222f5c4b07780d2f755ff2079e8b533144",
+        "0xff2876e29f9e2d36f4d2decbdf9bc18dabf45110c8489457b4c7b1439966bb21",
+        "0x1c1e51248af28499b8b15811c11042913fae903c0d469f2a99e348f79973d2ff"
+      ],
+      "transactionsRoot": "0x2140822ea6290bc63e0a1ed8adabb76ea81cd83bd0949996986f93463dbb7c4d",
+      "uncles": [],
+      "withdrawals": [],
+      "withdrawalsRoot": "0x0fb30caeeaeb0a3cc2dbf22ec85d0a8a595df1a6d27e8c28c592f59c0968ae66"
+    },
+    "block_before_window": {
+      "baseFeePerGas": "0x11b",
+      "blobGasUsed": "0x8ff20",
+      "difficulty": "0x0",
+      "excessBlobGas": "0x0",
+      "extraData": "0x01000000fa000000060000000000000000",
+      "gasLimit": "0x1c9c380",
+      "gasUsed": "0x848ef",
+      "hash": "0x7cdaa89cd86a3e58b7db6d32a722c710ff31622511dc8c5e4e000b220275f899",
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000040000000000000000000000000000800000000000000000040000000000000000000000000000000000000000000000000100000000040000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000408000000000000000000000080000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000002000000000000001000002000000000000000000000000000000000000000",
+      "miner": "0x4200000000000000000000000000000000000011",
+      "mixHash": "0x961a0e8a0163dd1ecb9cf89c7d4c04c90b975dd7beaa9118b3a9227dda4eb9ee",
+      "nonce": "0x0000000000000000",
+      "number": "0x3862cab",
+      "parentBeaconBlockRoot": "0xb9b95c025a1a74544b985413df1a32ca624004027e91b16baac02db2dd091b54",
+      "parentHash": "0xa477aebbbc82fe8d07e0e89ce23adc9af9945f1c2fb4f41bfa26a887e8cf6f8c",
+      "receiptsRoot": "0xa2291bf5c5a94b653295f047271849fa019b69b360c4b9e25d4fa3aec6025788",
+      "requestsHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+      "size": "0x1017",
+      "stateRoot": "0x5b64c61a427528e524d22c0d0838164ebd75a3f1557d0eb26b7fbaca6e6bcdab",
+      "timestamp": "0x6ad942d6",
+      "transactions": [
+        "0x9df2373b94ea058f651f60c18ba5376b4d8e129f081d6ba93a7b2aeba9385a15",
+        "0xaeed0cb6fd1177197a5b3522f770d7a18441042d2771575246d1de07ecaf7537",
+        "0x242e6c541255ae992a4760b162b3aaa20097150e468431f66401bad52e5941d1",
+        "0x1a3e39bb88733ec3e6463bff79a1cb42ae27a5009e9cda6c84687af1a179783f"
+      ],
+      "transactionsRoot": "0xc2ce2389d628ce8c5cda75116a483bb1457fcba2743988a4cc8600deeba5dd72",
+      "uncles": [],
+      "withdrawals": [],
+      "withdrawalsRoot": "0x0fb30caeeaeb0a3cc2dbf22ec85d0a8a595df1a6d27e8c28c592f59c0968ae66"
+    }
+  },
+  "scope": "Only supplied seed histories. Explicit boundaries include caller, executor and an annotated payout address if present; this attributes route cashflows, not beneficial ownership. Native-index completeness and reverted ancestors need independent checks. Marked component prices named stables at $1 and ETH/WETH at one reference, omits other assets and unrealized revaluation, and includes every scoped network fee, including failures. It is not whole-market bot P/L or a count of distinct competitors.",
+  "eth_usd_reference": "2381.27633624",
+  "ownership_verified": false,
+  "by_sender": {
+    "0x04d5b56546062906063b8037712c2d3dceeee5b9": {
+      "calls": 39,
+      "successes": 15,
+      "network_fee_wei": "16161223850767",
+      "l1_fee_wei": "305243364187",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "211355",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "521332230164",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "129524584627",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20713495627",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "147288316632",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "95443014671",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24658488472",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "110970638160"
+      },
+      "marked_component_after_fee_usd": "0.17287066007949105372610392",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 15
+    },
+    "0x107835ff1abf9d23b9a75e3102b7e131decf5582": {
+      "calls": 41,
+      "successes": 18,
+      "network_fee_wei": "8256839725821",
+      "l1_fee_wei": "330012329195",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "251535",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "162608575099",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "422425131053",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "62525219165",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "43247809679",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "222168873634",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "93013565717",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "219400307559",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "34048394",
+        "eth+weth": "3304980178488"
+      },
+      "marked_component_after_fee_usd": "0.23974325403955180889675208",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 17
+    },
+    "0xfa7e42af23c504788319f5583b09f4e1e3e52770": {
+      "calls": 39,
+      "successes": 16,
+      "network_fee_wei": "8364930767692",
+      "l1_fee_wei": "367562247253",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "144399",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "21001289475",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "258248066816",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "212474819222",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "293400057697",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "81019592928",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "93053480779"
+      },
+      "marked_component_after_fee_usd": "0.12447978830860914367924192",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0x1142917c195dd636c941f36f3ada6193b7820184": {
+      "calls": 39,
+      "successes": 13,
+      "network_fee_wei": "5699531772768",
+      "l1_fee_wei": "369697424596",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "116537",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "217639134458",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "83309109143",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46360559962",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161434439179",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "43253750190",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24665278660",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "219033824972"
+      },
+      "marked_component_after_fee_usd": "0.10296483986185954475648768",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 13
+    },
+    "0x2859d79750ee49b9d9be0b4685a5745f15f1de39": {
+      "calls": 39,
+      "successes": 18,
+      "network_fee_wei": "8446523580033",
+      "l1_fee_wei": "326431179743",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "131076",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "139187242220",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "311600712163",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "219167830749",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "218786378851",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20866535686",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49529676489",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161459061254",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "43242421874",
+        "eth+weth": "242039361549"
+      },
+      "marked_component_after_fee_usd": "0.11153885587946952079293984",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 17
+    },
+    "0x43980ec17f08bccb0b56e70bb4219e6c3b67a75f": {
+      "calls": 40,
+      "successes": 21,
+      "network_fee_wei": "22043059841247",
+      "l1_fee_wei": "349852735718",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "105560",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "21006371825",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "129681457223",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "148716802175",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49577906963",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "92688257175",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "48",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "205567486457",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "403551337672",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "107964623479",
+        "eth+weth": "17691187024224"
+      },
+      "marked_component_after_fee_usd": "0.09524498824249702265618648",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 18
+    },
+    "0xb56162935cf59a0e3cc000fffa1f87fd6e051def": {
+      "calls": 40,
+      "successes": 13,
+      "network_fee_wei": "8671329154575",
+      "l1_fee_wei": "351524637526",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "108868",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "48826169853",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "308303710476",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73250330514",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20890962831",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161287830428",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "130216761472",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46433846346"
+      },
+      "marked_component_after_fee_usd": "0.08821916908046254736570200",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 13
+    },
+    "0x794a1d4542acb40f06047554668bf3d9ee9dc2a0": {
+      "calls": 40,
+      "successes": 16,
+      "network_fee_wei": "5600155083071",
+      "l1_fee_wei": "378898034144",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "154346",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "129923989767",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24583387085",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "220755805780",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "511598315920",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "244799345158",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73079636982",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46513437727"
+      },
+      "marked_component_after_fee_usd": "0.14101048322140887627220696",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0xc52b8df006b1b979b10b173bde1a290ea2624583": {
+      "calls": 39,
+      "successes": 19,
+      "network_fee_wei": "6270606609392",
+      "l1_fee_wei": "363770826424",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "126006",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "81624065140",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "295852228350",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "43006467840",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "187251497609",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "548075412971",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "29179450",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20848593064",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "102204839155",
+        "eth+weth": "6390101841110"
+      },
+      "marked_component_after_fee_usd": "0.12629055116758358888086032",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 17
+    },
+    "0x224b84de7b4a1b18c93e7ab561b386b0ba51c18e": {
+      "calls": 39,
+      "successes": 16,
+      "network_fee_wei": "9558333930603",
+      "l1_fee_wei": "318478169085",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "173741",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "139429373332",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "439080072916",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "163952192893",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "308495172014",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49417161372",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73359526891",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "4811361",
+        "eth+weth": "6653629633060"
+      },
+      "marked_component_after_fee_usd": "0.16682409639248622212614168",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 15
+    },
+    "0xe1f5bc2777a36b76a2ccb221479a954e7df37e21": {
+      "calls": 40,
+      "successes": 21,
+      "network_fee_wei": "8779328982705",
+      "l1_fee_wei": "315795969520",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "218803",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "318710471297",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "325658940697",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20866556788",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "74208321820",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "92841016525",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "130048370609",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "219949446867",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "241707262963"
+      },
+      "marked_component_after_fee_usd": "0.19789699164541859127527080",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 21
+    },
+    "0x21205ea10baf6d0b4b91fe41caf7bdd3e1f55cf0": {
+      "calls": 40,
+      "successes": 9,
+      "network_fee_wei": "5598886711321",
+      "l1_fee_wei": "352821301498",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "134375",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "86018831403",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "110284428487",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161651759975",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24787810447",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "102152752364",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "72988993830",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46435483019"
+      },
+      "marked_component_after_fee_usd": "0.12104250356504270658942696",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 9
+    },
+    "0x08b881c09cdc942454c642d977f1858da77decbd": {
+      "calls": 39,
+      "successes": 18,
+      "network_fee_wei": "8367225489378",
+      "l1_fee_wei": "316067690491",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "177837",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "440114373116",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "85941076734",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49293751730",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "241286986796",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "307729089941",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73274049341",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "93029838374",
+        "eth+weth": "5162229370090"
+      },
+      "marked_component_after_fee_usd": "0.17020501858339845336260288",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 17
+    },
+    "0x7beeec076e68708b813f5156c93e2636f7975e6f": {
+      "calls": 40,
+      "successes": 19,
+      "network_fee_wei": "8224883836906",
+      "l1_fee_wei": "349455441427",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "189528",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "295057131552",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "110124185700",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "92724317697",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20859579607",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "242077479059",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "86382293235",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "437622735521",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49575925234"
+      },
+      "marked_component_after_fee_usd": "0.16994227875085288662272656",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 19
+    },
+    "0x497959a63001bae3bb561b3329c29f8b68be2e65": {
+      "calls": 39,
+      "successes": 18,
+      "network_fee_wei": "6989671663693",
+      "l1_fee_wei": "288314956197",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "242825",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "244169445341",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "41672549801",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "73534505547",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "222600131191",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "103297876830",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "293354293981",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "93066887434",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "44899797643"
+      },
+      "marked_component_after_fee_usd": "0.22618066026916058753186568",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 18
+    },
+    "0x974ec72dd11b41dca1878c1aab090047c13a3eec": {
+      "calls": 40,
+      "successes": 13,
+      "network_fee_wei": "11066308274885",
+      "l1_fee_wei": "314540569169",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "165996",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49957769",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "62614813350",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "130420292720",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "205934141114",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "92970227192",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "80963394231",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "108273884160",
+        "eth+weth": "8287594612088"
+      },
+      "marked_component_after_fee_usd": "0.15937911490959472904913672",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 12
+    },
+    "0xcadb47112e295e2731e0c3c57054763ee947e234": {
+      "calls": 40,
+      "successes": 17,
+      "network_fee_wei": "14944118185448",
+      "l1_fee_wei": "295424342947",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "176303",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "443534857673",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "241522182321",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "204911238602",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "146793612186",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "86690790110",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "92991011223",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "47373729",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20884123656",
+        "eth+weth": "975423715818"
+      },
+      "marked_component_after_fee_usd": "0.14303967841130352365160880",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0x37a691e05523b1adae27e86bde90f57456e52ca5": {
+      "calls": 39,
+      "successes": 17,
+      "network_fee_wei": "19283045613526",
+      "l1_fee_wei": "324669990998",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "112903",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "257471212305",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24734845792",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "41653581269",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "330951437978",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73306571531",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "102695083930",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "80565316843",
+        "eth+weth": "26404664866506"
+      },
+      "marked_component_after_fee_usd": "0.12986154340283246010199520",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 15
+    },
+    "0xc6b636af91cfb123d29b0199d0aae2b9984f6ef2": {
+      "calls": 40,
+      "successes": 21,
+      "network_fee_wei": "9395934309135",
+      "l1_fee_wei": "351763060822",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "180093",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "99006300090",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "62590098661",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "416064040262",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161566416487",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "146318791947",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "439255439309",
+        "eth+weth": "6326670151500"
+      },
+      "marked_component_after_fee_usd": "0.17278423389175417737680760",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 19
+    },
+    "0xd6522c8930d0790118adc5a9701d84c4b525d47a": {
+      "calls": 40,
+      "successes": 17,
+      "network_fee_wei": "7371937346795",
+      "l1_fee_wei": "319630959809",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "143967",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "102084104095",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20895869510",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "243059703006",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "146686736263",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "86867368952",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "440882659511",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "141762816654",
+        "eth+weth": "251469831864320"
+      },
+      "marked_component_after_fee_usd": "0.72523153994058991447260600",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0xd4dbc06667deb5c9ec30f25dde2a76f5a6f42297": {
+      "calls": 40,
+      "successes": 22,
+      "network_fee_wei": "8324527799217",
+      "l1_fee_wei": "319126810933",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "159695",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "417881765745",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "81102218926",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "48",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "147342494292",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "112290923182",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49424088747",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "204693784932",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "131378865526",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20918761024",
+        "eth+weth": "2014742685893"
+      },
+      "marked_component_after_fee_usd": "0.14471765802288213207193824",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 21
+    },
+    "0x4c07fd0f9587e3099905de19567d02cd5defc9ad": {
+      "calls": 39,
+      "successes": 18,
+      "network_fee_wei": "8251067358890",
+      "l1_fee_wei": "326398444257",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "112011",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "442826642559",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "185900740068",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "329089717076",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "128994235463",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161561613425"
+      },
+      "marked_component_after_fee_usd": "0.09236292854955296760682640",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 18
+    },
+    "0x9362aa78d6202625f451e59aee9cae93f901f3a0": {
+      "calls": 40,
+      "successes": 16,
+      "network_fee_wei": "6923286199115",
+      "l1_fee_wei": "314035325055",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "164384",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24798341278",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "62670661206",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "414857811408",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "146596995645",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161670950625",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "88362806383",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46618529634",
+        "eth+weth": "895556842135"
+      },
+      "marked_component_after_fee_usd": "0.15003031072096437452904480",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 15
+    },
+    "0xef5beb2abd5653018fd645bc3c62cebe54bd1646": {
+      "calls": 40,
+      "successes": 21,
+      "network_fee_wei": "9303059238973",
+      "l1_fee_wei": "346153362493",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "142530",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24763082408",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "41814635986",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "215336848883",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "325405539147",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "223284913736",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "114185985065",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "514286054678"
+      },
+      "marked_component_after_fee_usd": "0.12037684517959469193971848",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 21
+    },
+    "0xfc66ceeefc05fd874ca2abbd1c5a25dbe476ea60": {
+      "calls": 39,
+      "successes": 16,
+      "network_fee_wei": "7754077991646",
+      "l1_fee_wei": "334747990001",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "97834",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49543013968",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "42097841652",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "208340568555",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "242297011323",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "173631959037",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "215851583869",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46522350546"
+      },
+      "marked_component_after_fee_usd": "0.07936939756913399579294896",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0x04bc3d6ca47f3a772538f2c3b6d15f227a7293b2": {
+      "calls": 38,
+      "successes": 16,
+      "network_fee_wei": "14886294593558",
+      "l1_fee_wei": "319813074333",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "101029",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "545862357440",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24707587194",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "41814350334",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "139700829446",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "205638158829",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73576469340",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161522017588"
+      },
+      "marked_component_after_fee_usd": "0.06558061895006288585405808",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0xa6aefdf31e824e534c5ec9ed3e479d162b2fe243": {
+      "calls": 39,
+      "successes": 17,
+      "network_fee_wei": "7974821094063",
+      "l1_fee_wei": "313577483723",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "175644",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "296433747230",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "216314342374",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24227804228",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20873591857",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "80922361156",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "111267585028",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "186019888366",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "130746337057"
+      },
+      "marked_component_after_fee_usd": "0.15665374724296019094425688",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 17
+    },
+    "0x8ae3d597117ca4f99cea764e7257668c0ab2a216": {
+      "calls": 40,
+      "successes": 18,
+      "network_fee_wei": "11203277154767",
+      "l1_fee_wei": "330587794783",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "179178",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20880760893",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "216051555222",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "242991825340",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "185951211726",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "220269161167",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "25142032051",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "205419654620"
+      },
+      "marked_component_after_fee_usd": "0.15249990122301514678914392",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 18
+    },
+    "0xcfea50a97f4205c1db295f44a03071b680c43b39": {
+      "calls": 39,
+      "successes": 19,
+      "network_fee_wei": "8482738704524",
+      "l1_fee_wei": "331235730009",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "147740",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "331436818732",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "325365096312",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "205774680356",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "242609629246",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "76233175242",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "2400",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "42696963606",
+        "eth+weth": "5875450224398"
+      },
+      "marked_component_after_fee_usd": "0.14393132564052480066643376",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 17
+    },
+    "0x3f0c7d26ea223c8bfff533d5180d3b62a9601a60": {
+      "calls": 39,
+      "successes": 18,
+      "network_fee_wei": "6778023649927",
+      "l1_fee_wei": "351607381099",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "138601",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "485593475387",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46287264340",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "332296795362",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20801295356",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49025525089",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "103319429166",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "87243382053",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "147175492942"
+      },
+      "marked_component_after_fee_usd": "0.12246065267595376109654552",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 18
+    },
+    "0x8b09a58bf8d3de38c8369dfb5d13e18ddc1b0b5e": {
+      "calls": 39,
+      "successes": 16,
+      "network_fee_wei": "16873163753183",
+      "l1_fee_wei": "328259155447",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "92395",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20791278202",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "131266778432",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "162108945571",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "186011561862",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24697081273",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "102823483069",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73425227516",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "226193775309",
+        "eth+weth": "2957933419412"
+      },
+      "marked_component_after_fee_usd": "0.05925899129286208077683896",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 15
+    },
+    "0x922ae29856c021875b59dc0c51af15ef1a08455c": {
+      "calls": 39,
+      "successes": 16,
+      "network_fee_wei": "7356145359819",
+      "l1_fee_wei": "342605288879",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "71384",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "418016051181",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "86811250450",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20746979304",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "220070051566",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "139505142222",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "221548084037",
+        "eth+weth": "1777300108710"
+      },
+      "marked_component_after_fee_usd": "0.05809922781998923768310984",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 15
+    },
+    "0xec31bc4cda9b5fd227602d7196d9c81c5e35b988": {
+      "calls": 39,
+      "successes": 17,
+      "network_fee_wei": "7205943633449",
+      "l1_fee_wei": "316291932769",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "105620",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "174117332587",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "241690576227",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "102780781386",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46452706937",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "146410479350",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "325529580293",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24768166757",
+        "eth+weth": "4576970805222"
+      },
+      "marked_component_after_fee_usd": "0.09935968921552509858495352",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 15
+    },
+    "0xf5c07c7ad5fb7ace4b8a89ac841f07e100c54f40": {
+      "calls": 41,
+      "successes": 20,
+      "network_fee_wei": "14283251789696",
+      "l1_fee_wei": "371145413765",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "127537",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "92641416542",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "41747046567",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "24065334138",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "327942056807",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "406710864927",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "308566958054",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "150135430335",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "43455062918",
+        "eth+weth": "3471646313012"
+      },
+      "marked_component_after_fee_usd": "0.10179157972160960573577184",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 19
+    },
+    "0xbe49b7b4ff5e941219aa5d2f963c70e80aa95d07": {
+      "calls": 39,
+      "successes": 13,
+      "network_fee_wei": "6397525658695",
+      "l1_fee_wei": "330748257794",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "130334",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20831537040",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "50166338482",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "130513128885",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "205749382611",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "216039762136",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "82843160582",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "73240928578",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46719761883"
+      },
+      "marked_component_after_fee_usd": "0.11509972353846137770039320",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 13
+    },
+    "0x4e1781cca97c1f5f7f7e89e1586a85e0d794bbe0": {
+      "calls": 40,
+      "successes": 22,
+      "network_fee_wei": "8276742270243",
+      "l1_fee_wei": "351664650842",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "154864",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "105210728703",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "128941374704",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "369052224376",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "46339271861",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49896504260",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "109069776731",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "204703653429",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161483520185",
+        "eth+weth": "1766924174971"
+      },
+      "marked_component_after_fee_usd": "0.13936232421650183657374272",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 21
+    },
+    "0x8ee9fde95da318c24a0d69d97fd438cf235a816a": {
+      "calls": 39,
+      "successes": 16,
+      "network_fee_wei": "7064367159647",
+      "l1_fee_wei": "327421333488",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "218161",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "43061388386",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49439539605",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "62469393757",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "185907513099",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "332123096533",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "146595894629",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "102145804357"
+      },
+      "marked_component_after_fee_usd": "0.20133878965222161666829272",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0x3bc49a6051c85ee128f727bad566726e246d2313": {
+      "calls": 39,
+      "successes": 13,
+      "network_fee_wei": "6058583006144",
+      "l1_fee_wei": "356414199637",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "119090",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "85962301560",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161660964622",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "20821528990",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "330626576274",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49384122881",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "219475499791"
+      },
+      "marked_component_after_fee_usd": "0.10466283965632349027014144",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 13
+    },
+    "0x55bc429a8a7b2e554dba85b9d41ecf08b7c4d411": {
+      "calls": 39,
+      "successes": 16,
+      "network_fee_wei": "5541984915446",
+      "l1_fee_wei": "359058854883",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "116290",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "74194308084",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "309059856703",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "41635873546",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "221625009332",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "43617397462",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "93757484668",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "161242714259"
+      },
+      "marked_component_after_fee_usd": "0.10309300246504940293443696",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 16
+    },
+    "0x32f037b6472213e956c4fb556497c952cc7fbee8": {
+      "calls": 38,
+      "successes": 14,
+      "network_fee_wei": "13141662925927",
+      "l1_fee_wei": "325968901809",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "80347",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "108506750624",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "80927455972",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "49352408101",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "368305864574",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "139543044666",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "219675898595",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "11210502"
+      },
+      "marked_component_after_fee_usd": "0.04905306905564751493430552",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 14
+    },
+    "0x2cc26829be78810a216519c7e6cade19e87661e8": {
+      "calls": 143,
+      "successes": 100,
+      "network_fee_wei": "7334993944950",
+      "l1_fee_wei": "308543820553",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "28313",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "14782184144850",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "13372419194107",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "25772597076671",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "163181971856",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "5693036316140",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "2218369435903",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "24603464459758",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "842668471854",
+        "eth+weth": "13884149287"
+      },
+      "marked_component_after_fee_usd": "0.01087941448857283631827288",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 53
+    },
+    "0x3eb1007b13b2068672c9f8df0f5b3ce0d737a161": {
+      "calls": 1133,
+      "successes": 980,
+      "network_fee_wei": "37007195930331",
+      "l1_fee_wei": "6534334525053",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "300971",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "379",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "60681",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "855",
+        "eth+weth": "34298875147296"
+      },
+      "marked_component_after_fee_usd": "0.35643673980841176725231160",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0xe6d08d74edd773d7372634e756240376358aa983": {
+      "calls": 1126,
+      "successes": 987,
+      "network_fee_wei": "47270044460237",
+      "l1_fee_wei": "6415454374685",
+      "pre_fee_vector": {
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "75",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "25076",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "290467",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "5870",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "22245235832",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "33531777200",
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "157076833789",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "84396956900558",
+        "eth+weth": "30700462350518"
+      },
+      "marked_component_after_fee_usd": "0.28203124622074048998408344",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 6
+    },
+    "0x3f92270f2878ffeac386c28e46a761a7920b711e": {
+      "calls": 1131,
+      "successes": 991,
+      "network_fee_wei": "56246624676346",
+      "l1_fee_wei": "6480555790668",
+      "pre_fee_vector": {
+        "0xc3fdbe3a68ee5de461d30415a8165cf9aefe1171": "1334344082882",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "323379",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "44",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "14125",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "751",
+        "0x7d87fd6a379714194a797c0bbb8b40c30d250856": "28574206238",
+        "0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98": "1",
+        "eth+weth": "32707672651245"
+      },
+      "marked_component_after_fee_usd": "0.28224625056273836220403976",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 4
+    },
+    "0xb91d6456449b8617ee94b3064f48550ebc44c777": {
+      "calls": 1131,
+      "successes": 985,
+      "network_fee_wei": "46027484618320",
+      "l1_fee_wei": "6530308081558",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "41776170",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "211524519611",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "36",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "51896",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "936",
+        "0x4a2df09536f62341c9f946427d16414c04e21342": "166203256592",
+        "0x943bf64d566c32a2bcd41ac92fb63c111cc9de8f": "1291971275540",
+        "eth+weth": "31399594904186"
+      },
+      "marked_component_after_fee_usd": "41.79420495237460420753558384",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 3
+    },
+    "0x5fe5256a5dd4e30ad3106f97ac101b1d3b4c1317": {
+      "calls": 79,
+      "successes": 75,
+      "network_fee_wei": "22723664313203",
+      "l1_fee_wei": "598956869284",
+      "pre_fee_vector": {
+        "0xad09cd20e513e4d8cb78036f77ab9afde8555929": "-21410969325666165371",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "1755681077",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "107777",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "208245413",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "-608944366224358990",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "282875747576290814",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "2961625463328551779",
+        "0x30987adf0b11dc698438a99ba04ec3a1ab2c7eab": "-290756309205753960",
+        "0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98": "-848003",
+        "eth+weth": "-8523679941292987"
+      },
+      "marked_component_after_fee_usd": "1943.682918334013765952534671",
+      "calls_with_negative_asset_change": 75,
+      "calls_with_unpriced_components": 70
+    },
+    "0x17fc3813d8761eab20e8d16ba7d38b92547dec91": {
+      "calls": 78,
+      "successes": 74,
+      "network_fee_wei": "22477378432972",
+      "l1_fee_wei": "565034193030",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "128488",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "365547834",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "2771603482690738273",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "-683329673885244591",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "194115270438918690",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "769600790",
+        "0xad09cd20e513e4d8cb78036f77ab9afde8555929": "-9830520394618710484",
+        "0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98": "-976624",
+        "eth+weth": "28798245791727585"
+      },
+      "marked_component_after_fee_usd": "1203.800168379700914152368674",
+      "calls_with_negative_asset_change": 74,
+      "calls_with_unpriced_components": 65
+    },
+    "0x1daa4f9e8f68b71541ed4eb08f496c8e591a6bb5": {
+      "calls": 77,
+      "successes": 72,
+      "network_fee_wei": "22238534049990",
+      "l1_fee_wei": "546135149201",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "98792",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "846452865",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "-817570430271388477",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "-1127555082899574559",
+        "0xad09cd20e513e4d8cb78036f77ab9afde8555929": "-21497022870075374854",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "1749689631",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "159342481088499028",
+        "0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98": "-740838",
+        "eth+weth": "-17749882992449551"
+      },
+      "marked_component_after_fee_usd": "2553.920955564165136935478331",
+      "calls_with_negative_asset_change": 72,
+      "calls_with_unpriced_components": 69
+    },
+    "0x31b28e8a575bd07b53c51d0a7dc38c9dc47b7d9e": {
+      "calls": 77,
+      "successes": 73,
+      "network_fee_wei": "22261927366446",
+      "l1_fee_wei": "607797752792",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "112670",
+        "0x8e2eed8b8b5e13ea7bf38e50d7821d2c57309072": "5442089401012666645",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "19982503",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "1022460152",
+        "0xad09cd20e513e4d8cb78036f77ab9afde8555929": "-10806339595098323167",
+        "0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98": "-954408",
+        "0xe7e553cd128f0011777323a0b44a7b96ea1cb540": "51082491545024484",
+        "0xa8ddb5cd96b5222afe198316e9a57caa642850d5": "-1260987273478846820",
+        "eth+weth": "20597514203250100"
+      },
+      "marked_component_after_fee_usd": "1091.550686356729949305623821",
+      "calls_with_negative_asset_change": 73,
+      "calls_with_unpriced_components": 70
+    },
+    "0xec1423b08b57c427f5f0df4065dd99556c459a52": {
+      "calls": 1838,
+      "successes": 1273,
+      "network_fee_wei": "512666005327581",
+      "l1_fee_wei": "20525706498490",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "5603915",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "471734",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "7041",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "2567539",
+        "0x1217bfe6c773eec6cc4a38b5dc45b92292b6e189": "11648",
+        "eth+weth": "639454291375426"
+      },
+      "marked_component_after_fee_usd": "8.95214694527816145094740280",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 5
+    },
+    "0x92cd4046a50a95b17d5f8605c537fe3013df7fb9": {
+      "calls": 60,
+      "successes": 59,
+      "network_fee_wei": "266381816521305",
+      "l1_fee_wei": "211939054583",
+      "pre_fee_vector": {
+        "eth+weth": "-9221412982703276"
+      },
+      "marked_component_after_fee_usd": "-22.59306123849443663662911544",
+      "calls_with_negative_asset_change": 37,
+      "calls_with_unpriced_components": 0
+    },
+    "0x45778dbb78494d2aaf8948f82ccf28533f5c0a29": {
+      "calls": 18,
+      "successes": 18,
+      "network_fee_wei": "36737639682495",
+      "l1_fee_wei": "293764194641",
+      "pre_fee_vector": {
+        "eth+weth": "-1640279564677172"
+      },
+      "marked_component_after_fee_usd": "-3.99344138420903518898643208",
+      "calls_with_negative_asset_change": 8,
+      "calls_with_unpriced_components": 0
+    },
+    "0x5176eee04186af93ba34d4541c01d4de9c647dbd": {
+      "calls": 110,
+      "successes": 110,
+      "network_fee_wei": "1394495503235",
+      "l1_fee_wei": "629638015795",
+      "pre_fee_vector": {
+        "eth+weth": "-41620788285766309"
+      },
+      "marked_component_after_fee_usd": "-99.11391891969315303221547456",
+      "calls_with_negative_asset_change": 88,
+      "calls_with_unpriced_components": 0
+    },
+    "0xf53c2cd74897249e72c1e22a05727c923b368141": {
+      "calls": 111,
+      "successes": 110,
+      "network_fee_wei": "573539286753788",
+      "l1_fee_wei": "451434888967",
+      "pre_fee_vector": {
+        "eth+weth": "-138418216183542658"
+      },
+      "marked_component_after_fee_usd": "-330.9777782338734990775730031",
+      "calls_with_negative_asset_change": 102,
+      "calls_with_unpriced_components": 0
+    },
+    "0x94cd00a36988debb0c97076176b44bbd67955640": {
+      "calls": 20,
+      "successes": 20,
+      "network_fee_wei": "60278000236694",
+      "l1_fee_wei": "32975723060",
+      "pre_fee_vector": {
+        "eth+weth": "-15025933410111656"
+      },
+      "marked_component_after_fee_usd": "-35.92443823497640211012920400",
+      "calls_with_negative_asset_change": 11,
+      "calls_with_unpriced_components": 0
+    },
+    "0x1d4eeb56c932c1a9450e559d97a89233f026c4db": {
+      "calls": 4,
+      "successes": 4,
+      "network_fee_wei": "8560765476118",
+      "l1_fee_wei": "7270706245",
+      "pre_fee_vector": {
+        "eth+weth": "-2083337673620154"
+      },
+      "marked_component_after_fee_usd": "-4.98138825083734536480249728",
+      "calls_with_negative_asset_change": 2,
+      "calls_with_unpriced_components": 0
+    },
+    "0x435f236d487d3b8e77417a7b605c37077e8cc597": {
+      "calls": 26,
+      "successes": 26,
+      "network_fee_wei": "127733595118106",
+      "l1_fee_wei": "58836225715",
+      "pre_fee_vector": {
+        "eth+weth": "-28257247704358242"
+      },
+      "marked_component_after_fee_usd": "-67.59248427305795219597525152",
+      "calls_with_negative_asset_change": 25,
+      "calls_with_unpriced_components": 0
+    },
+    "0xc478f3e1ac7dfb11b4ed61d1f9522e8425ed6169": {
+      "calls": 79,
+      "successes": 72,
+      "network_fee_wei": "496397868501",
+      "l1_fee_wei": "174134654944",
+      "pre_fee_vector": {
+        "eth+weth": "-16702271512608441"
+      },
+      "marked_component_after_fee_usd": "-39.77390597492757275675897808",
+      "calls_with_negative_asset_change": 33,
+      "calls_with_unpriced_components": 0
+    },
+    "0xcb57332ca46fc333ae8cff1e8c485aa507c9eefb": {
+      "calls": 33,
+      "successes": 33,
+      "network_fee_wei": "225254603328",
+      "l1_fee_wei": "91509438851",
+      "pre_fee_vector": {
+        "eth+weth": "-5713152569354344"
+      },
+      "marked_component_after_fee_usd": "-13.60513141218878887699963328",
+      "calls_with_negative_asset_change": 17,
+      "calls_with_unpriced_components": 0
+    },
+    "0x45b61b63ceaa4131c1c0606d8c96bcda2a2cb000": {
+      "calls": 4,
+      "successes": 4,
+      "network_fee_wei": "16791886435952",
+      "l1_fee_wei": "9515953903",
+      "pre_fee_vector": {
+        "eth+weth": "-2915931113620154"
+      },
+      "marked_component_after_fee_usd": "-6.98362388078038541012108144",
+      "calls_with_negative_asset_change": 4,
+      "calls_with_unpriced_components": 0
+    },
+    "0xf932ab73eab43aa248a2932368b6f008ea607fb0": {
+      "calls": 7,
+      "successes": 7,
+      "network_fee_wei": "1945274725813",
+      "l1_fee_wei": "20026722611",
+      "pre_fee_vector": {
+        "eth+weth": "-3767438723938110"
+      },
+      "marked_component_after_fee_usd": "-8.97594491822010761650546952",
+      "calls_with_negative_asset_change": 4,
+      "calls_with_unpriced_components": 0
+    },
+    "0xbca93bd5cffb8426f6437684f61bcdb760ba3c74": {
+      "calls": 69,
+      "successes": 69,
+      "network_fee_wei": "157781334065606",
+      "l1_fee_wei": "176245561249",
+      "pre_fee_vector": {
+        "eth+weth": "-8405337400509704"
+      },
+      "marked_component_after_fee_usd": "-20.39115200705759920916223440",
+      "calls_with_negative_asset_change": 36,
+      "calls_with_unpriced_components": 0
+    },
+    "0x34aefc763e40e9312efd7c3e58a2e8b04c96811d": {
+      "calls": 14,
+      "successes": 14,
+      "network_fee_wei": "28854333209286",
+      "l1_fee_wei": "72674911286",
+      "pre_fee_vector": {
+        "eth+weth": "-3553294652768817"
+      },
+      "marked_component_after_fee_usd": "-8.53008661319576824470535272",
+      "calls_with_negative_asset_change": 7,
+      "calls_with_unpriced_components": 0
+    },
+    "0x756e54c0ee0f321450b91991ee13f4a4be80e46d": {
+      "calls": 66,
+      "successes": 65,
+      "network_fee_wei": "315420375899553",
+      "l1_fee_wei": "190995956370",
+      "pre_fee_vector": {
+        "eth+weth": "-50327286365175411"
+      },
+      "marked_component_after_fee_usd": "-120.5942791656637405931098955",
+      "calls_with_negative_asset_change": 50,
+      "calls_with_unpriced_components": 0
+    },
+    "0x33b2a05f720561bae935a2ba1d73826052f3c846": {
+      "calls": 41,
+      "successes": 41,
+      "network_fee_wei": "254423418835",
+      "l1_fee_wei": "111814205869",
+      "pre_fee_vector": {
+        "eth+weth": "-6289567380837404"
+      },
+      "marked_component_after_fee_usd": "-14.97780382164176324408180136",
+      "calls_with_negative_asset_change": 26,
+      "calls_with_unpriced_components": 0
+    },
+    "0x511adc275852fcb71daf58cbb4e895a081c0c737": {
+      "calls": 33,
+      "successes": 30,
+      "network_fee_wei": "67928955387412",
+      "l1_fee_wei": "200673930774",
+      "pre_fee_vector": {
+        "eth+weth": "-3712389192656542"
+      },
+      "marked_component_after_fee_usd": "-9.00198214939568870360309296",
+      "calls_with_negative_asset_change": 15,
+      "calls_with_unpriced_components": 0
+    },
+    "0x590ad2fffe9271d7613dda0c53b3972440d8e9c4": {
+      "calls": 27,
+      "successes": 27,
+      "network_fee_wei": "66713004246386",
+      "l1_fee_wei": "151987607761",
+      "pre_fee_vector": {
+        "eth+weth": "-5313347306593967"
+      },
+      "marked_component_after_fee_usd": "-12.81141030574815134738829272",
+      "calls_with_negative_asset_change": 15,
+      "calls_with_unpriced_components": 0
+    },
+    "0x9ae9e7763d6659426ba7c01118488afc1ba2f665": {
+      "calls": 9,
+      "successes": 9,
+      "network_fee_wei": "14114724598812",
+      "l1_fee_wei": "24195086551",
+      "pre_fee_vector": {
+        "eth+weth": "-1022292431169293"
+      },
+      "marked_component_after_fee_usd": "-2.46797183474039205744762520",
+      "calls_with_negative_asset_change": 5,
+      "calls_with_unpriced_components": 0
+    },
+    "0xeb447ca12991f9e79a842b552fff4ec2e626c0a6": {
+      "calls": 26,
+      "successes": 26,
+      "network_fee_wei": "226544153046",
+      "l1_fee_wei": "53244829081",
+      "pre_fee_vector": {
+        "eth+weth": "-17519317925724446"
+      },
+      "marked_component_after_fee_usd": "-41.71887666782362719139991008",
+      "calls_with_negative_asset_change": 15,
+      "calls_with_unpriced_components": 0
+    },
+    "0x2ea776c997012354e4c5cc7909af899384c6310c": {
+      "calls": 3,
+      "successes": 3,
+      "network_fee_wei": "392595386542",
+      "l1_fee_wei": "5145550062",
+      "pre_fee_vector": {
+        "eth+weth": "-408148360000000"
+      },
+      "marked_component_after_fee_usd": "-0.97284890944685402676288208",
+      "calls_with_negative_asset_change": 2,
+      "calls_with_unpriced_components": 0
+    },
+    "0xc2fb345b7cd1688d4edd85fcff9e33daae6b10e5": {
+      "calls": 44,
+      "successes": 44,
+      "network_fee_wei": "111674021472000",
+      "l1_fee_wei": "105288833052",
+      "pre_fee_vector": {
+        "eth+weth": "-7182948454555153"
+      },
+      "marked_component_after_fee_usd": "-17.37051188396789612659792472",
+      "calls_with_negative_asset_change": 23,
+      "calls_with_unpriced_components": 0
+    },
+    "0x39b803dc7da00d00bfa2ead09898adaab78c810a": {
+      "calls": 12,
+      "successes": 12,
+      "network_fee_wei": "48413529501073",
+      "l1_fee_wei": "22865704989",
+      "pre_fee_vector": {
+        "eth+weth": "-4473335240000000"
+      },
+      "marked_component_after_fee_usd": "-10.76753334323524336618878552",
+      "calls_with_negative_asset_change": 11,
+      "calls_with_unpriced_components": 0
+    },
+    "0xfe7daeaf75ce4138cb5d0b424828e07c33d711a6": {
+      "calls": 5,
+      "successes": 5,
+      "network_fee_wei": "26746722496",
+      "l1_fee_wei": "11828553415",
+      "pre_fee_vector": {},
+      "marked_component_after_fee_usd": "-0.00006369133735170286805504",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0xd6af9360570d99bd4c9610a65ed0eb7846f38816": {
+      "calls": 43,
+      "successes": 38,
+      "network_fee_wei": "128267025482971",
+      "l1_fee_wei": "278958754168",
+      "pre_fee_vector": {
+        "eth+weth": "-17267651308021233"
+      },
+      "marked_component_after_fee_usd": "-41.42448867473713734175755296",
+      "calls_with_negative_asset_change": 24,
+      "calls_with_unpriced_components": 0
+    },
+    "0x80fe121b69163e17bd4e9cc573652e29e48fa4ae": {
+      "calls": 96,
+      "successes": 96,
+      "network_fee_wei": "1804641095275",
+      "l1_fee_wei": "478715438398",
+      "pre_fee_vector": {
+        "eth+weth": "-38567779202653746"
+      },
+      "marked_component_after_fee_usd": "-91.84483730574416535296682104",
+      "calls_with_negative_asset_change": 44,
+      "calls_with_unpriced_components": 0
+    },
+    "0xdd3589ada73df739cc6928e5dfbf0855b6f9202c": {
+      "calls": 21,
+      "successes": 20,
+      "network_fee_wei": "63208301173424",
+      "l1_fee_wei": "42804021795",
+      "pre_fee_vector": {
+        "eth+weth": "-7559427845200809"
+      },
+      "marked_component_after_fee_usd": "-18.15160307512862591818010392",
+      "calls_with_negative_asset_change": 13,
+      "calls_with_unpriced_components": 0
+    },
+    "0xc4df2691e6f5e9298dd8ec12aa3211df86b4d823": {
+      "calls": 32,
+      "successes": 32,
+      "network_fee_wei": "122793454487852",
+      "l1_fee_wei": "51923346867",
+      "pre_fee_vector": {
+        "eth+weth": "-19001567468586669"
+      },
+      "marked_component_after_fee_usd": "-45.54038811183031984337294104",
+      "calls_with_negative_asset_change": 21,
+      "calls_with_unpriced_components": 0
+    },
+    "0xecde50a71862153d1b873cecda34ad5d7f619c17": {
+      "calls": 20,
+      "successes": 20,
+      "network_fee_wei": "70125355953113",
+      "l1_fee_wei": "29264064191",
+      "pre_fee_vector": {
+        "eth+weth": "-7119610515846465"
+      },
+      "marked_component_after_fee_usd": "-17.12074789533220143541810672",
+      "calls_with_negative_asset_change": 15,
+      "calls_with_unpriced_components": 0
+    },
+    "0xbc53e2a238540c0f3cdba43caa5f11ffe7e7ed43": {
+      "calls": 15,
+      "successes": 15,
+      "network_fee_wei": "163191794101",
+      "l1_fee_wei": "31351431186",
+      "pre_fee_vector": {
+        "eth+weth": "-1434283853507879"
+      },
+      "marked_component_after_fee_usd": "-3.41581480456699223881775520",
+      "calls_with_negative_asset_change": 7,
+      "calls_with_unpriced_components": 0
+    },
+    "0x2ea05430e58257c500ca052356ed834f86d3b9a6": {
+      "calls": 3,
+      "successes": 3,
+      "network_fee_wei": "363280818077",
+      "l1_fee_wei": "6921824441",
+      "pre_fee_vector": {
+        "eth+weth": "-408148360000000"
+      },
+      "marked_component_after_fee_usd": "-0.97277910335866123492221048",
+      "calls_with_negative_asset_change": 2,
+      "calls_with_unpriced_components": 0
+    },
+    "0xf57de3d7e6d8a29b36789eb305b4756573cc522e": {
+      "calls": 3,
+      "successes": 3,
+      "network_fee_wei": "1645440664143",
+      "l1_fee_wei": "3242315510",
+      "pre_fee_vector": {
+        "eth+weth": "-3257038520000000"
+      },
+      "marked_component_after_fee_usd": "-7.75982700281436272017944232",
+      "calls_with_negative_asset_change": 3,
+      "calls_with_unpriced_components": 0
+    },
+    "0x54aaf3c49365ae64d8cd76338743d24ba618c620": {
+      "calls": 15,
+      "successes": 15,
+      "network_fee_wei": "32467676503571",
+      "l1_fee_wei": "10197465396",
+      "pre_fee_vector": {
+        "eth+weth": "-1636436502338586"
+      },
+      "marked_component_after_fee_usd": "-3.97412202852887734621886968",
+      "calls_with_negative_asset_change": 8,
+      "calls_with_unpriced_components": 0
+    },
+    "0xa799434958338cd429e2980159ea277808105bda": {
+      "calls": 77,
+      "successes": 76,
+      "network_fee_wei": "142951114566530",
+      "l1_fee_wei": "51732672317",
+      "pre_fee_vector": {
+        "eth+weth": "-8156812961047274"
+      },
+      "marked_component_after_fee_usd": "-19.76403178963400951828945696",
+      "calls_with_negative_asset_change": 33,
+      "calls_with_unpriced_components": 0
+    },
+    "0x46950f4ca9063716869a54c148dfb9160721ccbd": {
+      "calls": 8,
+      "successes": 8,
+      "network_fee_wei": "21143949912606",
+      "l1_fee_wei": "6664762664",
+      "pre_fee_vector": {
+        "eth+weth": "-1216296720000000"
+      },
+      "marked_component_after_fee_usd": "-2.94668818476386161667064144",
+      "calls_with_negative_asset_change": 5,
+      "calls_with_unpriced_components": 0
+    },
+    "0x1eadbddb796b1b7054e82c1e7509b27db1509c22": {
+      "calls": 10,
+      "successes": 10,
+      "network_fee_wei": "291902751037",
+      "l1_fee_wei": "6201804927",
+      "pre_fee_vector": {
+        "eth+weth": "-4069029942338586"
+      },
+      "marked_component_after_fee_usd": "-9.69017981425641429188283752",
+      "calls_with_negative_asset_change": 6,
+      "calls_with_unpriced_components": 0
+    },
+    "0x4cb75146e98562c9d79b31649c6c739e4dcb7cd5": {
+      "calls": 2,
+      "successes": 2,
+      "network_fee_wei": "52614295686",
+      "l1_fee_wei": "1504637541",
+      "pre_fee_vector": {
+        "eth+weth": "-400000000000000"
+      },
+      "marked_component_after_fee_usd": "-0.95263582367326500611746064",
+      "calls_with_negative_asset_change": 1,
+      "calls_with_unpriced_components": 0
+    },
+    "0xbf1c9615a71fbf07d3c8db9e881140b1bb2734be": {
+      "calls": 121,
+      "successes": 121,
+      "network_fee_wei": "245350723948796",
+      "l1_fee_wei": "868748743532",
+      "pre_fee_vector": {
+        "eth+weth": "-19157601138744249"
+      },
+      "marked_component_after_fee_usd": "-46.20379012383477773732945080",
+      "calls_with_negative_asset_change": 44,
+      "calls_with_unpriced_components": 0
+    },
+    "0x0fc446fcb75323b2197d0bf47ba167d0139b3277": {
+      "calls": 6,
+      "successes": 6,
+      "network_fee_wei": "9798120531493",
+      "l1_fee_wei": "25536958210",
+      "pre_fee_vector": {
+        "eth+weth": "-411991422338586"
+      },
+      "marked_component_after_fee_usd": "-1.00439745731000613543936296",
+      "calls_with_negative_asset_change": 2,
+      "calls_with_unpriced_components": 0
+    },
+    "0xda5ea685f3f97f27e51fe05738a1e15d6599d313": {
+      "calls": 18,
+      "successes": 18,
+      "network_fee_wei": "510859068502",
+      "l1_fee_wei": "36393605216",
+      "pre_fee_vector": {
+        "eth+weth": "-1235974267015758"
+      },
+      "marked_component_after_fee_usd": "-2.94441277085718111033158240",
+      "calls_with_negative_asset_change": 6,
+      "calls_with_unpriced_components": 0
+    },
+    "0x5829fe1e861f5a9eea822d0a95dfdb2cf98172cc": {
+      "calls": 6,
+      "successes": 6,
+      "network_fee_wei": "19335070644717",
+      "l1_fee_wei": "9087662680",
+      "pre_fee_vector": {
+        "eth+weth": "-411991422338586"
+      },
+      "marked_component_after_fee_usd": "-1.02710757093452783533380072",
+      "calls_with_negative_asset_change": 2,
+      "calls_with_unpriced_components": 0
+    },
+    "0xb2308b923296d03932a49bb9c52fb20500d9e6bc": {
+      "calls": 22,
+      "successes": 22,
+      "network_fee_wei": "2029941386709",
+      "l1_fee_wei": "79325662778",
+      "pre_fee_vector": {
+        "eth+weth": "-7209849890925255"
+      },
+      "marked_component_after_fee_usd": "-17.17347878449097920263877536",
+      "calls_with_negative_asset_change": 9,
+      "calls_with_unpriced_components": 0
+    },
+    "0x5efa98b0201ec8512dd596506bf7bbb5161810e7": {
+      "calls": 1307,
+      "successes": 233,
+      "network_fee_wei": "303360591913879",
+      "l1_fee_wei": "19303304803225",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "1530245",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "80186",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "149082",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "10115",
+        "eth+weth": "87094007150299"
+      },
+      "marked_component_after_fee_usd": "1.25463749938304481101386080",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0x56995cbbcb598acfd40f053c7ddc48f4c97a294f": {
+      "calls": 98,
+      "successes": 79,
+      "network_fee_wei": "16633015418547",
+      "l1_fee_wei": "428322509698",
+      "pre_fee_vector": {
+        "0x2d270e6886d130d724215a266106e6832161eaed": "7901",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "3314",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "6276",
+        "eth+weth": "29154979747"
+      },
+      "marked_component_after_fee_usd": "-0.02204737995314594274211200",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0x1ef264f336572b083b2bb9ffce54b7fc96f27ca8": {
+      "calls": 87,
+      "successes": 66,
+      "network_fee_wei": "1166078631383",
+      "l1_fee_wei": "463058270465",
+      "pre_fee_vector": {
+        "0x2d270e6886d130d724215a266106e6832161eaed": "4752",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "7640",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "12",
+        "0x1217bfe6c773eec6cc4a38b5dc45b92292b6e189": "85",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "2763",
+        "eth+weth": "667893303259"
+      },
+      "marked_component_after_fee_usd": "0.01398068306707635904758624",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 1
+    },
+    "0x110f72913a6b509f4d7b566cc56de9ce216e51c6": {
+      "calls": 97,
+      "successes": 75,
+      "network_fee_wei": "2295504914207",
+      "l1_fee_wei": "420491618559",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "2731",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "11718",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "456",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "5028",
+        "eth+weth": "1793741350113"
+      },
+      "marked_component_after_fee_usd": "0.01873816229843551526503344",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0xd67ebf60eed8c8cac3350b29e1845984f55f2f70": {
+      "calls": 94,
+      "successes": 79,
+      "network_fee_wei": "1040716673865",
+      "l1_fee_wei": "518476993632",
+      "pre_fee_vector": {
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "23802",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "72",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "740",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "11286",
+        "eth+weth": "253263317638"
+      },
+      "marked_component_after_fee_usd": "0.03402485595692387785023352",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0x5a82bfb1ecf8c8019a6bf52b3f45975ba12729b5": {
+      "calls": 94,
+      "successes": 75,
+      "network_fee_wei": "2257849637918",
+      "l1_fee_wei": "475009592195",
+      "pre_fee_vector": {
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "2444",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "3112",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "8971",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "2828",
+        "eth+weth": "327732053681"
+      },
+      "marked_component_after_fee_usd": "0.01275885667049571706415112",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0xab1757354147edeb84418a494347ece4af983477": {
+      "calls": 88,
+      "successes": 79,
+      "network_fee_wei": "2314958967343",
+      "l1_fee_wei": "435665647901",
+      "pre_fee_vector": {
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "3927",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "8847",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "473",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "139",
+        "eth+weth": "756425485978"
+      },
+      "marked_component_after_fee_usd": "0.00967470110158778048583240",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0x2a818a31d9e4cc51217adda95b2b754acd9e58f1": {
+      "calls": 86,
+      "successes": 72,
+      "network_fee_wei": "1160093062433",
+      "l1_fee_wei": "375076254260",
+      "pre_fee_vector": {
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "2734",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "12802",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "440",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "3385",
+        "eth+weth": "2310699319344"
+      },
+      "marked_component_after_fee_usd": "0.02210091145191184625975464",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0xd821359c0cefc9557ad058c2d4696ea1b8e5289f": {
+      "calls": 88,
+      "successes": 82,
+      "network_fee_wei": "1143705984917",
+      "l1_fee_wei": "480897743467",
+      "pre_fee_vector": {
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "18842",
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "5100",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "2519",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "259",
+        "eth+weth": "1835199465543"
+      },
+      "marked_component_after_fee_usd": "0.02836663706207892670168624",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0xd4afb8c68f85ad386be3af34cf9e1224b2d9109c": {
+      "calls": 99,
+      "successes": 81,
+      "network_fee_wei": "2623267388362",
+      "l1_fee_wei": "459454081591",
+      "pre_fee_vector": {
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "3713",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "8229",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "2405",
+        "eth+weth": "3828557864473"
+      },
+      "marked_component_after_fee_usd": "0.01721712968905856732356264",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    },
+    "0xbc7af78d5865ecd1c4abc17cb2d28cc59b470130": {
+      "calls": 101,
+      "successes": 83,
+      "network_fee_wei": "3554307033210",
+      "l1_fee_wei": "475048623428",
+      "pre_fee_vector": {
+        "0x0200c29006150606b650577bbe7b6248f58470c1": "13326",
+        "0x2d270e6886d130d724215a266106e6832161eaed": "7089",
+        "0xf1815bd50389c46847f0bda824ec8da914045d14": "1709",
+        "0xe343167631d89b6ffc58b88d6b7fb0228795491d": "350",
+        "eth+weth": "951644745224"
+      },
+      "marked_component_after_fee_usd": "0.01627634188239468215158736",
+      "calls_with_negative_asset_change": 0,
+      "calls_with_unpriced_components": 0
+    }
+  }
+}
