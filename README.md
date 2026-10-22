@@ -629,3 +629,35 @@ python -m incy_arb simulate-cycle \
 [независимая EVM проверка пика](docs/validation/paper-peak-evm-59203443.json).
 Остальные prefix-кандидаты остаются без EVM/fee подтверждения: эта одна проверка
 не распространяется на состояния внутри незавершённых блоков.
+
+
+## Локальные arrival и verification timings
+
+Новые `observe` captures сохраняют `message_timings` отдельно от raw messages:
+UTC receive time и monotonic receive time фиксируются сразу после `ws.recv`,
+до JSON parse и canonical RPC checks. Поле `timing` разделяет промежутки между
+arrivals, span payload, ожидание semaphore, verification work и время от
+последнего arrival до окончания проверки. Timing не меняет valid/verified flags.
+
+```bash
+python -m incy_arb observe --duration 20 --output data/timed.jsonl
+python -m incy_arb capture-timing --capture data/timed.jsonl \
+  --output data/timing-summary.json
+```
+
+Старым captures arrival times не дорисовываются. Monotonic clock используется
+для интервалов, UTC — только для отдельного сравнения с header timestamp.
+Отрицательная разница с header допустима: сюда входят clock skew и расписание
+block timestamps. Это не измерение one-way network latency или гарантированного
+времени sequencer emission. Summary показывает median/p95 и число samples.
+
+Live sample: 15/15 полностью verified payloads, median gap 0,1955 s,
+median payload arrival span 0,8054 s. Canonical verification завершалась через
+median 2,6054 s после последнего arrival, maximum 27,1120 s. Verification work
+median 2,0128 s, maximum 26,3993 s; в него входят RPC, retries, rate limiting
+и локальная сверка. Это небольшой sample публичного endpoint в текущей среде.
+Артефакт: [observer-timing-2026-10-22](docs/validation/observer-timing-2026-10-22.json).
+
+Для поиска коротких окон полная проверка после sealed block даёт существенную
+задержку. Текущий paper replay остаётся post-hoc; отдельный provisional receive
+path с последующей canonical сверкой ещё предстоит подключить.

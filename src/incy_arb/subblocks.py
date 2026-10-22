@@ -46,6 +46,7 @@ class Payload:
     transactions: list[CapturedTx] = field(default_factory=list)
     indices: list[int] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
+    message_timings: list[dict[str, Any]] = field(default_factory=list)
 
     def add(self, message: dict[str, Any]) -> None:
         index = message.get("index")
@@ -107,6 +108,7 @@ class Payload:
             "transaction_kinds": [tx.kind for tx in self.transactions],
             # Preserve all raw stream data for deterministic later replay.
             "messages": self.messages,
+            "message_timings": self.message_timings,
         }
 
 
@@ -116,6 +118,10 @@ class PayloadCollector:
     def __init__(self) -> None:
         self._active: Payload | None = None
         self.ignored_partial_messages = 0
+
+    @property
+    def active_payload(self) -> Payload | None:
+        return self._active
 
     def add(self, message: dict[str, Any]) -> list[Payload]:
         index = message.get("index")
