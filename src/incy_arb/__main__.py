@@ -16,6 +16,7 @@ from .research import CycleScanConfig, ThreeHopConfig, TwoHopConfig, scan_cycles
 from .flash_credit import FlashCapacityConfig, snapshot_flash_capacity
 from .simulation import simulate_scan
 from .cl_snapshot import check_scan_cl_parity
+from .local_scan import LocalV4Config, scan_local_v4
 
 
 def _start_amount(value: str) -> tuple[str, int]:
@@ -134,6 +135,22 @@ def main() -> int:
     cl.add_argument("--words-around", type=int, default=3)
     cl.add_argument("--rpc-url", default=INK_RPC)
     cl.add_argument("--output", type=Path)
+    local = subparsers.add_parser("local-v4-scan", help="size full-fill v4 cycles locally and independently simulate finalists")
+    local.add_argument("--v4-discovery", type=Path, required=True)
+    local.add_argument("--v4-state", type=Path, required=True)
+    local.add_argument("--start-token", default=LocalV4Config.start_token)
+    local.add_argument("--currency", action="append", default=[], help="optional explicit currency filter; repeat per address")
+    local.add_argument("--min-amount", type=int, required=True)
+    local.add_argument("--max-amount", type=int, required=True)
+    local.add_argument("--max-fee-pips", type=int, default=10000)
+    local.add_argument("--max-steps", type=int, default=3)
+    local.add_argument("--words-around", type=int, default=3)
+    local.add_argument("--grid-points", type=int, default=33)
+    local.add_argument("--refinement-iterations", type=int, default=32)
+    local.add_argument("--validate-top", type=int, default=3)
+    local.add_argument("--block-number", type=int)
+    local.add_argument("--rpc-url", default=INK_RPC)
+    local.add_argument("--output", type=Path, default=Path("data/ink-local-v4-scan.json"))
     flash = subparsers.add_parser("flash-capacity", help="snapshot PoolManager token balances at one sealed block")
     flash.add_argument("--token", action="append", required=True)
     flash.add_argument("--output", type=Path, default=FlashCapacityConfig.output)
@@ -207,6 +224,14 @@ def main() -> int:
                 json.loads(args.scan.read_text()), args.rpc_url, args.finding, args.step,
                 tuple(args.amount0), tuple(args.amount1), args.words_around,
             ))
+        elif args.command == "local-v4-scan":
+            result = asyncio.run(scan_local_v4(LocalV4Config(
+                args.v4_discovery,args.v4_state,args.min_amount,args.max_amount,
+                start_token=args.start_token,currencies=tuple(args.currency),max_fee_pips=args.max_fee_pips,
+                max_steps=args.max_steps,words_around=args.words_around,grid_points=args.grid_points,
+                refinement_iterations=args.refinement_iterations,validate_top=args.validate_top,
+                quote_block=args.block_number,rpc_url=args.rpc_url,
+            )))
         else:
             flash_result = asyncio.run(snapshot_flash_capacity(
                 FlashCapacityConfig(tuple(args.token), args.output, args.rpc_url)
@@ -215,7 +240,7 @@ def main() -> int:
                       "balances": flash_result["balances"]}
     except KeyboardInterrupt:
         return 130
-    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity") and args.output:
+    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity", "local-v4-scan") and args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2) + "\n")
         if "summary" in result:

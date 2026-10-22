@@ -1,0 +1,28 @@
+{
+  "quote_block_number": 59201263,
+  "quote_block_hash": "0x85a8a4d54f1fdc6784f206723fc032334609ccea56bc12626906f8188e82dbcc",
+  "summary": {
+    "structural_cycles": 128,
+    "positive_local_gross": 8,
+    "simulated_success": 3,
+    "simulated_positive_after_budget": 0
+  },
+  "selected_pools": 44,
+  "search_seconds": 0.0948395690002144,
+  "local_quote_cache": {
+    "computed": 7562,
+    "hits": 20755,
+    "entries": 7562,
+    "maximum": 50000
+  },
+  "sizing_options": {
+    "minimum": "1000000000",
+    "maximum": "100000000000000000",
+    "grid_points": 33,
+    "refinement_iterations": 32,
+    "max_steps": 3
+  },
+  "file": "local-v4-sized-59201263.json.gz",
+  "sha256": "49e46d8667e072d0a765df66bc756fc06638e00fee4522e83ce3fc6db58b0ffe",
+  "raw_sha256": "8878ec86734a779d40ce6e9a9fea233c9d2277b051a4f255258c30c898626357"
+}
