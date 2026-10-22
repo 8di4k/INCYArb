@@ -348,3 +348,37 @@ overrides. Scan проверяет chain ID и hash блока до/после, 
 `scan-cycles --block-number N` позволяет повторить котирование на конкретном
 историческом sealed block (нужен RPC с historical state). Без этого параметра
 сохраняется поиск на новом sealed block.
+
+## Локальная CL-математика и проверка округления
+
+`cl-parity` загружает tick bitmap и liquidity net/gross вокруг текущего тика
+Slipstream или static zero-hook v4 на блоке сохранённого scan, затем сравнивает
+локальный exact-input расчёт с on-chain Quoter. Объёмы задаются отдельно в raw
+units token0 и token1:
+
+```bash
+python -m incy_arb cl-parity \
+  --scan data/market-2026-10-22/scan-two-hop.json --finding 12 --step 0 \
+  --amount0 1000 --amount1 1000 --words-around 3 \
+  --output data/cl-parity.json
+```
+
+Математика перенесена из `Arbitr/bot/xarb_bot/v3math.py`. Tick iteration сохраняет
+и пустые границы bitmap words, поскольку округление SwapMath происходит
+на каждом таком шаге. Также учтены Solidity overflow fallback для token0 input,
+направленная protocol fee v4 и границы загруженного диапазона. Для v4 ticks
+используются методы StateView, без предположения о storage layout PoolManager.
+
+При неполном покрытии, исчерпании liquidity или неподдержанной fee локальная
+quote возвращает `None`; результат обозначается `not_fully_modeled` и не
+экстраполируется. Quoter может вернуть выход частично исполненного swap при
+большом запрошенном input — текущая локальная модель принимает только полные
+fills. `quoter_error` и `difference` выделены отдельно. Проверка hash до/после
+и соответствие scan block обязательны.
+
+На block 59198585 проверены 18 пулов (9 Slipstream + 9 v4) в двух направлениях:
+130 точных совпадений, 0 различий, 14 Quoter errors. Эти 130 независимых
+on-chain значений включены в регрессионные тесты. Capture:
+[cl-parity-59198585.json](docs/validation/cl-parity-59198585.json).
+Это база для локального поиска по subblocks; обновление модели по их логам
+остаётся следующим слоем.
