@@ -587,3 +587,45 @@ keys и инициализированные во время capture пулы п
 время получения preconfirmation и не подтверждает исполнение сделки на префиксе.
 Команда проверяет state replay, поиск торговых кандидатов между границами ещё
 не подключён. Captures с gaps требуют нового непрерывного окна.
+
+
+## Paper search на границах subblocks
+
+```bash
+python -m incy_arb paper-subblock-search \
+  --baseline docs/validation/subblock-search-baseline-59203420.json.gz \
+  --replay docs/validation/subblock-v4-replay-59203420.json.gz \
+  --output data/paper-subblock-search.json
+```
+
+Это offline gross-only расчёт по сохранённым evidence. Baseline должен иметь
+тот же start block/hash и покрывать все tracked replay pools. Initial и final
+pricing state сверяются с replay evidence, payload/receipts перепроверяются
+локально; сетевой проверки в этой команде нет. Файлы следует получать через
+проверяющие команды `local-v4-scan` и `subblock-v4-replay`.
+
+Первый поиск считает весь граф; затем пересчитываются только циклы с изменёнными
+pricing pools. Leg cache создаётся заново для каждого состояния. Сохраняются
+новые/исчезнувшие кандидаты, обновлённые размеры и timeline каждой границы.
+Нулевые изменения pricing не вызывают нового поиска. Prefix-модели не
+используются как sealed state для EVM-симуляции.
+
+На сохранённом окне: 44 пула, 128 циклов, 240 границ; два изменения потребовали
+пересчёта 22 циклов каждое. Было 8 gross-кандидатов, стало 9; локальный проход
+занял 0,167 секунды CPU. Пик 10809806094 wei пришёлся на последнюю границу
+block 59203443. Поэтому для него отдельно выполнена полная EVM-симуляция
+именно sealed block: gross совпал точно, gas estimate 109143, верхний полный
+fee budget 2558558811 wei, расчётный net **+8251247283 wei ETH**.
+Это всего 0,000000008251247283 ETH в историческом гипотетическом вызове;
+живое включение, deployment costs и реальный доход не подтверждены.
+
+```bash
+python -m incy_arb simulate-cycle \
+  --scan docs/validation/paper-peak-scan-59203443.json \
+  --output data/paper-peak-evm.json
+```
+
+Артефакты: [paper summary](docs/validation/subblock-paper-search-59203420.json),
+[независимая EVM проверка пика](docs/validation/paper-peak-evm-59203443.json).
+Остальные prefix-кандидаты остаются без EVM/fee подтверждения: эта одна проверка
+не распространяется на состояния внутри незавершённых блоков.

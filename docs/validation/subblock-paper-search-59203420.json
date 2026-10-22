@@ -1,0 +1,20 @@
+{
+  "summary": {
+    "pools": 44,
+    "cycles": 128,
+    "subblocks": 240,
+    "incremental_searches": 2,
+    "cycles_recomputed": 44,
+    "initial_positive_gross": 8,
+    "final_positive_gross": 9,
+    "peak_gross_pnl": "10809806094",
+    "peak_cursor": {
+      "block_number": 59203443,
+      "subblock_index": 5
+    },
+    "search_seconds": 0.1671048290008912
+  },
+  "file": "subblock-paper-search-59203420.json.gz",
+  "sha256": "a5ba0ade62e87d24b4d37ccc1fb0c2d782c54124f277b612f5c7e1efd2ec21fc",
+  "raw_sha256": "ccadb6100318e83a44aee3fd5df748a799a3a792b78293a379c90ddfc7c0e19d"
+}

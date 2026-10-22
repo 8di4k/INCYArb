@@ -19,6 +19,7 @@ from .cl_snapshot import check_scan_cl_parity
 from .local_scan import LocalV4Config, scan_local_v4
 from .v4_replay import read_scan, verify_v4_replay
 from .subblock_replay import verify_subblock_replay
+from .paper_search import paper_search
 
 
 def _start_amount(value: str) -> tuple[str, int]:
@@ -163,6 +164,10 @@ def main() -> int:
     sub_replay.add_argument("--v4-discovery", type=Path, required=True)
     sub_replay.add_argument("--rpc-url", default=INK_RPC)
     sub_replay.add_argument("--output", type=Path, default=Path("data/ink-subblock-v4-replay.json"))
+    paper = subparsers.add_parser("paper-subblock-search", help="offline gross-only sizing over subblock replay evidence")
+    paper.add_argument("--baseline", type=Path, required=True)
+    paper.add_argument("--replay", type=Path, required=True)
+    paper.add_argument("--output", type=Path, default=Path("data/ink-paper-subblock-search.json"))
     flash = subparsers.add_parser("flash-capacity", help="snapshot PoolManager token balances at one sealed block")
     flash.add_argument("--token", action="append", required=True)
     flash.add_argument("--output", type=Path, default=FlashCapacityConfig.output)
@@ -236,6 +241,8 @@ def main() -> int:
                 json.loads(args.scan.read_text()), args.rpc_url, args.finding, args.step,
                 tuple(args.amount0), tuple(args.amount1), args.words_around,
             ))
+        elif args.command == "paper-subblock-search":
+            result = paper_search(read_scan(args.baseline), read_scan(args.replay))
         elif args.command == "subblock-v4-replay":
             result = asyncio.run(verify_subblock_replay(args.capture, args.v4_discovery, args.rpc_url))
         elif args.command == "v4-replay":
@@ -256,7 +263,7 @@ def main() -> int:
                       "balances": flash_result["balances"]}
     except KeyboardInterrupt:
         return 130
-    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity", "local-v4-scan", "v4-replay", "subblock-v4-replay") and args.output:
+    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity", "local-v4-scan", "v4-replay", "subblock-v4-replay", "paper-subblock-search") and args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2) + "\n")
         if "summary" in result:
