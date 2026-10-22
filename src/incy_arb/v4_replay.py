@@ -205,37 +205,7 @@ async def verify_v4_replay(scan: dict[str, Any], blocks: int, rpc_url: str = INK
                 totals[kind] = totals.get(kind, 0) + count
             evidence.append({"block": block, "receipts": receipts, "applied_events": counts})
             log.info("replayed block %s/%s; selected pool events=%s", number, start + blocks, counts)
-        comparisons, canonical = {}, {}
-        for index, (key, state) in enumerate(snapshots.items(), 1):
-            original = initial[key]
-            # Preserve the original bitmap window even if the current tick moves across a word.
-            width = original.ticks.hi - original.ticks.lo + 1
-            # Recover words_around from the original window, including TickMath limit clamping.
-            middle = (original.tick // original.tick_spacing) >> 8
-            words = next(
-                (
-                    w
-                    for w in range(17)
-                    if max(MIN_TICK, (middle - w) * 256 * original.tick_spacing) == original.ticks.lo
-                    and min(MAX_TICK, (middle + w + 1) * 256 * original.tick_spacing - 1) == original.ticks.hi
-                ),
-                None,
-            )
-            if width <= 0 or words is None:
-                raise ValueError("initial snapshot has an unsupported bitmap window")
-            reference = await load_cl_snapshot(
-                rpc, "uniswap_v4", state.pool, state.block, words, window_tick=original.tick
-            )
-            if reference.block_hash != state.block_hash:
-                raise RuntimeError("replay endpoint block replaced")
-            actual, expected = state.record(), reference.record()
-            comparisons[key] = {
-                "status": "match" if actual == expected else "difference",
-                "different_fields": [field for field in actual if actual[field] != expected[field]],
-            }
-            canonical[key] = expected
-            if index % 10 == 0 or index == len(snapshots):
-                log.info("checked replay endpoint %s/%s pools", index, len(snapshots))
+        comparisons, canonical = await compare_endpoint(rpc, initial, snapshots)
         start_after, end_after = await rpc.sealed_block(start), await rpc.sealed_block(start + blocks)
         if (
             not start_after
@@ -263,6 +233,42 @@ async def verify_v4_replay(scan: dict[str, Any], blocks: int, rpc_url: str = INK
         },
         "warning": "Sealed pricing-state replay only; no live timing or execution profitability claim.",
     }
+
+
+async def compare_endpoint(rpc: ReadOnlyRpc, initial: dict[str, CLSnapshot], snapshots: dict[str, CLSnapshot]):
+    """Independently load endpoint pricing state in each original bitmap window."""
+    comparisons, canonical = {}, {}
+    for index, (key, state) in enumerate(snapshots.items(), 1):
+        original = initial[key]
+        # Preserve the original bitmap window even if the current tick moves across a word.
+        width = original.ticks.hi - original.ticks.lo + 1
+        # Recover words_around from the original window, including TickMath limit clamping.
+        middle = (original.tick // original.tick_spacing) >> 8
+        words = next(
+            (
+                w
+                for w in range(17)
+                if max(MIN_TICK, (middle - w) * 256 * original.tick_spacing) == original.ticks.lo
+                and min(MAX_TICK, (middle + w + 1) * 256 * original.tick_spacing - 1) == original.ticks.hi
+            ),
+            None,
+        )
+        if width <= 0 or words is None:
+            raise ValueError("initial snapshot has an unsupported bitmap window")
+        reference = await load_cl_snapshot(
+            rpc, "uniswap_v4", state.pool, state.block, words, window_tick=original.tick
+        )
+        if reference.block_hash != state.block_hash:
+            raise RuntimeError("replay endpoint block replaced")
+        actual, expected = state.record(), reference.record()
+        comparisons[key] = {
+            "status": "match" if actual == expected else "difference",
+            "different_fields": [field for field in actual if actual[field] != expected[field]],
+        }
+        canonical[key] = expected
+        if index % 10 == 0 or index == len(snapshots):
+            log.info("checked replay endpoint %s/%s pools", index, len(snapshots))
+    return comparisons, canonical
 
 
 def read_scan(path: Path) -> dict[str, Any]:

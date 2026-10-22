@@ -1161,3 +1161,33 @@ scan/simulation, unchanged executor encoding и независимые EVM refer
 Обычный `scan-cycles` на block 59203114 проверил 22 двухшаговых WETH цикла
 при input 10^14 wei, включая 10 с DyorSwap: все 22 получили quote,
 положительных gross нет. Capture: `docs/validation/dyor-inclusive-twohop-59203114.json[.gz]`.
+
+
+## 34. Canonical replay по captured subblock boundaries
+
+Добавлен `subblock-v4-replay`. Payload заново строится из raw messages;
+проверки block header/transaction order и canonical receipts выполняются снова,
+без доверия к сохранённым flags. Capture сортируется по block number, требует
+1–256 уникальных последовательных блоков и совпадения parent hashes.
+Перевод модели по блоку атомарный. Порядок logs берётся из raw tx order,
+не из receipt dictionary. Prefix pricing state сохраняется без sealed block tag.
+
+Initial snapshots загружаются перед первым блоком для supported pools с events;
+неизвестные keys, hooks/dynamic fee и новые за время capture pools исключены
+с явной причиной. Последний pricing state независимо сравнивается со StateView
+в первоначальном bitmap window. Reorg на любом этапе прерывает проверку.
+Общий endpoint comparator переиспользуется обычным sealed v4 replay.
+
+Первое 120-second окно: 118/118 полностью verified blocks 59203230–59203347,
+17 исключённых hook/dynamic-fee pool IDs, ноль supported pricing transitions.
+Следующее окно дало supported события. Проверенные blocks 59203421–59203460:
+40 blocks, 240 subblock boundaries, 2 Swap одного zero-hook/static-fee пула,
+конечный StateView match, 0 differences. Полные source/canonical данные и
+prefix states в `subblock-v4-replay-59203420.json.gz`; предыдущее окно —
+`subblock-coverage-59203230.jsonl.gz`. Summary содержит SHA-256.
+
+204 Python-теста проходят, включая offline replay всех 240 границ, raw tx
+order против receipt map order, ошибку позднего события без partial state,
+source tampering, canonical log order, gaps, reorg и неверную сеть.
+Это post-hoc state reconstruction, не latency benchmark или исполнимый
+prefix trade. Local candidate search на границах ещё не подключён.
