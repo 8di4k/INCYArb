@@ -32,6 +32,8 @@ class V4DiscoveryConfig:
     max_pages: int = 10
     restart: bool = False
     requests_per_second: float = 1.0
+    timeout_seconds: float = 60.0
+    attempts: int = 3
 
 
 def _event_name(event: dict[str, Any]) -> str | None:
@@ -128,32 +130,50 @@ def _write_state(path: Path, state: dict[str, Any]) -> None:
     temporary.replace(path)
 
 
-async def _get_page(session: aiohttp.ClientSession, endpoint: str, cursor: dict[str, Any]) -> dict[str, Any]:
-    try:
-        async with session.get(endpoint, params=cursor) as response:
-            if response.status != 200:
-                raise RuntimeError(f"Blockscout HTTP {response.status}")
-            payload = await response.json(content_type=None)
-    except (aiohttp.ClientError, asyncio.TimeoutError) as exc:
-        raise RuntimeError(f"Blockscout transport error: {exc}") from exc
-    if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
-        raise RuntimeError("Blockscout returned an invalid logs page")
-    return payload
+class _TransientPageError(RuntimeError):
+    pass
+
+
+async def _get_page(session: aiohttp.ClientSession, endpoint: str, cursor: dict[str, Any], attempts: int = 3) -> dict[str, Any]:
+    for attempt in range(attempts):
+        try:
+            async with session.get(endpoint, params=cursor) as response:
+                if response.status in (429, 500, 502, 503, 504):
+                    raise _TransientPageError(f"HTTP {response.status}")
+                if response.status != 200:
+                    raise RuntimeError(f"Blockscout HTTP {response.status}")
+                payload = await response.json(content_type=None)
+        except (aiohttp.ClientError, asyncio.TimeoutError, _TransientPageError) as exc:
+            if attempt + 1 == attempts:
+                raise RuntimeError(f"Blockscout page failed after {attempts} attempts: {type(exc).__name__}: {exc}") from exc
+            await asyncio.sleep(min(2 ** attempt, 8))
+            continue
+        if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
+            raise RuntimeError("Blockscout returned an invalid logs page")
+        next_cursor = payload.get("next_page_params")
+        if next_cursor is not None and not isinstance(next_cursor, dict):
+            raise RuntimeError("Blockscout returned an invalid page cursor")
+        if next_cursor and next_cursor == cursor:
+            raise RuntimeError("Blockscout page cursor did not advance")
+        return payload
+    raise ValueError("attempts must be positive")
 
 
 async def discover_v4_pools(config: V4DiscoveryConfig) -> dict[str, Any]:
     """Advance a paginated Initialize crawl and persist every completed page."""
     if config.max_pages < 1:
         raise ValueError("max_pages must be positive")
+    if config.timeout_seconds <= 0 or config.attempts < 1:
+        raise ValueError("timeout and attempts must be positive")
     if config.requests_per_second <= 0:
         raise ValueError("requests_per_second must be positive")
     state = _load_state(config)
     if state["complete"]:
         return state
-    timeout = aiohttp.ClientTimeout(total=30)
+    timeout = aiohttp.ClientTimeout(total=config.timeout_seconds)
     async with aiohttp.ClientSession(timeout=timeout, trust_env=True) as session:
         for page_number in range(config.max_pages):
-            page = await _get_page(session, config.endpoint, state["next_page_params"])
+            page = await _get_page(session, config.endpoint, state["next_page_params"], config.attempts)
             for event in page["items"]:
                 if not isinstance(event, dict):
                     continue
