@@ -11,7 +11,7 @@ from eth_abi.exceptions import DecodingError
 from eth_utils import is_address, keccak
 
 from .abi import decode_result, encode_call, function_selector, hex_bytes
-from .flash_credit import INT128_MAX, POOL_MANAGER
+from .flash_credit import INT128_MAX, NATIVE_CURRENCY, POOL_MANAGER
 from .fees import assess_net_profit, fee_budget
 from .rpc import ReadOnlyRpc, RpcError
 
@@ -26,6 +26,12 @@ def _address(value: str) -> bytes:
     return bytes.fromhex(value[2:])
 
 
+def _currency(value: str) -> bytes:
+    if not is_address(value):
+        raise ValueError("simulation currency must be a 20-byte address")
+    return bytes.fromhex(value[2:])
+
+
 def encode_simulation_route(route: dict[str, Any], block: int, min_profit: int = 0) -> bytes:
     """Encode V2 (including stable kind 5), Slipstream, and zero-hook static-fee v4 steps."""
     token = route["start_token"].lower()
@@ -35,7 +41,7 @@ def encode_simulation_route(route: dict[str, Any], block: int, min_profit: int =
     steps = route["steps"]
     if not 2 <= len(steps) <= 8:
         raise ValueError("a simulation route must contain 2–8 steps")
-    packed = bytearray(function_selector("execute()") + _address(token) + amount.to_bytes(16, "big")
+    packed = bytearray(function_selector("execute()") + _currency(token) + amount.to_bytes(16, "big")
                        + min_profit.to_bytes(16, "big") + block.to_bytes(4, "big"))
     current = token
     used: set[str] = set()
@@ -50,6 +56,8 @@ def encode_simulation_route(route: dict[str, Any], block: int, min_profit: int =
         if identity in used:
             raise ValueError("repeated pool in simple cycle")
         used.add(identity)
+        if venue != "uniswap_v4" and NATIVE_CURRENCY in (current, output):
+            raise ValueError("native currency is supported only by v4 steps")
         if venue == "slipstream":
             packed += b"\x01" + _address(identity) + _address(output)
         elif venue in ("uniswap_v2", "velodrome_v2"):
@@ -70,7 +78,7 @@ def encode_simulation_route(route: dict[str, Any], block: int, min_profit: int =
             pool_id = "0x" + keccak(encode(["(address,address,uint24,int24,address)"], [key])).hex()
             if identity != pool_id:
                 raise ValueError("v4 pool ID does not match its key")
-            packed += b"\x02" + _address(output) + fee.to_bytes(3, "big") + spacing.to_bytes(3, "big") + bytes(20)
+            packed += b"\x02" + _currency(output) + fee.to_bytes(3, "big") + spacing.to_bytes(3, "big") + bytes(20)
         else:
             raise ValueError(f"unsupported simulation venue: {venue}")
         current = output

@@ -79,8 +79,8 @@ async def load_cl_snapshot(
         if int(pool["hooks"], 16) != 0 or fee & 0x800000 or not 0 < spacing < 1 << 23:
             raise ValueError("hooks/dynamic fee or invalid tick spacing are unsupported")
         a, b = pool["token0"].lower(), pool["token1"].lower()
-        if int(a, 16) == 0 or int(b, 16) == 0 or a >= b:
-            raise ValueError("v4 snapshot requires ordered ERC-20 currencies")
+        if a >= b:
+            raise ValueError("v4 snapshot requires ordered distinct currencies")
         key = (a, b, fee, spacing, pool["hooks"])
         if identity != "0x" + keccak(encode(["(address,address,uint24,int24,address)"], [key])).hex():
             raise ValueError("pool ID differs from its key")

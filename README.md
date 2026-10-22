@@ -172,7 +172,7 @@ reserves, у которых последний `Sync` старше часа; п�
 storage PoolManager. Для каждого уже обнаруженного pool ID сохраняются
 `slot0`, liquidity, фактический LP fee и protocol fee. Флаг
 `eligible_for_future_quote` требует положительную liquidity, zero-hook и
-статическую fee, а также две ERC-20 currencies (не native `address(0)`);
+статическую fee; поддерживаются и native ETH currencies (`address(0)`);
 это только техническая предпосылка для будущей котировки,
 не разрешение на сделку. Для массового snapshot по умолчанию используется
 один RPC request в секунду и повторяются временные transport/503 ошибки;
@@ -258,7 +258,7 @@ PoolManager; для первого v4-шага учитывается `int128`, 
 В новом scan каждый finding содержит `simulation_route` с определениями шагов
 и V2 fee, прочитанной на quote block. Старые captures без этого поля нужно
 пересоздать. Симулятор принимает volatile V2, stable Velodrome V2, Slipstream и
-v4 с нулевыми hooks и статической fee; adapters и native currencies отклоняются.
+v4 с нулевыми hooks и статической fee. Native ETH допускается только на v4-шаге; adapters отклоняются.
 
 `InkArb` — производный от `Arbitr/XArb2` контракт без X Layer-адаптеров.
 Сначала `eth_call` конструктора создаёт runtime с Ink PoolManager в immutable;
@@ -302,7 +302,7 @@ python -m pytest
 измениться к реальной отправке. Верхняя оценка Fjord compression статистическая,
 а не абсолютная гарантия для произвольных данных.
 
-`net_profit_assessment` вычитает ETH-расход только из результата с начальным WETH
+`net_profit_assessment` вычитает ETH-расход только из результата с начальным ETH или WETH
 (1 WETH = 1 ETH). Для USDt0 и других валют возвращается
 `start_token_valuation_required`: без проверенной оценки валюты положительный
 net PnL не объявляется. Недоступность fee oracle или оценки газа тоже исключает
@@ -401,3 +401,29 @@ replay логов требуется именно `receipt_verification.verified
 Свежая проверка blocks 59199202–59199220: 19 payload, 69 transactions,
 74 logs — все 19 прошли полную сверку. Сжатый capture и SHA-256 summary:
 [verified-receipts-2026-10-22.json](docs/validation/verified-receipts-2026-10-22.json).
+
+
+## Native ETH в v4
+
+Currency `0x0000000000000000000000000000000000000000` обозначает ETH, не ERC-20.
+Поиск включает native v4 по умолчанию. `--exclude-native-v4` сохраняет прежний
+ERC-20-only universe, в том числе при повторении старых архивных сканов.
+В полном captured snapshot native поддержка добавляет 186 активных
+zero-hook/static-fee пулов к прежним 121 ERC-20 пулам.
+
+```bash
+python -m incy_arb scan-cycles \
+  --inventory data/market-2026-10-22/inventory.json \
+  --v4-discovery data/market-2026-10-22/v4-discovery.json \
+  --v4-state data/market-2026-10-22/v4-state.json \
+  --start-token 0x0000000000000000000000000000000000000000 \
+  --amount 100000000000000 --max-steps 2 --output data/native-scan.json
+```
+
+Баланс native PoolManager читается через `eth_getBalance`; `flash-capacity`
+также принимает zero currency и показывает ETH с 18 decimals. Начальный v4
+swap создаёт дельту без физического займа, включая native currency. Native
+промежуточные суммы остаются внутри PoolManager между v4-шагами; V2/V3 шаги
+работают только с ERC-20. Финальная native прибыль уходит непосредственно на
+beneficiary. Executor не получает ETH, wrap/unwrap шаги не добавлялись.
+Полный hypothetical вызов по-прежнему не требует деплоя или подписи.

@@ -114,6 +114,7 @@ def main() -> int:
     cycles.add_argument("--min-steps", type=int, default=2)
     cycles.add_argument("--max-steps", type=int, default=4)
     cycles.add_argument("--rpc-url", default=INK_RPC)
+    cycles.add_argument("--exclude-native-v4", action="store_true", help="retain the earlier ERC-20-only research universe")
     cycles.add_argument("--block-number", type=int, help="replay quotes at a historical sealed block instead of latest")
     cycles.add_argument("--output", type=Path, help="save full scan as JSON for simulate-cycle")
     simulation = subparsers.add_parser("simulate-cycle", help="simulate one full scan finding via sealed eth_call overrides")
@@ -193,7 +194,7 @@ def main() -> int:
                 args.inventory, tuple(args.amount), args.rpc_url, args.v4_discovery, args.v4_state,
                 tuple(args.start_token), args.max_steps, args.min_steps, tuple(args.start_amount),
                 tuple(args.size_range), args.size_grid_points, args.size_refinement_iterations,
-                quote_block=args.block_number,
+                quote_block=args.block_number, include_native_v4=not args.exclude_native_v4,
             )))
         elif args.command == "simulate-cycle":
             result = asyncio.run(simulate_scan(

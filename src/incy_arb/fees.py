@@ -7,6 +7,7 @@ import rlp
 from eth_utils import is_address
 
 from .abi import decode_result, encode_call, hex_bytes
+from .flash_credit import NATIVE_CURRENCY
 from .rpc import ReadOnlyRpc
 
 GAS_PRICE_ORACLE = "0x420000000000000000000000000000000000000f"
@@ -70,9 +71,9 @@ def assess_net_profit(simulation: dict[str, Any], budget: dict[str, Any]) -> dic
         return {"status": "fee_budget_unavailable"}
     if simulation["block_hash"] != budget["block_hash"] or simulation["block_number"] != budget["block_number"]:
         raise ValueError("fee budget and simulation must refer to the same sealed block")
-    if simulation["start_token"].lower() != WETH:
+    if simulation["start_token"].lower() not in (WETH, NATIVE_CURRENCY):
         return {"status": "start_token_valuation_required", "start_token": simulation["start_token"]}
     net = int(simulation["simulated_gross_pnl"]) - int(budget["total_fee_budget_wei"])
     return {"status": "estimated_positive" if net > 0 else "not_positive_after_fee_budget",
             "estimated_net_pnl_native_wei": str(net),
-            "warning": "WETH valued at 1 ETH. Estimate excludes deployment, capital provisioning, and payout conversion."}
+            "warning": "Native ETH/WETH valued in ETH wei. Estimate excludes deployment, capital provisioning, and payout conversion."}
