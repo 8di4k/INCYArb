@@ -1,0 +1,37 @@
+{
+  "chain_id": 57073,
+  "source": "sealed_eth_call_with_simulator_code_override",
+  "block_number": 59199849,
+  "block_hash": "0xeb2d23d18fbdfd4b26ae208d5dd2c55e68b25470af094f83fcddcc53cfb24aab",
+  "finding_index": 56,
+  "start_token": "0x0000000000000000000000000000000000000000",
+  "quoted_gross_pnl": "-131315399420",
+  "calldata": "0x614619540000000000000000000000000000000000000000000000000000000000005af3107a40000000000000000000000000000000000003875169020200c29006150606b650577bbe7b6248f58470c100004b0000010000000000000000000000000000000000000000020000000000000000000000000000000000000000000bb800003c0000000000000000000000000000000000000000",
+  "creation_sha256": "3d426e606e2b122157c56bf3d6088ac8fceec9fe1bc16b7fc09804ce49058c17",
+  "runtime_keccak256": "0xfe618d732cae2ba714ca8e9d87858f5706a15e527d0b15a25a981250f6cb5529",
+  "overridden_accounts": [
+    "0x00000000000000000000000000000000000a4b17",
+    "0x00000000000000000000000000000000000a4b18"
+  ],
+  "market_state_overridden": false,
+  "warning": "Hypothetical executor only. No deployment, execution permission, or net-profit claim.",
+  "status": "execution_reverted",
+  "execution_error": {
+    "message": "execution reverted",
+    "rpc_code": 3,
+    "revert_data": "0x7de56d17ffffffffffffffffffffffffffffffffffffffffffffffffffffffe16cfe0504",
+    "error": "NegativeProfit",
+    "arguments": [
+      -131315399420
+    ]
+  },
+  "simulated_gross_pnl": "-131315399420",
+  "quote_difference": "0",
+  "fee_budget": {
+    "status": "not_estimated",
+    "reason": "execution or gas estimate did not succeed"
+  },
+  "net_profit_assessment": {
+    "status": "execution_not_confirmed"
+  }
+}

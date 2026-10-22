@@ -12,7 +12,8 @@ interface IExttload {
 /// @notice Packed route: token(20), amountIn(16), minProfit(16), maxBlock(4).
 /// Steps: V3=1|pool(20)|tokenOut(20), V4=2|tokenOut(20)|fee(3)|spacing(3)|hooks(20),
 /// V2=4|pair(20)|tokenOut(20)|feeBps(2), stable V2=5|pair(20)|tokenOut(20).
-/// No adapter or native-currency steps. Stable output uses the pool invariant directly.
+/// Native currency is supported inside v4 steps and for payout; external steps require ERC-20.
+/// Stable output uses the pool invariant directly.
 /// Used only through eth_call state overrides; no deployment or signer is provided.
 contract InkArb {
     uint8 internal constant V3 = 1;
@@ -101,7 +102,6 @@ contract InkArb {
     function unlockCallback(bytes calldata raw) external returns (bytes memory) {
         if (msg.sender != address(poolManager) || !inRoute) revert Unauthorized();
         address token = _addr(raw, 0);
-        if (token == address(0)) revert NativeNotSupported();
         uint256 amount = _uint(raw, 20, 128);
 
         address tokenIn = token;
@@ -120,7 +120,8 @@ contract InkArb {
                 if (next == V2 || next == STABLE_V2) dest = _addr(raw, q + 1);
             }
             address tokenOut = _addr(raw, kind == V4 ? p + 1 : p + 21);
-            if (tokenOut == address(0)) revert NativeNotSupported();
+            if (kind != V4 && (tokenIn == address(0) || tokenOut == address(0))) revert NativeNotSupported();
+            if (tokenOut == address(0) && dest != address(poolManager)) revert NativeNotSupported();
 
             if (kind == V3) amount = _v3(_addr(raw, p + 1), tokenIn, tokenOut, amount, dest);
             else if (kind == V4) amount = _v4(raw, p, tokenIn, tokenOut, amount, dest);

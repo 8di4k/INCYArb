@@ -202,3 +202,14 @@ def test_local_model_replays_130_independent_on_chain_quote_vectors():
                 assert snapshot.quote(point["zero_for_one"], int(point["amount_in"])) == int(point["quoter_amount_out"])
                 checked += 1
     assert checked == 130
+
+
+def test_native_v4_currency_uses_stateview_without_an_erc20_zero_call():
+    value = pool("uniswap_v4")
+    value["token0"] = ZERO
+    value["token1"] = A
+    value["address"] = (
+        "0x" + keccak(encode(["(address,address,uint24,int24,address)"], [(ZERO, A, 3000, 60, ZERO)])).hex()
+    )
+    snapshot = asyncio.run(load_cl_snapshot(SnapshotRpc(), "uniswap_v4", value, 123, 1))
+    assert snapshot.pool["token0"] == ZERO and snapshot.quote(True, 10**6) == 996999

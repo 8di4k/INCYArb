@@ -6,6 +6,7 @@ import {IPoolManager, PoolKey, SwapParams} from "../src/Interfaces.sol";
 
 interface Vm {
     function prank(address) external;
+    function deal(address,uint256) external;
     function expectRevert(bytes4) external;
     function expectRevert(bytes calldata) external;
 }
@@ -47,7 +48,10 @@ contract Manager {
     function take(address token, address to, uint256 amount) external {
         require(unlocked, "locked");
         account(token, -int256(amount));
-        Token(token).transfer(to, amount);
+        if (token==address(0)) {
+            (bool ok,)=payable(to).call{value:amount}("");
+            require(ok,"native transfer");
+        } else Token(token).transfer(to, amount);
     }
     function sync(address token) external {
         synced = token;
@@ -183,6 +187,28 @@ contract InkArbTest {
         require(profit > 750 && profit < 850,"must quote actual placed input");
         require(a.balanceOf(PAYOUT)==profit,"payout");
         require(a.balanceOf(address(arb))==0 && b.balanceOf(address(arb))==0,"no executor balance");
+    }
+    function v4(address output, uint24 fee) internal pure returns (bytes memory) {
+        return abi.encodePacked(uint8(2),output,fee,int24(60),address(0));
+    }
+    function testNativeStartPaysNativeProfitAndSettlesEveryCurrency() public {
+        vm.deal(address(manager),1000000);
+        bytes memory head=abi.encodePacked(InkArb.execute.selector,address(0),uint128(1000),uint128(1),uint32(block.number));
+        uint256 profit=run(bytes.concat(head,v4(address(a),3000),v4(address(0),500)));
+        require(profit==3000 && PAYOUT.balance==profit,"native payout");
+        require(address(arb).balance==0 && address(manager).balance==1000000-profit,"no native custody");
+        require(manager.delta(manager.key(address(arb),address(0)))==0,"native settled");
+    }
+    function testNativeIntermediateNeverNeedsPhysicalNativeTransfer() public {
+        require(address(manager).balance==0,"no physical ETH");
+        uint256 profit=run(bytes.concat(header(1000,1),v4(address(0),3000),v4(address(b),500),v2(p2,a)));
+        require(profit>2500 && a.balanceOf(PAYOUT)==profit,"ERC20 payout");
+        require(address(manager).balance==0 && address(arb).balance==0,"native never transferred");
+        require(manager.delta(manager.key(address(arb),address(0)))==0,"native intermediate settled");
+    }
+    function testNativeExternalStepIsRejectedBeforeTransfer() public {
+        vm.expectRevert(InkArb.NativeNotSupported.selector);
+        run(bytes.concat(header(1000,0),v4(address(0),3000),v2(p2,a)));
     }
     function testRejectsUnauthorizedExecute() public {
         bytes memory data=bytes.concat(header(1000,0),v2(p1,b),v2(p2,a));

@@ -14,7 +14,7 @@ from .inventory import VELODROME_V2_FACTORY
 from .observer import INK_RPC
 from .quotes import SLIPSTREAM_QUOTER, constant_product_out, decode_slipstream_quote
 from .rpc import PinnedQuoteCache, ReadOnlyRpc, RpcError
-from .flash_credit import INT128_MAX, POOL_MANAGER
+from .flash_credit import INT128_MAX, NATIVE_CURRENCY, POOL_MANAGER
 from .sizing import optimize_size_async
 
 
@@ -48,6 +48,7 @@ class CycleScanConfig(TwoHopConfig):
     size_grid_points: int = 17
     size_refinement_iterations: int = 16
     quote_block: int | None = None
+    include_native_v4: bool = True
 
 
 def overlapping_slipstream_pairs(inventory: dict[str, Any]) -> list[tuple[dict[str, Any], dict[str, Any]]]:
@@ -161,6 +162,8 @@ def xarb2_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tup
     """Describe only adapter support already present in Arbitr's XArb2 contract."""
     reasons: list[str] = []
     for venue, pool, _token_in, _token_out in path:
+        if NATIVE_CURRENCY in (_token_in.lower(), _token_out.lower()):
+            reasons.append("native_currency_unsupported_by_xarb2")
         if venue == "velodrome_v2" and pool.get("stable"):
             reasons.append("velodrome_stable_requires_new_adapter")
         elif venue not in ("velodrome_v2", "uniswap_v2", "slipstream", "uniswap_v4"):
@@ -169,9 +172,13 @@ def xarb2_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tup
 
 
 def ink_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tuple[bool, list[str]]:
-    """InkArb supports native stable V2 steps; upstream XArb2 does not."""
-    reasons = [f"unsupported_venue:{venue}" for venue, _pool, _token_in, _token_out in path
-               if venue not in ("velodrome_v2", "uniswap_v2", "slipstream", "uniswap_v4")]
+    """External steps require ERC-20; native currency remains internal to v4 until payout."""
+    reasons = []
+    for venue, _pool, token_in, token_out in path:
+        if venue not in ("velodrome_v2", "uniswap_v2", "slipstream", "uniswap_v4"):
+            reasons.append(f"unsupported_venue:{venue}")
+        if venue != "uniswap_v4" and NATIVE_CURRENCY in (token_in.lower(), token_out.lower()):
+            reasons.append("native_currency_requires_v4_step")
     return not reasons, list(dict.fromkeys(reasons))
 
 
@@ -188,12 +195,18 @@ def initial_flash_capacity(
     return not reasons, initial_take_required, reasons
 
 
-def _eligible_v4_pools(discovery: dict[str, Any], state: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+def _eligible_v4_pools(discovery: dict[str, Any], state: dict[str, Any], include_native: bool = True) -> list[tuple[str, dict[str, Any]]]:
     out = []
     for pool_id, snapshot in state.get("states", {}).items():
-        if not snapshot.get("eligible_for_future_quote") or pool_id not in discovery.get("pools", {}):
+        if not snapshot.get("readable") or int(snapshot.get("liquidity", 0)) <= 0 or pool_id not in discovery.get("pools", {}):
             continue
         definition = discovery["pools"][pool_id]
+        if not include_native and NATIVE_CURRENCY in (definition["currency0"].lower(), definition["currency1"].lower()):
+            continue
+        # Derive eligibility from facts so earlier ERC-20-only captures also support native v4.
+        if (int(definition["hooks"], 16) != 0 or int(definition["fee_pips"]) & 0x800000
+                or definition["currency0"].lower() == definition["currency1"].lower()):
+            continue
         out.append(("uniswap_v4", {
             "address": pool_id, "token0": definition["currency0"], "token1": definition["currency1"],
             "fee_pips": definition["fee_pips"], "tick_spacing": definition["tick_spacing"],
@@ -245,16 +258,14 @@ async def _current_v2(
 
 async def _flash_balances(rpc: ReadOnlyRpc, block: int, tokens: tuple[str, ...]) -> dict[str, int]:
     unique = tuple(dict.fromkeys(token.lower() for token in tokens))
-    calls = [
-        ReadCall(token, encode_call("balanceOf(address)", ["address"], [POOL_MANAGER]), token)
-        for token in unique
-    ]
+    erc20 = tuple(token for token in unique if token != NATIVE_CURRENCY)
+    calls = [ReadCall(token, encode_call("balanceOf(address)", ["address"], [POOL_MANAGER]), token) for token in erc20]
     replies = await rpc.multicall(calls, block)
-    return {
-        token: decode_result(["uint256"], data)[0]
-        for token, (success, data) in zip(unique, replies, strict=True)
-        if success
-    }
+    balances = {token: decode_result(["uint256"], data)[0]
+                for token, (success, data) in zip(erc20, replies, strict=True) if success}
+    if NATIVE_CURRENCY in unique:
+        balances[NATIVE_CURRENCY] = await rpc.native_balance(POOL_MANAGER, block)
+    return balances
 
 
 async def _quote_stable_v2(rpc: ReadOnlyRpc | PinnedQuoteCache, block: int, token_in: str, token_out: str, amount: int) -> int:
@@ -378,7 +389,7 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
     state = json.loads(config.v4_state.read_text(encoding="utf-8"))
     if inventory.get("chain_id") != 57073 or discovery.get("chain_id") != 57073 or state.get("chain_id") != 57073:
         raise ValueError("cycle scan requires Ink inventory, v4 discovery, and v4 state")
-    pools = _research_pools(inventory) + _eligible_v4_pools(discovery, state)
+    pools = _research_pools(inventory) + _eligible_v4_pools(discovery, state, config.include_native_v4)
     paths = [path for path in cycle_paths(pools, config.starts, config.max_steps) if len(path) >= config.min_steps]
     findings: list[dict[str, Any]] = []
     sizing: list[dict[str, Any]] = []
@@ -478,7 +489,8 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
         "quote_block_hash": sealed["hash"], "quote_cache": quote_rpc.summary(),
         "input_snapshot": {"inventory_block_number": inventory.get("block_number"),
                            "v4_state_block_number": state.get("block_number"),
-                           "v4_discovery_complete": bool(discovery.get("complete"))},
+                           "v4_discovery_complete": bool(discovery.get("complete")),
+                           "include_native_v4": config.include_native_v4},
         "chain_id": 57073, "source": "sealed_rpc_multi_venue_quotes", "quote_block_number": block,
         "quote_block_timestamp": int(sealed["timestamp"], 16), "start_tokens": list(config.starts),
         "min_steps": config.min_steps, "max_steps": config.max_steps,

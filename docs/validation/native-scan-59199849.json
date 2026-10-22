@@ -1,0 +1,14 @@
+{
+  "chain_id": 57073,
+  "block_number": 59199849,
+  "block_hash": "0xeb2d23d18fbdfd4b26ae208d5dd2c55e68b25470af094f83fcddcc53cfb24aab",
+  "include_native_v4": true,
+  "structural_cycles": 114,
+  "complete_quotes": 107,
+  "positive_gross_quotes": 0,
+  "amount_in": "100000000000000",
+  "native_pool_manager_balance": "73057190147534005969",
+  "file": "native-scan-59199849.json.gz",
+  "sha256": "0cdd1acafb235567e786d5bb95f5b9661596fa0a174c24c5a30a38d440de2d8f",
+  "raw_sha256": "344b42e497a0f95b2bd5afd37a399b73b8e9d5b7a4bce7b599a3559fd408c757"
+}

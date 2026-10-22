@@ -44,10 +44,11 @@ python -m incy_arb scan-cycles \
   --v4-discovery data/market-2026-10-22/v4-discovery.json \
   --v4-state data/market-2026-10-22/v4-state.json \
   --start-token 0x4200000000000000000000000000000000000006 \
-  --amount 100000000000000 --max-steps 4 --block-number 59197361 \
+  --amount 100000000000000 --max-steps 4 --block-number 59197361 --exclude-native-v4 \
   --output data/market-2026-10-22/weth-replay.json
 ```
 
+Эти captures были сделаны для ERC-20-only universe; `--exclude-native-v4` сохраняет эту границу при повторе новым кодом.
 Для точного повторения нужен RPC с историческим state. Без `--block-number`
 сканер котирует на новом sealed block. Архивный universe остаётся снимком,
 а не автоматически обновляемым торговым allowlist. DyorSwap сохраняется в

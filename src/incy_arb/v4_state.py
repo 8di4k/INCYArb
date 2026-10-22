@@ -95,7 +95,8 @@ async def snapshot_v4_state(config: V4StateConfig) -> dict[str, Any]:
                     "zero_hook": zero_hook,
                     "erc20_currencies": erc20_currencies,
                     "static_fee": static_fee,
-                    "eligible_for_future_quote": liquidity > 0 and zero_hook and erc20_currencies and static_fee,
+                    "native_currency": not erc20_currencies,
+                    "eligible_for_future_quote": liquidity > 0 and zero_hook and static_fee,
                 }
     result = {
         "schema_version": 1,

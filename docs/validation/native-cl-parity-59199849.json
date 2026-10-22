@@ -1,0 +1,111 @@
+{
+  "chain_id": 57073,
+  "snapshot": {
+    "venue": "uniswap_v4",
+    "pool": {
+      "address": "0x60c6f21c43b62875a8d02c379afeb076205c4bf3b7e9414b9a17789e8f43f827",
+      "token0": "0x0000000000000000000000000000000000000000",
+      "token1": "0x0200c29006150606b650577bbe7b6248f58470c1",
+      "fee_pips": 75,
+      "tick_spacing": 1,
+      "hooks": "0x0000000000000000000000000000000000000000"
+    },
+    "block_number": 59199849,
+    "block_hash": "0xeb2d23d18fbdfd4b26ae208d5dd2c55e68b25470af094f83fcddcc53cfb24aab",
+    "sqrt_price_x96": "3871384691521755439867731",
+    "tick": -198540,
+    "liquidity": "15323206191116",
+    "tick_spacing": 1,
+    "lp_fee": 75,
+    "protocol_fee": 0,
+    "tick_window": {
+      "lo": -199424,
+      "hi": -197633,
+      "liquidity_net": {
+        "-198971": "1242663209030",
+        "-198894": "1135309643817",
+        "-198806": "12897375208723",
+        "-198120": "67588157995",
+        "-198086": "-1242663209030",
+        "-198067": "-1135309643817",
+        "-198015": "4079292670",
+        "-197791": "-12897375208723"
+      },
+      "liquidity_gross": {
+        "-198971": "1242663209030",
+        "-198894": "1135309643817",
+        "-198806": "12897375208723",
+        "-198120": "67588157995",
+        "-198086": "1242663209030",
+        "-198067": "1135309643817",
+        "-198015": "4079292670",
+        "-197791": "12897375208723"
+      }
+    }
+  },
+  "points": [
+    {
+      "zero_for_one": true,
+      "amount_in": "10000000000",
+      "local_amount_out": "23",
+      "quoter_amount_out": "23",
+      "status": "match"
+    },
+    {
+      "zero_for_one": true,
+      "amount_in": "1000000000000",
+      "local_amount_out": "2387",
+      "quoter_amount_out": "2387",
+      "status": "match"
+    },
+    {
+      "zero_for_one": true,
+      "amount_in": "100000000000000",
+      "local_amount_out": "238672",
+      "quoter_amount_out": "238672",
+      "status": "match"
+    },
+    {
+      "zero_for_one": true,
+      "amount_in": "10000000000000000",
+      "local_amount_out": null,
+      "quoter_amount_out": "12599137",
+      "status": "not_fully_modeled"
+    },
+    {
+      "zero_for_one": false,
+      "amount_in": "100",
+      "local_amount_out": "41463088421",
+      "quoter_amount_out": "41463088421",
+      "status": "match"
+    },
+    {
+      "zero_for_one": false,
+      "amount_in": "10000",
+      "local_amount_out": "4187716560336",
+      "quoter_amount_out": "4187716560336",
+      "status": "match"
+    },
+    {
+      "zero_for_one": false,
+      "amount_in": "1000000",
+      "local_amount_out": "418229190352000",
+      "quoter_amount_out": "418229190352000",
+      "status": "match"
+    },
+    {
+      "zero_for_one": false,
+      "amount_in": "100000000",
+      "local_amount_out": null,
+      "quoter_amount_out": "11838067558715177",
+      "status": "not_fully_modeled"
+    }
+  ],
+  "summary": {
+    "match": 6,
+    "difference": 0,
+    "not_fully_modeled": 2,
+    "quoter_error": 0
+  },
+  "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+}

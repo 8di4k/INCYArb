@@ -1029,3 +1029,30 @@ Live blocks 59199202–59199220: 19/19 payload полностью verified, 69 t
 содержат счётчики и hashes. 119 Python-тестов покрывают подменённые/пропущенные
 receipts, metadata mismatch, порядок и содержимое logs, невозможные logs
 неуспешной транзакции, RPC failure, opt-out и reorg.
+
+## 29. Native ETH v4: устранён пробел покрытия
+
+ERC-20-only фильтр исключал значимую часть рынка. В полном captured snapshot
+обнаружены 186 дополнительных native zero-hook/static-fee пулов с положительной
+liquidity, включая ETH/USDt0 и ETH/USDC. Вместе с прежними 121 ERC-20 пулами
+это 307 технически доступных v4 пулов. Старые snapshots содержат необходимые
+факты, поэтому eligibility пересчитывается и для старых файлов.
+
+Native currency разрешена в котировании, локальной CL-модели, кодировании и
+InkArb v4-шаге. Она остаётся transient-дельтой между v4 шагами и выплачивается
+непосредственно beneficiary; V2/V3 не получают native inputs/outputs. Нет
+wrap/unwrap и хранения ETH в executor. `eth_getBalance` используется вместо
+`balanceOf` нулевого адреса; ETH/WETH net assessment работает в native wei.
+`--exclude-native-v4` сохраняет границу прежних ERC-20-only сканов для replay.
+
+На block 59199849 выполнены 114 двухшаговых native циклов при input 10^14 wei,
+107 полных quotes, положительных gross результатов не найдено. Лучший из
+прокотированных ETH→USDt0→ETH маршрутов дал −131315399420 wei; полная
+симуляция точно совпала и откатилась с NegativeProfit. Native CL parity
+на ETH/USDt0: 6 точных совпадений, 0 различий и 2 не полностью моделируемых
+размера. Артефакты: `native-scan-59199849.json[.gz]`,
+`native-full-route-59199849.json`, `native-cl-parity-59199849.json` в `docs/validation`.
+
+127 Python- и 16 Solidity-тестов проходят. Новые contract tests проверяют
+native выплату, нулевую native custody executor, ERC-20→native→ERC-20 путь без
+физического ETH баланса и отказ до native передачи на внешний V2 шаг.

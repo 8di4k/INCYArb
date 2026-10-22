@@ -66,6 +66,9 @@ class ReadOnlyRpc:
     async def simulation_gas(self, transaction: dict[str, Any], block: int, overrides: dict[str, Any]) -> int:
         return int(await self._request("eth_estimateGas", [transaction, hex(block), overrides]), 16)
 
+    async def native_balance(self, address: str, block: int) -> int:
+        return int(await self._request("eth_getBalance", [address, hex(block)]), 16)
+
     async def block_receipts(self, block: int) -> list[dict[str, Any]]:
         result = await self._request("eth_getBlockReceipts", [hex(block)])
         if not isinstance(result, list):
