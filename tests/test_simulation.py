@@ -195,3 +195,11 @@ def test_stable_velodrome_has_its_own_kind_and_no_volatile_fee_bytes():
     data = encode_simulation_route(value,123)
     assert data[60] == 5 and data[101] == 1
     assert len(data) == 60 + 41 + 41
+
+
+def test_scan_from_replaced_block_is_not_silently_resimulated():
+    value = scan(); value['quote_block_hash'] = '0xbb'
+    rpc = FakeRpc()
+    with pytest.raises(RuntimeError, match='rescan'):
+        asyncio.run(simulate_finding(rpc,value))
+    assert rpc.calls == []

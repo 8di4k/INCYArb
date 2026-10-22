@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -12,9 +13,12 @@ from .abi import ReadCall, decode_result, encode_call
 from .inventory import VELODROME_V2_FACTORY
 from .observer import INK_RPC
 from .quotes import SLIPSTREAM_QUOTER, constant_product_out, decode_slipstream_quote
-from .rpc import ReadOnlyRpc, RpcError
+from .rpc import PinnedQuoteCache, ReadOnlyRpc, RpcError
 from .flash_credit import INT128_MAX, POOL_MANAGER
 from .sizing import optimize_size_async
+
+
+log = logging.getLogger(__name__)
 
 
 VELODROME_ROUTER = "0x3a63171dd9bebf4d07bc782fecc7eb0b890c2a45"
@@ -53,7 +57,7 @@ def overlapping_slipstream_pairs(inventory: dict[str, Any]) -> list[tuple[dict[s
     return [(pools[i], pools[j]) for pools in groups.values() for i in range(len(pools)) for j in range(i + 1, len(pools))]
 
 
-async def _quote(rpc: ReadOnlyRpc, block: int, token_in: str, token_out: str, amount: int, spacing: int) -> dict[str, int]:
+async def _quote(rpc: ReadOnlyRpc | PinnedQuoteCache, block: int, token_in: str, token_out: str, amount: int, spacing: int) -> dict[str, int]:
     data = encode_call(
         "quoteExactInputSingle((address,address,uint256,int24,uint160))",
         ["(address,address,uint256,int24,uint160)"],
@@ -197,7 +201,7 @@ def _eligible_v4_pools(discovery: dict[str, Any], state: dict[str, Any]) -> list
     return out
 
 
-async def _quote_v4(rpc: ReadOnlyRpc, block: int, pool: dict[str, Any], token_in: str, amount: int) -> tuple[int, int]:
+async def _quote_v4(rpc: ReadOnlyRpc | PinnedQuoteCache, block: int, pool: dict[str, Any], token_in: str, amount: int) -> tuple[int, int]:
     key = (pool["token0"], pool["token1"], int(pool["fee_pips"]), int(pool["tick_spacing"]), pool["hooks"])
     data = encode_call(
         "quoteExactInputSingle(((address,address,uint24,int24,address),bool,uint128,bytes))",
@@ -252,7 +256,7 @@ async def _flash_balances(rpc: ReadOnlyRpc, block: int, tokens: tuple[str, ...])
     }
 
 
-async def _quote_stable_v2(rpc: ReadOnlyRpc, block: int, token_in: str, token_out: str, amount: int) -> int:
+async def _quote_stable_v2(rpc: ReadOnlyRpc | PinnedQuoteCache, block: int, token_in: str, token_out: str, amount: int) -> int:
     data = encode_call(
         "getAmountsOut(uint256,(address,address,bool)[])",
         ["uint256", "(address,address,bool)[]"],
@@ -310,12 +314,14 @@ async def scan_three_hop(config: ThreeHopConfig) -> dict[str, Any]:
 
 
 async def _quote_cycle(
-    rpc: ReadOnlyRpc, block: int, path: list[tuple[str, dict[str, Any], str, str]],
+    rpc: ReadOnlyRpc | PinnedQuoteCache, block: int, path: list[tuple[str, dict[str, Any], str, str]],
     amount: int, current_v2: dict[str, dict[str, int]],
 ) -> tuple[int, int] | None:
     value, quoted_gas, valid = amount, 0, True
     try:
         for venue, pool, token_in, token_out in path:
+            if value <= 0:
+                return None
             if venue in ("velodrome_v2", "uniswap_v2"):
                 current = current_v2.get(pool["address"].lower())
                 if current is None:
@@ -374,22 +380,25 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
     findings: list[dict[str, Any]] = []
     sizing: list[dict[str, Any]] = []
     async with ReadOnlyRpc(config.rpc_url) as rpc:
+        if await rpc.chain_id() != 57073:
+            raise ValueError("cycle scan RPC must have Ink chain ID 57073")
         block = await rpc.block_number()
         sealed = await rpc.sealed_block(block)
-        if sealed is None:
+        if sealed is None or not sealed.get("hash"):
             raise RuntimeError("could not pin a sealed block")
         current_v2 = await _current_v2(
             rpc, block, [(venue, pool) for venue, pool in pools if venue in ("velodrome_v2", "uniswap_v2")]
         )
         flash_balances = await _flash_balances(rpc, block, config.starts)
-        for path in paths:
+        quote_rpc = PinnedQuoteCache(rpc, block)
+        for path_index, path in enumerate(paths, 1):
             path_amounts = (tuple(amounts_by_start[path[0][2]])
                             if path[0][2] in amounts_by_start else config.amounts)
             quote_cache: dict[int, tuple[int, int] | None] = {}
 
             async def quote_amount(amount: int) -> tuple[int, int] | None:
                 if amount not in quote_cache:
-                    quote_cache[amount] = await _quote_cycle(rpc, block, path, amount, current_v2)
+                    quote_cache[amount] = await _quote_cycle(quote_rpc, block, path, amount, current_v2)
                 return quote_cache[amount]
 
             size_metadata = None
@@ -457,7 +466,13 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                                       for venue, pool, token_in, token_out in path],
                         },
                     })
+            if path_index % 50 == 0 or path_index == len(paths):
+                log.info("cycle scan %s/%s; findings=%s; quote cache=%s", path_index, len(paths), len(findings), quote_rpc.summary())
+        after = await rpc.sealed_block(block)
+        if after is None or after.get("hash") != sealed["hash"]:
+            raise RuntimeError("quote block changed during scan; discard findings")
     return {
+        "quote_block_hash": sealed["hash"], "quote_cache": quote_rpc.summary(),
         "chain_id": 57073, "source": "sealed_rpc_multi_venue_quotes", "quote_block_number": block,
         "quote_block_timestamp": int(sealed["timestamp"], 16), "start_tokens": list(config.starts),
         "min_steps": config.min_steps, "max_steps": config.max_steps,
