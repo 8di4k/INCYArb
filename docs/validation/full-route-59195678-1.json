@@ -1,0 +1,29 @@
+{
+  "chain_id": 57073,
+  "source": "sealed_eth_call_with_simulator_code_override",
+  "block_number": 59195678,
+  "block_hash": "0x6f5038d19b5d7752e8d9fde4018589c2d057d82dffa8ecbf809ae775f5f5e3ea",
+  "finding_index": 1,
+  "quoted_gross_pnl": "-164941",
+  "calldata": "0x614619540200c29006150606b650577bbe7b6248f58470c1000000000000000000000000000f4240000000000000000000000000000000000387411e01565d43daf06d7a2fbe600b2d063a369572c5ee3e1217bfe6c773eec6cc4a38b5dc45b92292b6e18901fd18e52d312ed3af76617b9103632987f6d50e9f0200c29006150606b650577bbe7b6248f58470c1",
+  "creation_sha256": "5cc1f8a80f3a4ce1474623c0bab1e5404f16c67fa46f4ac49e4e5f80b8fcde93",
+  "runtime_keccak256": "0x2116a682e5596dc1e88fa830e3f0002ce5100a9bf085bd911c213cd098603069",
+  "overridden_accounts": [
+    "0x00000000000000000000000000000000000a4b17",
+    "0x00000000000000000000000000000000000a4b18"
+  ],
+  "market_state_overridden": false,
+  "warning": "Hypothetical executor only. No deployment, execution permission, or net-profit claim.",
+  "status": "execution_reverted",
+  "execution_error": {
+    "message": "execution reverted",
+    "rpc_code": 3,
+    "revert_data": "0x7de56d17fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd7bb3",
+    "error": "NegativeProfit",
+    "arguments": [
+      -164941
+    ]
+  },
+  "simulated_gross_pnl": "-164941",
+  "quote_difference": "0"
+}

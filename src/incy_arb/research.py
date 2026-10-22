@@ -438,6 +438,14 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                         "flash_capacity_sufficient": capacity_ok,
                         "flash_capacity_reasons": capacity_reasons,
                         "sizing": size_metadata,
+                        "simulation_route": {
+                            "start_token": path[0][2], "amount_in": str(amount),
+                            "steps": [{"venue": venue,
+                                       "pool": ({**pool, "fee_bps": current_v2[pool["address"].lower()]["fee_bps"]}
+                                                if venue in ("velodrome_v2", "uniswap_v2") else pool),
+                                       "token_in": token_in, "token_out": token_out}
+                                      for venue, pool, token_in, token_out in path],
+                        },
                     })
     return {
         "chain_id": 57073, "source": "sealed_rpc_multi_venue_quotes", "quote_block_number": block,

@@ -11,7 +11,10 @@ from .abi import MULTICALL3, ReadCall, decode_aggregate3, encode_aggregate3
 
 
 class RpcError(RuntimeError):
-    pass
+    def __init__(self, message: str, *, code: int | None = None, data: Any = None) -> None:
+        super().__init__(message)
+        self.code = code
+        self.data = data
 
 
 class ReadOnlyRpc:
@@ -49,6 +52,19 @@ class ReadOnlyRpc:
         if last_error is not None:
             raise last_error
         return None
+
+    async def chain_id(self) -> int:
+        return int(await self._request("eth_chainId", []), 16)
+
+    async def code_at(self, address: str, block: int) -> str:
+        return await self._request("eth_getCode", [address, hex(block)])
+
+    async def simulation_call(self, transaction: dict[str, Any], block: int, overrides: dict[str, Any]) -> str:
+        """Execute a hypothetical transaction without signing, broadcasting, or persisting state."""
+        return await self._request("eth_call", [transaction, hex(block), overrides])
+
+    async def simulation_gas(self, transaction: dict[str, Any], block: int, overrides: dict[str, Any]) -> int:
+        return int(await self._request("eth_estimateGas", [transaction, hex(block), overrides]), 16)
 
     async def block_number(self) -> int:
         return int(await self._request("eth_blockNumber", []), 16)
@@ -91,7 +107,8 @@ class ReadOnlyRpc:
         except (aiohttp.ClientError, asyncio.TimeoutError) as exc:
             raise RpcError(f"RPC transport error: {exc}") from exc
         if "error" in reply:
-            raise RpcError(str(reply["error"]))
+            error = reply["error"]
+            raise RpcError(str(error.get("message", "RPC error")), code=error.get("code"), data=error.get("data"))
         return reply.get("result")
 
     async def _take_rate_slot(self) -> None:

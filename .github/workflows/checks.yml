@@ -1,0 +1,18 @@
+name: checks
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.3.1
+      - run: forge test --root contracts
+      - run: python scripts/build_simulator.py "$HOME/.svm/0.8.28/solc-0.8.28"
+      - run: git diff --exit-code -- src/incy_arb/artifacts/InkArb.json
