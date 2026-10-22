@@ -17,6 +17,7 @@ from .flash_credit import FlashCapacityConfig, snapshot_flash_capacity
 from .simulation import simulate_scan
 from .cl_snapshot import check_scan_cl_parity
 from .local_scan import LocalV4Config, scan_local_v4
+from .v4_replay import read_scan, verify_v4_replay
 
 
 def _start_amount(value: str) -> tuple[str, int]:
@@ -151,6 +152,11 @@ def main() -> int:
     local.add_argument("--block-number", type=int)
     local.add_argument("--rpc-url", default=INK_RPC)
     local.add_argument("--output", type=Path, default=Path("data/ink-local-v4-scan.json"))
+    replay = subparsers.add_parser("v4-replay", help="verify canonical v4 log replay against sealed pricing state")
+    replay.add_argument("--scan", type=Path, required=True)
+    replay.add_argument("--blocks", type=int, default=20)
+    replay.add_argument("--rpc-url", default=INK_RPC)
+    replay.add_argument("--output", type=Path, default=Path("data/ink-v4-replay.json"))
     flash = subparsers.add_parser("flash-capacity", help="snapshot PoolManager token balances at one sealed block")
     flash.add_argument("--token", action="append", required=True)
     flash.add_argument("--output", type=Path, default=FlashCapacityConfig.output)
@@ -224,6 +230,8 @@ def main() -> int:
                 json.loads(args.scan.read_text()), args.rpc_url, args.finding, args.step,
                 tuple(args.amount0), tuple(args.amount1), args.words_around,
             ))
+        elif args.command == "v4-replay":
+            result = asyncio.run(verify_v4_replay(read_scan(args.scan), args.blocks, args.rpc_url))
         elif args.command == "local-v4-scan":
             result = asyncio.run(scan_local_v4(LocalV4Config(
                 args.v4_discovery,args.v4_state,args.min_amount,args.max_amount,
@@ -240,7 +248,7 @@ def main() -> int:
                       "balances": flash_result["balances"]}
     except KeyboardInterrupt:
         return 130
-    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity", "local-v4-scan") and args.output:
+    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity", "local-v4-scan", "v4-replay") and args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2) + "\n")
         if "summary" in result:

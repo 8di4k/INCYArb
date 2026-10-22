@@ -1080,3 +1080,29 @@ Core snapshots и EVM ответ сохранены в `docs/validation/native-l
 Полный snapshot и SHA-256 summary: `local-v4-sized-59201263.json[.gz]`.
 141 Python-тест проходит, включая replay первого EVM-подтверждённого optimum,
 блоковую согласованность, ограничения кэша и условия net promotion.
+
+
+## 31. Проверенный v4 replay на границе sealed block
+
+`v4-replay` атомарно применяет ordered canonical logs к static zero-hook v4
+snapshots. Учитываются Swap, ModifyLiquidity и ProtocolFeeUpdated, net/gross
+инициализация ticks, zero delta, изменения active liquidity и directional fees.
+Проверяются полнота receipts, tx/log order, metadata, непрерывная цепочка parent
+hashes и неизменность блоков при чтении. Bitmap window фиксируется по исходному
+snapshot; текущий tick за пределами окна исключает локальную quote.
+
+Независимые endpoint snapshots через StateView точно совпали:
+- block 59201003: два Swap;
+- blocks 59201184–59201188: один Swap и 40 zero-delta ModifyLiquidity;
+- block 59100911: одно ненулевое изменение ликвидности.
+Полные receipts, исходные и конечные snapshots архивированы в
+`docs/validation/v4-replay-{59201002,59201183,59100910}.json.gz`.
+Также 44/44 пула совпали после 20 blocks и 13/13 после 128 blocks;
+в этих дополнительных окнах выбранные пулы не менялись.
+172 Python-теста, в том числе offline replay canonical event captures.
+Preconfirmation replay и latency пока не реализованы.
+
+Расширение local search до fee cap 999999 pips дало 140 used pools и
+862 цикла на block 59201725. Найдено 17 positive gross; 5 верхних EVM проверок
+успешны с quote_difference=0, все ниже верхнего fee budget. CPU 0,6034 секунды
+после загрузки состояния. Capture: `local-v4-allfees-59201725.json[.gz]`.
