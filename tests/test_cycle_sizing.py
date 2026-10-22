@@ -187,3 +187,13 @@ def test_scan_discards_findings_if_its_pinned_block_is_replaced(scan_setup, monk
     monkeypatch.setattr(research,'ReadOnlyRpc',Reorg)
     with pytest.raises(RuntimeError,match='discard findings'):
         asyncio.run(research.scan_cycles(scan_setup))
+
+
+def test_explicit_quote_block_replays_without_reading_latest_height(scan_setup, monkeypatch):
+    parent = research.ReadOnlyRpc
+    class Replay(parent):
+        async def block_number(self): raise AssertionError('must not read latest height')
+    monkeypatch.setattr(research,'ReadOnlyRpc',Replay)
+    result = asyncio.run(research.scan_cycles(replace(scan_setup,quote_block=123)))
+    assert result['quote_block_number'] == 123 and result['quote_block_hash'] == '0xaa'
+    assert len(result['findings']) == 1

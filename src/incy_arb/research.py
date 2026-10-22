@@ -47,6 +47,7 @@ class CycleScanConfig(TwoHopConfig):
     size_ranges: tuple[tuple[str, int, int], ...] = ()
     size_grid_points: int = 17
     size_refinement_iterations: int = 16
+    quote_block: int | None = None
 
 
 def overlapping_slipstream_pairs(inventory: dict[str, Any]) -> list[tuple[dict[str, Any], dict[str, Any]]]:
@@ -347,6 +348,8 @@ async def _quote_cycle(
 
 
 async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
+    if config.quote_block is not None and config.quote_block < 0:
+        raise ValueError("quote block must be nonnegative")
     if not 2 <= config.min_steps <= config.max_steps <= 8:
         raise ValueError("cycle step range must satisfy 2 <= min_steps <= max_steps <= 8")
     ranges: dict[str, tuple[int, int]] = {}
@@ -382,7 +385,7 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
     async with ReadOnlyRpc(config.rpc_url) as rpc:
         if await rpc.chain_id() != 57073:
             raise ValueError("cycle scan RPC must have Ink chain ID 57073")
-        block = await rpc.block_number()
+        block = await rpc.block_number() if config.quote_block is None else config.quote_block
         sealed = await rpc.sealed_block(block)
         if sealed is None or not sealed.get("hash"):
             raise RuntimeError("could not pin a sealed block")
@@ -473,6 +476,9 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
             raise RuntimeError("quote block changed during scan; discard findings")
     return {
         "quote_block_hash": sealed["hash"], "quote_cache": quote_rpc.summary(),
+        "input_snapshot": {"inventory_block_number": inventory.get("block_number"),
+                           "v4_state_block_number": state.get("block_number"),
+                           "v4_discovery_complete": bool(discovery.get("complete"))},
         "chain_id": 57073, "source": "sealed_rpc_multi_venue_quotes", "quote_block_number": block,
         "quote_block_timestamp": int(sealed["timestamp"], 16), "start_tokens": list(config.starts),
         "min_steps": config.min_steps, "max_steps": config.max_steps,

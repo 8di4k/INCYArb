@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "chain_id": 57073,
+  "reserve_age_threshold_seconds": 86400,
+  "v4_discovery": {
+    "complete": true,
+    "pages_scanned": 93,
+    "pool_ids": 4603,
+    "invalid_initialize_events": 0,
+    "oldest_initialize_block": 6391727,
+    "newest_initialize_block": 59187626
+  },
+  "v4_state": {
+    "block_number": 59196963,
+    "discovered_pool_ids": 4603,
+    "selected_pool_ids": 4603,
+    "readable": 4603,
+    "positive_liquidity": 1152,
+    "eligible_for_future_quote": 121
+  },
+  "files": [
+    {
+      "file": "inventory.json.gz",
+      "sha256": "7cb2f25fa0f37c3f3676117f4438ee8dbef4c30684758300ac2a87f403a8557e",
+      "raw_sha256": "54bed0a51656bd0258893b5782a5c0b93733bde11c7d896f0aa680954490e13b",
+      "compressed_bytes": 68357,
+      "raw_bytes": 382460
+    },
+    {
+      "file": "v4-discovery.json.gz",
+      "sha256": "77e437aa87bebd39312a8317cd63359da17c01a812091d46f0b3b61130c59632",
+      "raw_sha256": "b19d386da89b220baaaf1ef3549ee5eb3091cf4e828e7f8580352f7ec238e21f",
+      "compressed_bytes": 700885,
+      "raw_bytes": 3782419
+    },
+    {
+      "file": "v4-state.json.gz",
+      "sha256": "a25ae015d8c7a6d08a6a4ee26982d50b5dcb745b84240fa53878294e41c7dd81",
+      "raw_sha256": "9070c40e2dd4fdc43a6a7a379d9f8904d89f800fb850e5c959ca901026dd805a",
+      "compressed_bytes": 288743,
+      "raw_bytes": 1965539
+    },
+    {
+      "file": "scan-two-hop.json.gz",
+      "sha256": "c9716c8e9e5a5835b95c564a82b3cc4899f5f4b5cfa7b70650b612690c399a89",
+      "raw_sha256": "2300a5bdf6d368068e1b20475dcf9848b6b7fe3788527a86b4191a97e29e028e",
+      "compressed_bytes": 10035,
+      "raw_bytes": 186561
+    },
+    {
+      "file": "scan-weth-2-4.json.gz",
+      "sha256": "9524b7d4d1fc39169ac6655b790b2b8b1910bc0a2932ccdb70f4262437195d00",
+      "raw_sha256": "7cd6be9546e589ebdc6d57fd1fd85d7db5a25d9b1a198e4c1ec00d96c556fbc8",
+      "compressed_bytes": 53283,
+      "raw_bytes": 1433316
+    },
+    {
+      "file": "replay-weth-two-hop.json.gz",
+      "sha256": "0ee93bb11452613087e11e14f35eca1567382b0b20165c040da5061fb35685b3",
+      "raw_sha256": "d72a0d71a42ac1472fa22e2fc4ba658a04fbf869828ba1b84e24ce60c3206015",
+      "compressed_bytes": 2380,
+      "raw_bytes": 33828
+    },
+    {
+      "file": "scan-stables-2-4.json.gz",
+      "sha256": "62ac5df0d78066f4b5b57a0fbe89f1af87d6356ca1434de3ccf9ded1bb8a69f7",
+      "raw_sha256": "e16793f21e82ffd4271840e798ca724656893a5476ac5cf531454a3092f39fbd",
+      "compressed_bytes": 175006,
+      "raw_bytes": 4972958
+    },
+    {
+      "file": "subblocks.jsonl.gz",
+      "sha256": "a56c98ee184afee80ec3faa5778c769f58df4fc37a195da0622fcefa2bc7c851",
+      "raw_sha256": "0a624a8a40e03ea4b1c5aa5b770f214e7ad2a341d2ff43b580a3b30922ccb97c",
+      "compressed_bytes": 72274,
+      "raw_bytes": 777229
+    }
+  ],
+  "scope": "Explorer history complete through its captured head, not a continuously refreshed live universe. Graph eligibility uses snapshots; each scan quotes fresh sealed RPC state. Research only, no trade permission.",
+  "scans": [
+    {
+      "file": "scan-two-hop.json.gz",
+      "quote_block_number": 59197217,
+      "structural_cycles": 82,
+      "complete_quotes": 75,
+      "positive_gross_quotes": 0,
+      "quote_cache": null
+    },
+    {
+      "file": "scan-weth-2-4.json.gz",
+      "quote_block_number": 59197361,
+      "structural_cycles": 428,
+      "complete_quotes": 340,
+      "positive_gross_quotes": 0,
+      "quote_cache": {
+        "hits": 257,
+        "misses": 232,
+        "entries": 232,
+        "max_entries": 20000
+      }
+    },
+    {
+      "file": "scan-stables-2-4.json.gz",
+      "quote_block_number": 59197505,
+      "structural_cycles": 1398,
+      "complete_quotes": 1243,
+      "positive_gross_quotes": 0,
+      "quote_cache": {
+        "hits": 1577,
+        "misses": 1378,
+        "entries": 1378,
+        "max_entries": 20000
+      }
+    }
+  ],
+  "observer": {
+    "payloads": 18,
+    "verified": 18,
+    "invalid": 0,
+    "duration_seconds": 20
+  },
+  "historical_replay": {
+    "block_number": 59197217,
+    "weth_two_step_matches": 12,
+    "differences": 0
+  }
+}
