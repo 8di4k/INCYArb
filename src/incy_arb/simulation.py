@@ -27,7 +27,7 @@ def _address(value: str) -> bytes:
 
 
 def encode_simulation_route(route: dict[str, Any], block: int, min_profit: int = 0) -> bytes:
-    """Encode only validated V2, Slipstream, and zero-hook static-fee v4 steps."""
+    """Encode V2 (including stable kind 5), Slipstream, and zero-hook static-fee v4 steps."""
     token = route["start_token"].lower()
     amount = int(route["amount_in"])
     if not 0 < amount <= INT128_MAX or not 0 <= min_profit <= INT128_MAX or not 0 <= block < 1 << 32:
@@ -54,11 +54,14 @@ def encode_simulation_route(route: dict[str, Any], block: int, min_profit: int =
             packed += b"\x01" + _address(identity) + _address(output)
         elif venue in ("uniswap_v2", "velodrome_v2"):
             if pool.get("stable"):
-                raise ValueError("stable Velodrome V2 needs a separate execution adapter")
-            fee = int(pool["fee_bps"])
-            if not 0 <= fee < 10_000:
-                raise ValueError("invalid V2 fee")
-            packed += b"\x04" + _address(identity) + _address(output) + fee.to_bytes(2, "big")
+                if venue != "velodrome_v2":
+                    raise ValueError("stable execution kind is only supported for Velodrome V2")
+                packed += b"\x05" + _address(identity) + _address(output)
+            else:
+                fee = int(pool["fee_bps"])
+                if not 0 <= fee < 10_000:
+                    raise ValueError("invalid V2 fee")
+                packed += b"\x04" + _address(identity) + _address(output) + fee.to_bytes(2, "big")
         elif venue == "uniswap_v4":
             fee, spacing = int(pool["fee_pips"]), int(pool["tick_spacing"])
             if int(pool["hooks"], 16) != 0 or not 0 <= fee <= 1_000_000 or not 0 < spacing < 1 << 23:

@@ -185,3 +185,13 @@ def test_successful_execution_with_failed_fee_oracle_has_no_net_profit_claim():
     assert result['status'] == 'success'
     assert result['fee_budget']['status'] == 'unavailable'
     assert result['net_profit_assessment']['status'] == 'fee_budget_unavailable'
+
+
+def test_stable_velodrome_has_its_own_kind_and_no_volatile_fee_bytes():
+    value = route()
+    value['steps'][0]['venue'] = 'velodrome_v2'
+    value['steps'][0]['pool']['stable'] = True
+    value['steps'][0]['pool'].pop('fee_bps')
+    data = encode_simulation_route(value,123)
+    assert data[60] == 5 and data[101] == 1
+    assert len(data) == 60 + 41 + 41

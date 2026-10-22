@@ -1,0 +1,38 @@
+{
+  "chain_id": 57073,
+  "source": "sealed_eth_call_with_simulator_code_override",
+  "block_number": 59197029,
+  "block_hash": "0xd7ac1d17d317a405b5c79f89908ae4a9bc2b1bcea1286486cb8895cb1ad18f99",
+  "finding_index": 1,
+  "start_token": "0x4200000000000000000000000000000000000006",
+  "quoted_gross_pnl": "-210492897829",
+  "calldata": "0x614619544200000000000000000000000000000000000006000000000000000000005af3107a4000000000000000000000000000000000000387466504685e46328d8eea70a2d60e51a14e3443ab2882bc11476323d8dfcbafac942588e2f38823d2dd308e001e057951b285b2ff42d70eb8a681efd110ca73c6b2b74200000000000000000000000000000000000006",
+  "creation_sha256": "82ad026f4616e5950c7a1485d7b028cd410f66d038baf1598d87f67d86dee3a3",
+  "runtime_keccak256": "0x70b5ee5e745e7d8c4d63bc5418af2b638e4ee97efa46cf808da65445904c4ec9",
+  "overridden_accounts": [
+    "0x00000000000000000000000000000000000a4b17",
+    "0x00000000000000000000000000000000000a4b18"
+  ],
+  "market_state_overridden": false,
+  "warning": "Hypothetical executor only. No deployment, execution permission, or net-profit claim.",
+  "status": "execution_reverted",
+  "execution_error": {
+    "message": "execution reverted",
+    "rpc_code": 3,
+    "revert_data": "0x7de56d17ffffffffffffffffffffffffffffffffffffffffffffffffffffffcefda545db",
+    "error": "NegativeProfit",
+    "arguments": [
+      -210492897829
+    ]
+  },
+  "simulated_gross_pnl": "-210492897829",
+  "quote_difference": "0",
+  "fee_budget": {
+    "status": "not_estimated",
+    "reason": "execution or gas estimate did not succeed"
+  },
+  "net_profit_assessment": {
+    "status": "execution_not_confirmed"
+  },
+  "validation_scope": "WETH/iETH stable + volatile Velodrome V2, 1e14 raw WETH input; inventory reserve-age threshold 86400 seconds."
+}

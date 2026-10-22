@@ -45,3 +45,10 @@ def test_v4_first_step_does_not_need_an_initial_token_transfer() -> None:
     assert initial_flash_capacity(v4_path, INT128_MAX + 1, 0) == (
         False, False, ["amount_exceeds_int128_delta"]
     )
+
+
+def test_ink_supports_stable_v2_while_upstream_xarb2_does_not():
+    from incy_arb.research import ink_compatibility
+    path = [('velodrome_v2', {'stable': True}, 'a', 'b')]
+    assert ink_compatibility(path) == (True, [])
+    assert xarb2_compatibility(path)[0] is False

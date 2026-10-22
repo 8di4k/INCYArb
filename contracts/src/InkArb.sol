@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.28;
 
-import {IERC20, IPoolManager, IV3Pool, IV2Pair, PoolKey, SwapParams} from "./Interfaces.sol";
+import {IERC20, IPoolManager, IV3Pool, IV2Pair, IVelodromePair, PoolKey, SwapParams} from "./Interfaces.sol";
 
 /// @dev Чтение transient-хранилища PoolManager (Uniswap v4 Exttload): долг/кредит адреса по валюте.
 interface IExttload {
@@ -11,12 +11,14 @@ interface IExttload {
 /// @title InkArb — read-only simulation executor derived from 8di4k/Arbitr XArb2.
 /// @notice Packed route: token(20), amountIn(16), minProfit(16), maxBlock(4).
 /// Steps: V3=1|pool(20)|tokenOut(20), V4=2|tokenOut(20)|fee(3)|spacing(3)|hooks(20),
-/// V2=4|pair(20)|tokenOut(20)|feeBps(2). No adapter or native-currency steps.
+/// V2=4|pair(20)|tokenOut(20)|feeBps(2), stable V2=5|pair(20)|tokenOut(20).
+/// No adapter or native-currency steps. Stable output uses the pool invariant directly.
 /// Used only through eth_call state overrides; no deployment or signer is provided.
 contract InkArb {
     uint8 internal constant V3 = 1;
     uint8 internal constant V4 = 2;
     uint8 internal constant V2 = 4;
+    uint8 internal constant STABLE_V2 = 5;
 
     uint256 internal constant HEADER = 56;
 
@@ -115,7 +117,7 @@ contract InkArb {
             address dest = address(poolManager);
             if (q < n) {
                 uint8 next = uint8(_uint(raw, q, 8));
-                if (next == V2) dest = _addr(raw, q + 1);
+                if (next == V2 || next == STABLE_V2) dest = _addr(raw, q + 1);
             }
             address tokenOut = _addr(raw, kind == V4 ? p + 1 : p + 21);
             if (tokenOut == address(0)) revert NativeNotSupported();
@@ -198,7 +200,7 @@ contract InkArb {
         address pair = _addr(raw, p + 1);
         bool zeroForOne = tokenIn < tokenOut;
         if (!placed) poolManager.take(tokenIn, pair, amount);
-        out = _v2Out(pair, tokenIn, zeroForOne, _uint(raw, p + 41, 16));
+        out = _v2StepOut(raw, p, tokenIn);
         bool credit = dest == address(poolManager);
         if (credit) poolManager.sync(tokenOut);
         (uint256 o0, uint256 o1) = zeroForOne ? (uint256(0), out) : (out, uint256(0));
@@ -210,14 +212,28 @@ contract InkArb {
     function _v2Out(address pair, address tokenIn, bool zeroForOne, uint256 feeBps) internal view returns (uint256) {
         (uint112 r0, uint112 r1,) = IV2Pair(pair).getReserves();
         (uint256 rIn, uint256 rOut) = zeroForOne ? (uint256(r0), uint256(r1)) : (uint256(r1), uint256(r0));
-        uint256 inAfterFee = (IERC20(tokenIn).balanceOf(pair) - rIn) * (10_000 - feeBps);
+        uint256 actualIn = IERC20(tokenIn).balanceOf(pair) - rIn;
+        uint256 inAfterFee = actualIn * (10_000 - feeBps);
         return inAfterFee * rOut / (rIn * 10_000 + inAfterFee);
+    }
+
+    function _v2StepOut(bytes calldata raw, uint256 p, address tokenIn) internal view returns (uint256) {
+        address pair = _addr(raw, p + 1);
+        bool zeroForOne = tokenIn < _addr(raw, p + 21);
+        if (uint8(_uint(raw, p, 8)) != STABLE_V2) {
+            return _v2Out(pair, tokenIn, zeroForOne, _uint(raw, p + 41, 16));
+        }
+        (uint112 r0, uint112 r1,) = IV2Pair(pair).getReserves();
+        uint256 reserveIn = zeroForOne ? uint256(r0) : uint256(r1);
+        uint256 actualIn = IERC20(tokenIn).balanceOf(pair) - reserveIn;
+        return IVelodromePair(pair).getAmountOut(actualIn, tokenIn);
     }
 
     function _stepLength(uint8 kind) internal pure returns (uint256) {
         if (kind == V3) return 41;
         if (kind == V4) return 47;
         if (kind == V2) return 43;
+        if (kind == STABLE_V2) return 41;
         revert UnknownKind(kind);
     }
 
