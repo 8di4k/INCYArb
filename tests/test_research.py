@@ -1,5 +1,6 @@
 from incy_arb.__main__ import _start_amount
-from incy_arb.research import cycle_paths, overlapping_slipstream_pairs, xarb2_compatibility
+from incy_arb.flash_credit import INT128_MAX
+from incy_arb.research import cycle_paths, initial_flash_capacity, overlapping_slipstream_pairs, xarb2_compatibility
 
 
 def test_overlapping_pairs_require_two_liquid_pools_for_same_tokens() -> None:
@@ -31,3 +32,16 @@ def test_xarb2_compatibility_rejects_velodrome_stable_math() -> None:
     path = [("velodrome_v2", {"stable": True}, "a", "b")]
     assert xarb2_compatibility(path) == (False, ["velodrome_stable_requires_new_adapter"])
     assert xarb2_compatibility([("uniswap_v2", {"fee_bps": 30}, "a", "b")]) == (True, [])
+
+
+def test_v4_first_step_does_not_need_an_initial_token_transfer() -> None:
+    v4_path = [("uniswap_v4", {}, "a", "b")]
+    assert initial_flash_capacity(v4_path, 100, 0) == (True, False, [])
+
+    external_path = [("uniswap_v2", {}, "a", "b")]
+    assert initial_flash_capacity(external_path, 100, 0) == (
+        False, True, ["insufficient_pool_manager_balance_for_initial_take"]
+    )
+    assert initial_flash_capacity(v4_path, INT128_MAX + 1, 0) == (
+        False, False, ["amount_exceeds_int128_delta"]
+    )
