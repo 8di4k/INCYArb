@@ -1,0 +1,17 @@
+{
+  "source": "canonical_v4_receipt_replay",
+  "summary": {
+    "pools": 1,
+    "blocks": 1,
+    "applied_events": {
+      "swap": 2
+    },
+    "matches": 1,
+    "differences": 0
+  },
+  "file": "v4-replay-59201002.json.gz",
+  "sha256": "544b60af53ac5b9e8473ddf6e468e3287461018c19ee69e632808e0300fb5324",
+  "raw_sha256": "bcfaae38025b1ef57b48fd42a306a8230c48d5fdebd0c4998200085319871ec3",
+  "start_block": 59201002,
+  "end_block": 59201003
+}

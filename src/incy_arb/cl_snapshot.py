@@ -35,7 +35,8 @@ class CLSnapshot:
         return protocol + self.lp_fee - protocol * self.lp_fee // 1_000_000
 
     def quote(self, zero_for_one: bool, amount: int) -> int | None:
-        if amount <= 0 or not 0 <= self.fee(zero_for_one) < 1_000_000:
+        if (amount <= 0 or not 0 <= self.fee(zero_for_one) < 1_000_000
+                or not self.ticks.lo <= self.tick <= self.ticks.hi):
             return None
         result = swap_exact_in(
             self.sqrt_price_x96, self.tick, self.liquidity, self.fee(zero_for_one), self.ticks, zero_for_one, amount
@@ -64,7 +65,8 @@ class CLSnapshot:
 
 
 async def load_cl_snapshot(
-    rpc: ReadOnlyRpc, venue: str, pool: dict[str, Any], block: int, words_around: int = 3
+    rpc: ReadOnlyRpc, venue: str, pool: dict[str, Any], block: int, words_around: int = 3,
+    *, window_tick: int | None = None,
 ) -> CLSnapshot:
     if venue not in ("slipstream", "uniswap_v4") or not 0 <= words_around <= 16:
         raise ValueError("CL snapshot requires Slipstream/static zero-hook v4 and 0–16 surrounding words")
@@ -112,7 +114,9 @@ async def load_cl_snapshot(
     liquidity = decode_result(["uint128"], raw[1])[0]
     if not 0 < spacing < 1 << 23 or not MIN_TICK <= tick <= MAX_TICK or not 0 <= lp <= 1_000_000:
         raise RuntimeError("invalid CL metadata")
-    middle = (tick // spacing) >> 8
+    if window_tick is not None and not MIN_TICK <= window_tick <= MAX_TICK:
+        raise ValueError("invalid fixed window tick")
+    middle = ((tick if window_tick is None else window_tick) // spacing) >> 8
     words = list(range(middle - words_around, middle + words_around + 1))
     if venue == "uniswap_v4":
         calls = [

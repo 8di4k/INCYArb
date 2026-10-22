@@ -1,0 +1,23 @@
+{
+  "source": "sealed_local_v4_full_fill_estimates",
+  "summary": {
+    "structural_cycles": 862,
+    "positive_local_gross": 17,
+    "simulated_success": 5,
+    "simulated_positive_after_budget": 0
+  },
+  "file": "local-v4-allfees-59201725.json.gz",
+  "sha256": "303b98c5dc9385089e04fc95de7b64069f812a0c774ac4d98a0a42b0d3680903",
+  "raw_sha256": "603638886df8a22950955486dbe2516a79894a7c139e9f2c8d8dc34be460943a",
+  "quote_block_number": 59201725,
+  "quote_block_hash": "0x9eb856023a0115d7c5547026eb91fef66a6b174795df3649fc90d822cbc9876a",
+  "selected_pools": 140,
+  "search_seconds": 0.6034370529996522,
+  "sizing_options": {
+    "minimum": "1",
+    "maximum": "100000000000000000",
+    "grid_points": 33,
+    "refinement_iterations": 32,
+    "max_steps": 3
+  }
+}

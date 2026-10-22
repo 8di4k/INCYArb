@@ -461,3 +461,37 @@ python -m incy_arb local-v4-scan \
 Артефакты: [summary](docs/validation/local-v4-sized-59201263.json),
 [первый EVM результат](docs/validation/native-positive-before-fees-59200457.json).
 Время CPU не включает RPC, загрузку ticks и EVM проверку.
+
+
+## Replay v4 pricing state
+
+```bash
+python -m incy_arb v4-replay \
+  --scan docs/validation/local-v4-sized-59201263.json.gz --blocks 20 \
+  --output data/v4-replay.json
+```
+
+Команда читает полный набор canonical receipts для 1–128 последовательных
+sealed blocks после scan. Проверяются parent hashes, transaction set/order,
+receipt metadata и глобальный порядок logs. Swap обновляет price/tick/liquidity;
+ModifyLiquidity — active liquidity и tick net/gross; ProtocolFeeUpdated —
+направленные fees. Нулевая LP delta не создаёт ticks; net=0 с gross>0 сохраняется.
+Блок применяется атомарно. Пропуск блока, reorg или некорректное событие прерывают
+replay. Окно bitmap остаётся исходным; quote за его границами отвергается.
+
+Итог каждого пула независимо сравнивается со StateView на конечном блоке,
+включая исходное окно ticks. `differences` означает несовпадение, а не успех.
+JSON сохраняет исходные snapshots, полные blocks/receipts и обе конечные модели.
+Поддерживаются только static zero-hook v4. Это проверка sealed state;
+обработка preconfirmation latency и поиск между subblocks ещё не подключены.
+
+Capture [v4-replay-59201002](docs/validation/v4-replay-59201002.json) подтверждает
+2 Swap; [v4-replay-59201183](docs/validation/v4-replay-59201183.json) — 1 Swap и
+40 сборов LP fees с нулевой liquidity delta;
+[v4-replay-59100910](docs/validation/v4-replay-59100910.json) — реальное изменение
+ликвидности. Во всех случаях конечная pricing model точно совпала со StateView.
+
+Расширенный size scan с fee cap 999999 pips на block 59201725 охватил 140 пулов
+и 862 цикла за 0,603 секунды CPU: 17 gross-кандидатов, 5 точных успешных EVM
+симуляций, 0 положительных после верхнего fee budget. Snapshot:
+[local-v4-allfees-59201725](docs/validation/local-v4-allfees-59201725.json).
