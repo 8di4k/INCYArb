@@ -1,0 +1,1744 @@
+{
+  "block_number": 59198585,
+  "pool_count": 18,
+  "processed": 18,
+  "totals": {
+    "match": 130,
+    "difference": 0,
+    "not_fully_modeled": 0,
+    "quoter_error": 14
+  },
+  "results": [
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0xd376112ec898598f0b5de1cc17c3b6943ee95ad8",
+          "token0": "0x0200c29006150606b650577bbe7b6248f58470c1",
+          "token1": "0x767f1e9fedff2bfa4f90a7effddfccc2970530ba",
+          "tick_spacing": 200,
+          "liquidity": "577224962141670613",
+          "sqrt_price_x96": "14714544607298036293616095712275452075",
+          "tick": 380814,
+          "fee_pips": 3000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "14714544607298036293616095712275452075",
+        "tick": 380814,
+        "liquidity": "577224962141670613",
+        "tick_spacing": 200,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": 204800,
+          "hi": 563199,
+          "liquidity_net": {
+            "253200": "-63807719247742442429",
+            "276400": "350181385416175420",
+            "299400": "1230535192257997085",
+            "322400": "256712498606030313",
+            "335200": "106245661955818677",
+            "345400": "319945690380123575",
+            "380000": "-329150881165380541",
+            "380200": "-106245661955818677",
+            "380400": "566773155516725",
+            "380600": "-400127809675108667",
+            "380800": "-851437886833683297",
+            "381200": "-566773155516725",
+            "382200": "-570455460470150274",
+            "382400": "-6202728516003614"
+          }
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100",
+          "local_amount_out": "3414834536357456149",
+          "quoter_amount_out": "3414834536357456149",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000",
+          "local_amount_out": "343896890882374016235",
+          "quoter_amount_out": "343896890882374016235",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000",
+          "local_amount_out": "34378771129547838735859",
+          "quoter_amount_out": "34378771129547838735859",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "28",
+          "quoter_amount_out": "28",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0x53e708a9559dc5ec6e9c75cd0cff5b008fe536d3",
+          "token0": "0xe343167631d89b6ffc58b88d6b7fb0228795491d",
+          "token1": "0xf50258d3c1dd88946c567920b986a12e65b50dac",
+          "tick_spacing": 2000,
+          "liquidity": "1522",
+          "sqrt_price_x96": "1248810786893887052606068989",
+          "tick": -83007,
+          "fee_pips": 10000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "1248810786893887052606068989",
+        "tick": -83007,
+        "liquidity": "1522",
+        "tick_spacing": 2000,
+        "lp_fee": 10000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -887272,
+          "hi": 887272,
+          "liquidity_net": {
+            "-886000": "1522",
+            "886000": "-1522"
+          }
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000",
+          "local_amount_out": "2",
+          "quoter_amount_out": "2",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000",
+          "local_amount_out": "21",
+          "quoter_amount_out": "21",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100",
+          "local_amount_out": "77725",
+          "quoter_amount_out": "77725",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000",
+          "local_amount_out": "96326",
+          "quoter_amount_out": "96326",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000",
+          "local_amount_out": "96557",
+          "quoter_amount_out": "96557",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0xf1875468301e8a59a45a8560ed3c40b2abd4eb90",
+          "token0": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "token1": "0xd95b9a5fa7c2708fd4fe0e07e59bde1ef35b194a",
+          "tick_spacing": 2000,
+          "liquidity": "13638773903007",
+          "sqrt_price_x96": "2515907871826600209272736842267907895",
+          "tick": 345488,
+          "fee_pips": 10000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "2515907871826600209272736842267907895",
+        "tick": 345488,
+        "liquidity": "13638773903007",
+        "tick_spacing": 2000,
+        "lp_fee": 10000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -887272,
+          "hi": 887272,
+          "liquidity_net": {
+            "-886000": "13638773903007",
+            "886000": "-13638773903007"
+          }
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100",
+          "local_amount_out": "99808010953636711",
+          "quoter_amount_out": "99808010953636711",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000",
+          "local_amount_out": "9758173672736788475",
+          "quoter_amount_out": "9758173672736788475",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000",
+          "local_amount_out": "302058583946787919828",
+          "quoter_amount_out": "302058583946787919828",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "9",
+          "quoter_amount_out": "9",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "979",
+          "quoter_amount_out": "979",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0xa02b629b7795d06c8b1408c76fc116b5bfd6852f",
+          "token0": "0x1a523ac6553d11f1d66b60cf351c94bd7c7283db",
+          "token1": "0x4200000000000000000000000000000000000006",
+          "tick_spacing": 200,
+          "liquidity": "3644173431657",
+          "sqrt_price_x96": "21741051571802873373130752",
+          "tick": -164026,
+          "fee_pips": 3000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "21741051571802873373130752",
+        "tick": -164026,
+        "liquidity": "3644173431657",
+        "tick_spacing": 200,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -358400,
+          "hi": -1,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "75069",
+          "quoter_amount_out": "75069",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "7451587",
+          "quoter_amount_out": "7451587",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "428817204",
+          "quoter_amount_out": "428817204",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "986855128",
+          "quoter_amount_out": "986855128",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "13266693386770882",
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        }
+      ],
+      "summary": {
+        "match": 4,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 4
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0x011cfaec5d7158de76b83b0df2ae4db0f309824f",
+          "token0": "0x4200000000000000000000000000000000000006",
+          "token1": "0xfd3c463f13f652f7a0d0d2faa9d5950ffc579899",
+          "tick_spacing": 200,
+          "liquidity": "3644173431657",
+          "sqrt_price_x96": "288721164873542169185530098483200",
+          "tick": 164025,
+          "fee_pips": 3000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "288721164873542169185530098483200",
+        "tick": 164025,
+        "liquidity": "3644173431657",
+        "tick_spacing": 200,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": 0,
+          "hi": 358399,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "13266693386770878",
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "75069",
+          "quoter_amount_out": "75069",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "7451587",
+          "quoter_amount_out": "7451587",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "428817204",
+          "quoter_amount_out": "428817204",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "986855128",
+          "quoter_amount_out": "986855128",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 4,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 4
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0x3a1da298b5b2f95aed712c05a15a64bee8226d66",
+          "token0": "0x4200000000000000000000000000000000000006",
+          "token1": "0xed1fb7fb76392b38e50c68bbbec71871785f2999",
+          "tick_spacing": 200,
+          "liquidity": "6653319973266",
+          "sqrt_price_x96": "527130316101357490951872336363520",
+          "tick": 176066,
+          "fee_pips": 3000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "527130316101357490951872336363520",
+        "tick": 176066,
+        "liquidity": "6653319973266",
+        "tick_spacing": 200,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": 0,
+          "hi": 358399,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "44222311289241800",
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted: TF",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "22522",
+          "quoter_amount_out": "22522",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "2247197",
+          "quoter_amount_out": "2247197",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "183823981",
+          "quoter_amount_out": "183823981",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "957487675",
+          "quoter_amount_out": "957487675",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 4,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 4
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0x58263e7a4a2551d0b7e551f6772430950514fb16",
+          "token0": "0x0bd1c10dceada114096ee3dcfd07352fe057ba92",
+          "token1": "0x4200000000000000000000000000000000000006",
+          "tick_spacing": 200,
+          "liquidity": "46170119351179204661",
+          "sqrt_price_x96": "1720238716663315558335335",
+          "tick": -214764,
+          "fee_pips": 3000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "1720238716663315558335335",
+        "tick": -214764,
+        "liquidity": "46170119351179204661",
+        "tick_spacing": 200,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -409600,
+          "hi": -51201,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "470",
+          "quoter_amount_out": "470",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "47001",
+          "quoter_amount_out": "47001",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "4700168",
+          "quoter_amount_out": "4700168",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "470016628",
+          "quoter_amount_out": "470016628",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "2112735737646549960329",
+          "quoter_amount_out": "2112735737646549960329",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "192353270826291123165342",
+          "quoter_amount_out": "192353270826291123165342",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "1932158428403535458546270",
+          "quoter_amount_out": "1932158428403535458546270",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "2124297834898140424896641",
+          "quoter_amount_out": "2124297834898140424896641",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0x565d43daf06d7a2fbe600b2d063a369572c5ee3e",
+          "token0": "0x0200c29006150606b650577bbe7b6248f58470c1",
+          "token1": "0x1217bfe6c773eec6cc4a38b5dc45b92292b6e189",
+          "tick_spacing": 2000,
+          "liquidity": "5516899",
+          "sqrt_price_x96": "79228162514264337593543950336",
+          "tick": 0,
+          "fee_pips": 10000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "79228162514264337593543950336",
+        "tick": 0,
+        "liquidity": "5516899",
+        "tick_spacing": 2000,
+        "lp_fee": 10000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -887272,
+          "hi": 887272,
+          "liquidity_net": {
+            "-4000": "5516899",
+            "4000": "-5516899"
+          }
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100",
+          "local_amount_out": "98",
+          "quoter_amount_out": "98",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000",
+          "local_amount_out": "9882",
+          "quoter_amount_out": "9882",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000",
+          "local_amount_out": "839375",
+          "quoter_amount_out": "839375",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100",
+          "local_amount_out": "98",
+          "quoter_amount_out": "98",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000",
+          "local_amount_out": "9882",
+          "quoter_amount_out": "9882",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000",
+          "local_amount_out": "839375",
+          "quoter_amount_out": "839375",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "slipstream",
+        "pool": {
+          "address": "0xfd18e52d312ed3af76617b9103632987f6d50e9f",
+          "token0": "0x0200c29006150606b650577bbe7b6248f58470c1",
+          "token1": "0x1217bfe6c773eec6cc4a38b5dc45b92292b6e189",
+          "tick_spacing": 200,
+          "liquidity": "5678423707",
+          "sqrt_price_x96": "79307509717440027892069326911",
+          "tick": 20,
+          "fee_pips": 3000,
+          "has_positive_liquidity": true
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "79307509717440027892069326911",
+        "tick": 20,
+        "liquidity": "5678423707",
+        "tick_spacing": 200,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -153600,
+          "hi": 204799,
+          "liquidity_net": {
+            "-200": "91314364",
+            "0": "5587109343",
+            "200": "-5587109343",
+            "400": "-91314364"
+          }
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100",
+          "local_amount_out": "99",
+          "quoter_amount_out": "99",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000",
+          "local_amount_out": "9989",
+          "quoter_amount_out": "9989",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000",
+          "local_amount_out": "998822",
+          "quoter_amount_out": "998822",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100",
+          "local_amount_out": "98",
+          "quoter_amount_out": "98",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000",
+          "local_amount_out": "9950",
+          "quoter_amount_out": "9950",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000",
+          "local_amount_out": "994831",
+          "quoter_amount_out": "994831",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0x2147bea553e29c1910e0a8c095f2e5ea558883e348e318c335f47d329a37a103",
+          "token0": "0x4e7942a72dcfcc72fa0872068b0dba3921c1bb8a",
+          "token1": "0x75e7a5316e44755ff4ad724ee45337d1eef6895e",
+          "fee_pips": 3000,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "31522733378561018208271788562",
+        "tick": -18434,
+        "liquidity": "388378949484021452169",
+        "tick_spacing": 60,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -76800,
+          "hi": 30719,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "157827881759",
+          "quoter_amount_out": "157827881759",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "15782786580061",
+          "quoter_amount_out": "15782786580061",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "1578262699280730",
+          "quoter_amount_out": "1578262699280730",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "157666845488848356",
+          "quoter_amount_out": "157666845488848356",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "6298056981376",
+          "quoter_amount_out": "6298056981376",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "629805295850049",
+          "quoter_amount_out": "629805295850049",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "62976506968107286",
+          "quoter_amount_out": "62976506968107286",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "6257682377967558202",
+          "quoter_amount_out": "6257682377967558202",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0x600db6e788247536444bbc2b094e81d98f1972fa825a078de2e42e45e21745d3",
+          "token0": "0x0200c29006150606b650577bbe7b6248f58470c1",
+          "token1": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "fee_pips": 375,
+          "tick_spacing": 4,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "79211874976837466294354335716",
+        "tick": -5,
+        "liquidity": "18325075",
+        "tick_spacing": 4,
+        "lp_fee": 375,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -4096,
+          "hi": 3071,
+          "liquidity_net": {
+            "-8": "18325075",
+            "4": "74509046893169",
+            "8": "-74509046893169",
+            "16": "-18325075"
+          }
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100",
+          "local_amount_out": "98",
+          "quoter_amount_out": "98",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000",
+          "local_amount_out": null,
+          "status": "quoter_error",
+          "error": "execution reverted",
+          "rpc_code": 3
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100",
+          "local_amount_out": "99",
+          "quoter_amount_out": "99",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000",
+          "local_amount_out": "9991",
+          "quoter_amount_out": "9991",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000",
+          "local_amount_out": "999224",
+          "quoter_amount_out": "999224",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 6,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 2
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0x6096a9c56b72512008a3ac63682057aadb38d9c234bd131e1c1e270b8e03a920",
+          "token0": "0x25fdc675e6045f7279cbf0dae98ff746d55fa273",
+          "token1": "0xe169c0cad1f9e5884c30db1976a39ebc40f8865f",
+          "fee_pips": 500,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "52202193511689853294199826024",
+        "tick": -8345,
+        "liquidity": "48300811924902437805",
+        "tick_spacing": 60,
+        "lp_fee": 500,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -61440,
+          "hi": 46079,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "433911469115",
+          "quoter_amount_out": "433911469115",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "43391088341859",
+          "quoter_amount_out": "43391088341859",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "4338523216661994",
+          "quoter_amount_out": "4338523216661994",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "428074910253008729",
+          "quoter_amount_out": "428074910253008729",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "2302313435133",
+          "quoter_amount_out": "2302313435133",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "230230627670835",
+          "quoter_amount_out": "230230627670835",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "23015906589393563",
+          "quoter_amount_out": "23015906589393563",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "2232207730516143459",
+          "quoter_amount_out": "2232207730516143459",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0x703410325283cffc755fee1134a6f3661b19ff099717316d4de2eadecaa19999",
+          "token0": "0x2a1bce657f919ac3f9ab50b2584cfc77563a02ec",
+          "token1": "0x4e7942a72dcfcc72fa0872068b0dba3921c1bb8a",
+          "fee_pips": 3000,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "458986868546572426377288443232",
+        "tick": 35135,
+        "liquidity": "3000000000000000000",
+        "tick_spacing": 60,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -15360,
+          "hi": 92159,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "33460750380682",
+          "quoter_amount_out": "33460750380682",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "3345437388829818",
+          "quoter_amount_out": "3345437388829818",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "328287681041708461",
+          "quoter_amount_out": "328287681041708461",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "11438488028466824733",
+          "quoter_amount_out": "11438488028466824733",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "29706656841",
+          "quoter_amount_out": "29706656841",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "2970648813238",
+          "quoter_amount_out": "2970648813238",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "296896268473844",
+          "quoter_amount_out": "296896268473844",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "28094967613990406",
+          "quoter_amount_out": "28094967613990406",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0xb4b5f78f96398c84faab4d72f0032622ea8cbb0061af732d4ee3f45e86a912dd",
+          "token0": "0x20c69c12abf2b6f8d8ca33604dd25c700c7e70a5",
+          "token1": "0x21c97338b1ea81a0b49930483c70d5b79abcf041",
+          "fee_pips": 3000,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "2433749629670189890034946976304",
+        "tick": 68500,
+        "liquidity": "10978297617461452977",
+        "tick_spacing": 60,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": 15360,
+          "hi": 122879,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "940776750634673",
+          "quoter_amount_out": "940776750634673",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "94051699970795824",
+          "quoter_amount_out": "94051699970795824",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "9152467957815322760",
+          "quoter_amount_out": "9152467957815322760",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "248246831385212887960",
+          "quoter_amount_out": "248246831385212887960",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "1056580345",
+          "quoter_amount_out": "1056580345",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "105658003611",
+          "quoter_amount_out": "105658003611",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "10565491126152",
+          "quoter_amount_out": "10565491126152",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "1053465877300062",
+          "quoter_amount_out": "1053465877300062",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0xc400a6a7836177bc2130846fc56ff1c995230d4af1fe2c682011f2d895a94d24",
+          "token0": "0x20c69c12abf2b6f8d8ca33604dd25c700c7e70a5",
+          "token1": "0x2a1bce657f919ac3f9ab50b2584cfc77563a02ec",
+          "fee_pips": 3000,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "427492737926922839348596471745",
+        "tick": 33713,
+        "liquidity": "4303663734406428479",
+        "tick_spacing": 60,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -15360,
+          "hi": 92159,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "29026383638220",
+          "quoter_amount_out": "29026383638220",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "2902279210549322",
+          "quoter_amount_out": "2902279210549322",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "286680723397708256",
+          "quoter_amount_out": "286680723397708256",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "12900697539359725585",
+          "quoter_amount_out": "12900697539359725585",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "34244972684",
+          "quoter_amount_out": "34244972684",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "3424482712604",
+          "quoter_amount_out": "3424482712604",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "342302775137738",
+          "quoter_amount_out": "342302775137738",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "32835206873947372",
+          "quoter_amount_out": "32835206873947372",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0xd8797155ba8d2306a57a1709da6cda2552817a44df3369f0fb2a08b5972a9a0d",
+          "token0": "0x20c69c12abf2b6f8d8ca33604dd25c700c7e70a5",
+          "token1": "0x75e7a5316e44755ff4ad724ee45337d1eef6895e",
+          "fee_pips": 3000,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "938650121905890344094059730487",
+        "tick": 49444,
+        "liquidity": "25171345344874859274",
+        "tick_spacing": 60,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": 0,
+          "hi": 107519,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "139940450867777",
+          "quoter_amount_out": "139940450867777",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "13993395000540869",
+          "quoter_amount_out": "13993395000540869",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "1392868998067384852",
+          "quoter_amount_out": "1392868998067384852",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "95245622503450844409",
+          "quoter_amount_out": "95245622503450844409",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "7103082232",
+          "quoter_amount_out": "7103082232",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "710307988197",
+          "quoter_amount_out": "710307988197",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "71028447931728",
+          "quoter_amount_out": "71028447931728",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "7079414238302253",
+          "quoter_amount_out": "7079414238302253",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0xeb552157e7906ba537304675abf3a7637e604f5e8da76bfbb6450dc3571b0d8f",
+          "token0": "0x21c97338b1ea81a0b49930483c70d5b79abcf041",
+          "token1": "0x75e7a5316e44755ff4ad724ee45337d1eef6895e",
+          "fee_pips": 3000,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "30089433526016350684931095764",
+        "tick": -19365,
+        "liquidity": "451619001651412650022",
+        "tick_spacing": 60,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -76800,
+          "hi": 30719,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000",
+          "local_amount_out": "143801697850",
+          "quoter_amount_out": "143801697850",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100000000000000",
+          "local_amount_out": "14380168591473",
+          "quoter_amount_out": "14380168591473",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "1438004923309475",
+          "quoter_amount_out": "1438004923309475",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "143681233929882765",
+          "quoter_amount_out": "143681233929882765",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000",
+          "local_amount_out": "6912359229727",
+          "quoter_amount_out": "6912359229727",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100000000000000",
+          "local_amount_out": "691235525186509",
+          "quoter_amount_out": "691235525186509",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000000000000000",
+          "local_amount_out": "69119574887349529",
+          "quoter_amount_out": "69119574887349529",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000000000000000",
+          "local_amount_out": "6872411029919489485",
+          "quoter_amount_out": "6872411029919489485",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    },
+    {
+      "chain_id": 57073,
+      "snapshot": {
+        "venue": "uniswap_v4",
+        "pool": {
+          "address": "0xebe217f32c62f1d4d7ec6d6db482e4e3283e33b327b48e8b8c8bebf61c839e71",
+          "token0": "0x0200c29006150606b650577bbe7b6248f58470c1",
+          "token1": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "fee_pips": 3000,
+          "tick_spacing": 60,
+          "hooks": "0x0000000000000000000000000000000000000000"
+        },
+        "block_number": 59198585,
+        "block_hash": "0x8c832a0ac0414b83c41e3d13fed7336c227610d26400aa6e7eec26c479cb6b7d",
+        "sqrt_price_x96": "79252375299585525008537781946",
+        "tick": 6,
+        "liquidity": "1514153",
+        "tick_spacing": 60,
+        "lp_fee": 3000,
+        "protocol_fee": 0,
+        "tick_window": {
+          "lo": -46080,
+          "hi": 61439,
+          "liquidity_net": {}
+        }
+      },
+      "points": [
+        {
+          "zero_for_one": true,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "100",
+          "local_amount_out": "99",
+          "quoter_amount_out": "99",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "10000",
+          "local_amount_out": "9908",
+          "quoter_amount_out": "9908",
+          "status": "match"
+        },
+        {
+          "zero_for_one": true,
+          "amount_in": "1000000",
+          "local_amount_out": "601455",
+          "quoter_amount_out": "601455",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1",
+          "local_amount_out": "0",
+          "quoter_amount_out": "0",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "100",
+          "local_amount_out": "98",
+          "quoter_amount_out": "98",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "10000",
+          "local_amount_out": "9898",
+          "quoter_amount_out": "9898",
+          "status": "match"
+        },
+        {
+          "zero_for_one": false,
+          "amount_in": "1000000",
+          "local_amount_out": "600867",
+          "quoter_amount_out": "600867",
+          "status": "match"
+        }
+      ],
+      "summary": {
+        "match": 8,
+        "difference": 0,
+        "not_fully_modeled": 0,
+        "quoter_error": 0
+      },
+      "warning": "Parity only for sampled full fills within the loaded tick window. Partial fills, exhausted liquidity, and unsupported fees are not extrapolated. No live signal or execution permission."
+    }
+  ]
+}

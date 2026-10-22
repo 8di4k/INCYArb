@@ -984,3 +984,31 @@ USDC.e (1243 полных quotes). Положительного gross PnL на �
 Повтор 12 двухшаговых WETH quotes на историческом block 59197217 дал ноль
 различий. Свежий 20-секундный subblock capture: 18 завершённых payload,
 18/18 sealed-verified, invalid=0. 86 Python-тестов проходят.
+
+## 27. Локальная CL-модель с on-chain parity
+
+Перенесена целочисленная exact-input математика из Arbitr (source commit
+7b3ee78bed6d3620f00163b73dbbbe7bcc26ee69). Модель читает bitmap и initialized
+liquidity net/gross на pinned block: Slipstream через pool methods, v4 через
+StateView. Направленная protocol fee комбинируется с LP fee как в v4 core.
+Пустые границы bitmap words сохранены в итерации, чтобы не пропускать
+промежуточное округление SwapMath. Учтён overflow fallback SqrtPriceMath.
+
+На block 59198585 проверены 9 Slipstream и 9 static zero-hook v4 пулов:
+по четыре размера в каждом направлении, всего 144 попытки. Получены
+130 точных совпадений, 0 различий и 14 ошибок самого Quoter. Ошибки не
+объявляются совпадениями. Все 130 численных reference points повторяются
+локально в регрессионном тесте.
+Артефакт: `docs/validation/cl-parity-59198585.json`.
+
+Отдельная проверка USDt0/oUSDT на block 59195678 показывает предел модели:
+из 6 размеров 3 совпали, а 3 получили `not_fully_modeled`. On-chain Quoter
+возвращает частичный выход после исчерпания ликвидности; модель полного fill
+не экстраполирует результат за известный/исполнимый диапазон.
+Артефакт: `docs/validation/cl-partial-fill-59195678.json`.
+
+Warm-cache CPU проверка 13000 локальных quotes заняла 0,1208 секунды,
+около 9,29 микросекунды на quote в этой среде. Это измерение чистой математики,
+без доставки subblocks, обновления состояний, поиска циклов и симуляции.
+98 Python-тестов проходят. Следующая интеграция — применение ordered logs
+и проверка состояния на sealed boundary перед использованием модели.

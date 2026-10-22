@@ -15,6 +15,7 @@ from .v4_state import V4StateConfig, snapshot_v4_state
 from .research import CycleScanConfig, ThreeHopConfig, TwoHopConfig, scan_cycles, scan_three_hop, scan_two_hop_slipstream
 from .flash_credit import FlashCapacityConfig, snapshot_flash_capacity
 from .simulation import simulate_scan
+from .cl_snapshot import check_scan_cl_parity
 
 
 def _start_amount(value: str) -> tuple[str, int]:
@@ -122,6 +123,15 @@ def main() -> int:
     simulation.add_argument("--gas-margin-bps", type=int, default=2000)
     simulation.add_argument("--max-fee-per-gas", type=int, help="wei; defaults to twice the pinned base fee plus priority")
     simulation.add_argument("--priority-fee-per-gas", type=int, default=0, help="wei")
+    cl = subparsers.add_parser("cl-parity", help="compare local CL tick arithmetic with a pinned on-chain Quoter")
+    cl.add_argument("--scan", type=Path, required=True)
+    cl.add_argument("--finding", type=int, default=0)
+    cl.add_argument("--step", type=int, default=0)
+    cl.add_argument("--amount0", type=int, action="append", required=True, help="raw token0 input; repeat to cover several sizes")
+    cl.add_argument("--amount1", type=int, action="append", required=True, help="raw token1 input; repeat to cover several sizes")
+    cl.add_argument("--words-around", type=int, default=3)
+    cl.add_argument("--rpc-url", default=INK_RPC)
+    cl.add_argument("--output", type=Path)
     flash = subparsers.add_parser("flash-capacity", help="snapshot PoolManager token balances at one sealed block")
     flash.add_argument("--token", action="append", required=True)
     flash.add_argument("--output", type=Path, default=FlashCapacityConfig.output)
@@ -190,6 +200,11 @@ def main() -> int:
                 gas_margin_bps=args.gas_margin_bps, max_fee=args.max_fee_per_gas,
                 priority_fee=args.priority_fee_per_gas,
             ))
+        elif args.command == "cl-parity":
+            result = asyncio.run(check_scan_cl_parity(
+                json.loads(args.scan.read_text()), args.rpc_url, args.finding, args.step,
+                tuple(args.amount0), tuple(args.amount1), args.words_around,
+            ))
         else:
             flash_result = asyncio.run(snapshot_flash_capacity(
                 FlashCapacityConfig(tuple(args.token), args.output, args.rpc_url)
@@ -198,10 +213,13 @@ def main() -> int:
                       "balances": flash_result["balances"]}
     except KeyboardInterrupt:
         return 130
-    if args.command in ("scan-cycles", "simulate-cycle") and args.output:
+    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity") and args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2) + "\n")
-        print({"output": str(args.output), "status": result.get("status"), "findings": len(result.get("findings", []))})
+        if "summary" in result:
+            print({"output": str(args.output), "summary": result["summary"]})
+        else:
+            print({"output": str(args.output), "status": result.get("status"), "findings": len(result.get("findings", []))})
     else:
         print(result)
     return 0
