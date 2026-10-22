@@ -71,6 +71,11 @@ RPC `debug_traceTransaction` через проверенный endpoint был �
 
 ## Как продолжать поиск
 
+[Расширенный проход](Executor-routing-expanded-Ink.md) добавляет 500 вызовов
+пяти исполнителей, 31 трассу и декодирование CoW → 0x → InkSettler, включая
+ещё 50 прямых вызовов AllowanceHolder. Новая доступная оракульная сторона
+в этой выборке не подтверждена; описаны границы выборки и динамические комиссии.
+
 Дополнительный отбор без стандартных AMM Swap events уже дал
 [исполненный xChange RFQ и точный AtomicSwap deployment](Xchange-observed-Ink.md).
 Это технически подтверждённая RFQ-сторона с allowlist, не публичный oracle edge.
