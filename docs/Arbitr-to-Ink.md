@@ -1012,3 +1012,20 @@ Warm-cache CPU проверка 13000 локальных quotes заняла 0,1
 без доставки subblocks, обновления состояний, поиска циклов и симуляции.
 98 Python-тестов проходят. Следующая интеграция — применение ordered logs
 и проверка состояния на sealed boundary перед использованием модели.
+
+
+## 28. Canonical receipt logs как вход replay
+
+Проверка только transaction hashes недостаточна как явная проверка данных
+receipt logs. Observer теперь по умолчанию получает sealed block receipts,
+сверяет status/type/cumulativeGasUsed и ordered log contents для каждого
+raw transaction, проверяет block hash/index и повторно читает hash после
+receipts. Ошибка endpoint не превращается в hash-only успех. Явный opt-out
+сохраняет `receipt_verification.verified=false`, поэтому не годится для
+подтверждённого replay. Лишние receipt keys без соответствующих raw tx запрещены.
+
+Live blocks 59199202–59199220: 19/19 payload полностью verified, 69 transactions,
+74 logs. Артефакты `docs/validation/verified-receipts-2026-10-22.json` и `.jsonl.gz`
+содержат счётчики и hashes. 119 Python-тестов покрывают подменённые/пропущенные
+receipts, metadata mismatch, порядок и содержимое logs, невозможные logs
+неуспешной транзакции, RPC failure, opt-out и reorg.

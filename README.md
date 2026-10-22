@@ -18,7 +18,7 @@ cd /workspace/INCYArb
 
 Параметр `--duration 0` оставляет observer работать до `Ctrl-C`. Файл JSONL
 содержит исходные stream messages, вычисленные keccak-хэши транзакций,
-результат sealed-сверки и причину любой неполноты. Его можно использовать как
+результат sealed-сверки транзакций/receipt logs и причину любой неполноты. Его можно использовать как
 вход будущего replay, но запись с `verified: false` не годится как основа для
 торгового решения.
 
@@ -382,3 +382,22 @@ on-chain значений включены в регрессионные тес�
 [cl-parity-59198585.json](docs/validation/cl-parity-59198585.json).
 Это база для локального поиска по subblocks; обновление модели по их логам
 остаётся следующим слоем.
+
+
+## Проверка receipt logs перед replay
+
+Observer по умолчанию сверяет receipts через `eth_getBlockReceipts`: status,
+type, cumulativeGasUsed, порядок и содержимое логов каждого raw transaction.
+Проверяются transaction index, номер/hash блока и неизменность sealed hash
+после чтения receipts. Лишние receipts без raw transaction, неполные данные,
+ошибка RPC или заменённый блок исключают `verified: true`.
+
+`receipt_verification` хранит отдельный результат и счётчики. Для будущего
+replay логов требуется именно `receipt_verification.verified`, а не только
+совпадение transaction hashes. Старые captures без этого поля не подтверждают
+логи. `--skip-receipt-verification` явно оставляет только hash/header сверку;
+такой capture сохраняет `requested: false, verified: false` для receipts.
+
+Свежая проверка blocks 59199202–59199220: 19 payload, 69 transactions,
+74 logs — все 19 прошли полную сверку. Сжатый capture и SHA-256 summary:
+[verified-receipts-2026-10-22.json](docs/validation/verified-receipts-2026-10-22.json).

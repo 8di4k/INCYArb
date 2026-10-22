@@ -1,4 +1,5 @@
 """Read-only Ink subblock capture and sealed verification."""
+
 from __future__ import annotations
 
 import asyncio
@@ -12,7 +13,7 @@ from typing import Any
 import websockets
 
 from .rpc import ReadOnlyRpc, RpcError
-from .subblocks import Payload, PayloadCollector, verify_sealed
+from .subblocks import Payload, PayloadCollector, verify_receipts, verify_sealed
 
 LOG = logging.getLogger(__name__)
 INK_SUBBLOCKS = "wss://subblocks.inkonchain.com/ws"
@@ -25,6 +26,7 @@ class ObserverConfig:
     rpc_url: str = INK_RPC
     duration_seconds: float = 60.0
     output: Path = Path("data/ink-subblocks.jsonl")
+    verify_receipt_logs: bool = True
 
 
 async def observe(config: ObserverConfig) -> dict[str, int]:
@@ -33,7 +35,7 @@ async def observe(config: ObserverConfig) -> dict[str, int]:
     collector = PayloadCollector()
     finished: set[asyncio.Task[dict[str, Any]]] = set()
     verify_slots = asyncio.Semaphore(2)
-    captured = verified = invalid = 0
+    captured = verified = invalid = receipts_verified = 0
     start = time.monotonic()
 
     async with ReadOnlyRpc(config.rpc_url) as rpc:
@@ -41,7 +43,11 @@ async def observe(config: ObserverConfig) -> dict[str, int]:
             async with websockets.connect(config.websocket_url, max_size=None, ping_interval=20, ping_timeout=20) as ws:
                 LOG.info("connected to Ink subblocks")
                 while config.duration_seconds == 0 or time.monotonic() - start < config.duration_seconds:
-                    remaining = None if config.duration_seconds == 0 else max(0.1, config.duration_seconds - (time.monotonic() - start))
+                    remaining = (
+                        None
+                        if config.duration_seconds == 0
+                        else max(0.1, config.duration_seconds - (time.monotonic() - start))
+                    )
                     try:
                         raw = await asyncio.wait_for(ws.recv(), timeout=remaining)
                     except TimeoutError:
@@ -52,13 +58,18 @@ async def observe(config: ObserverConfig) -> dict[str, int]:
                         LOG.warning("discarded malformed JSON stream message")
                         continue
                     for payload in collector.add(message):
-                        finished.add(asyncio.create_task(_verify_and_record(payload, rpc, output, verify_slots)))
+                        finished.add(
+                            asyncio.create_task(
+                                _verify_and_record(payload, rpc, output, verify_slots, config.verify_receipt_logs)
+                            )
+                        )
                     done = {task for task in finished if task.done()}
                     for task in done:
                         record = task.result()
                         captured += 1
                         verified += int(record["sealed_verification"]["verified"])
                         invalid += int(not record["valid"])
+                        receipts_verified += int(record["receipt_verification"]["verified"])
                     finished -= done
 
             for task in asyncio.as_completed(finished):
@@ -66,9 +77,11 @@ async def observe(config: ObserverConfig) -> dict[str, int]:
                 captured += 1
                 verified += int(record["sealed_verification"]["verified"])
                 invalid += int(not record["valid"])
+                receipts_verified += int(record["receipt_verification"]["verified"])
 
     return {
         "captured": captured,
+        "receipts_verified": receipts_verified,
         "verified": verified,
         "invalid": invalid,
         "ignored_partial_messages": collector.ignored_partial_messages,
@@ -76,17 +89,38 @@ async def observe(config: ObserverConfig) -> dict[str, int]:
 
 
 async def _verify_and_record(
-    payload: Payload, rpc: ReadOnlyRpc, output: Any, verify_slots: asyncio.Semaphore
+    payload: Payload,
+    rpc: ReadOnlyRpc,
+    output: Any,
+    verify_slots: asyncio.Semaphore,
+    verify_receipt_logs: bool = True,
 ) -> dict[str, Any]:
+    receipt_verification: dict[str, Any] = {"requested": verify_receipt_logs, "verified": False, "differences": []}
     try:
         async with verify_slots:
             sealed = await rpc.sealed_block(payload.block_number)
             verification = verify_sealed(payload, sealed)
+            verification["transaction_order_verified"] = verification["verified"]
+            if verify_receipt_logs and verification["verified"]:
+                if not sealed or not sealed.get("hash"):
+                    raise RpcError("sealed block hash unavailable for receipt verification")
+                receipts = await rpc.block_receipts(payload.block_number)
+                receipt_verification = verify_receipts(payload, receipts, sealed["hash"])
+                after = await rpc.sealed_block(payload.block_number)
+                if not after or after.get("hash") != sealed["hash"]:
+                    receipt_verification["verified"] = False
+                    receipt_verification["differences"].append("sealed block changed during receipt reads")
+                verification["verified"] = receipt_verification["verified"]
+                if not receipt_verification["verified"]:
+                    verification["differences"].append("sealed receipt verification failed")
     except RpcError as exc:
         verification = {"verified": False, "differences": [f"RPC error: {exc}"]}
+        if verify_receipt_logs:
+            receipt_verification["differences"].append(f"RPC error: {exc}")
     record = payload.record()
     record["captured_at_unix"] = time.time()
     record["sealed_verification"] = verification
+    record["receipt_verification"] = receipt_verification
     output.write(json.dumps(record, separators=(",", ":"), ensure_ascii=False) + "\n")
     output.flush()
     return record
