@@ -71,6 +71,10 @@ RPC `debug_traceTransaction` через проверенный endpoint был �
 
 ## Как продолжать поиск
 
+Дополнительный отбор без стандартных AMM Swap events уже дал
+[исполненный xChange RFQ и точный AtomicSwap deployment](Xchange-observed-Ink.md).
+Это технически подтверждённая RFQ-сторона с allowlist, не публичный oracle edge.
+
 Фильтр «два стандартных Swap» — только начальный seed. Он может пропустить
 самые нужные oracle↔AMM и oracle↔oracle круги, если площадка не публикует
 такие события. Следующий проход должен включать один AMM swap плюс неизвестный
