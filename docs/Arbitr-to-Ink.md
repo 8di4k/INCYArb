@@ -873,3 +873,32 @@ callback и settlement для проверенных путей, но не по�
 прибыльный V2-круг на детерминированных mocks, выплату, нулевые дельты,
 убыточный откат, v4-first без стартового баланса, minProfit,
 pause/expiry, недопустимые callbacks, overpay и повторный callback.
+
+
+## 22. Бюджет L2 + L1 + operator fee
+
+Поддержка fee methods сверена с верифицированной реализацией Ink GasPriceOracle
+`0x547d0fba434877d7237d511cf87fabe2ee26b152` за predeploy
+`0x420000000000000000000000000000000000000f`.
+`getL1FeeUpperBound` принимает размер unsigned RLP-транзакции и сам добавляет
+68 байт на подпись. Его fastlz bound статистический (в коде указано 99,99%),
+поэтому результат не является безусловной гарантией будущей оплаты.
+`getOperatorFee` использует актуальные chain/hardfork параметры; ноль допустим
+только после успешного чтения, а не как fallback при ошибке.
+
+В `simulate-cycle` добавлены полная оценка газа с запасом и fee budget на
+том же sealed block. WETH gross можно сопоставить с native budget напрямую;
+для других токенов нужен проверенный источник valuation. Без него результат
+остаётся `start_token_valuation_required`.
+
+Живая проверка fee methods на блоке `59195678`: при условном лимите
+300000 gas и calldata исследованного цикла unsigned envelope занимает 182 байта.
+Base fee — 282 wei/gas, max fee — 564 wei/gas; L2 budget — 169200000 wei,
+L1 upper estimate — 3749259698 wei, operator fee — 0. Всего — 3918459698 wei.
+Это **проверка fee RPC с явно заданным условным gas limit**, а не измерение газа
+успешного круга: исследованный рыночный маршрут убыточен и откатывается.
+Артефакт: `docs/validation/fee-budget-59195678.json`.
+
+66 Python-тестов покрывают транзакционный envelope, signature allowance,
+сложение всех частей комиссии, единицы WETH/ETH и отказ от смешивания stablecoin
+raw units с ETH wei; отсутствующие данные и reorg не дают положительного net.

@@ -13,6 +13,7 @@ dependencies = [
   "eth-utils>=4.0",
   "eth-hash[pycryptodome]>=0.7",
   "websockets>=12",
+  "rlp>=4.0",
 ]
 
 [project.optional-dependencies]
