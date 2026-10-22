@@ -1127,3 +1127,37 @@ allowance, future fees и inclusion сохраняют ограничения о
 Captures: `native-content-fees-59200457.json`, `native-fee-sensitivity-59200457.json`.
 175 Python-тестов проходят, включая недоступный content method и запрет
 повышать отрицательный основной net status по положительной дополнительной оценке.
+
+
+## 33. DyorSwap: проверенная комиссия конкретного runtime
+
+Для pair runtime hash `e21efb434c9e1a20cdd4d9df255bcade55c20e175c5d23b27f7fc3290ca96ef1`
+подтверждён 30 bps invariant: PC 0xda5..0xe40 использует множители
+30, 10000 и 100000000. Общий runtime содержит дополнительную WETH/factory
+логику, поэтому одного утверждения о совместимости V2 недостаточно.
+На block 59202817 code обоих основных USDt0/WETH и WETH/USDC.e пулов совпал.
+11 полных EVM routes в обоих направлениях и трёх размерах точно совпали
+с constant-product моделью. Все убыточны. Три understating controls при
+29 bps вернули `Dyor: K`. Один крупный stable input и его контроль не прошли
+по балансу PoolManager; они не подтверждают fee model.
+
+Inventory теперь читает code recent/nonzero Dyor pairs, присваивает 30 bps
+только известному hash и сохраняет runtime evidence. Scan повторно проверяет
+code на новом quote block, simulation — на своём sealed block. Неизвестные
+реализации не получают fee. Venue `dyorswap_v2` использует существующий V2
+executor kind=4; token risk/full simulation остаются обязательны. Торговой
+политики или автоматического допуска всех 447 pairs не добавлено.
+Inventory также проверяет Ink chain ID, hash после всех reads и сохраняет hash.
+
+Fresh inventory block 59203033: 447 Dyor pairs, 346 nonzero, 19 recent
+(окно 86400 seconds), все 19 runtime-recognized. Локальный preliminary
+core study: 6 пулов, 8 циклов с Dyor, 0 positive gross.
+Архивы `dyor-fee-parity-59202817.json[.gz]` и
+`dyor-inventory-59203033.json[.gz]` в docs/validation.
+190 Python- и 16 Solidity-тестов проходят. Новые tests проверяют code hash,
+несовпадение сети/блока, исключение unknown runtime, повторную проверку при
+scan/simulation, unchanged executor encoding и независимые EVM reference values.
+
+Обычный `scan-cycles` на block 59203114 проверил 22 двухшаговых WETH цикла
+при input 10^14 wei, включая 10 с DyorSwap: все 22 получили quote,
+положительных gross нет. Capture: `docs/validation/dyor-inclusive-twohop-59203114.json[.gz]`.

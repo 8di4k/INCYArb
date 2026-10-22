@@ -48,8 +48,8 @@ Velodrome V2, Slipstream, Uniswap V2 и DyorSwap. Для V2 сохраняютс
 умолчанию — не старше часа); для Slipstream —
 `has_positive_liquidity`. Эти поля не являются оценкой глубины, экономической
 пригодности или гарантией quote parity. Uniswap V2 использует подтверждённые
-30 bps; DyorSwap остаётся inventory-only, пока его fork-specific fee не
-подтверждён. v4 намеренно не включён в этот вывод: у
+30 bps; DyorSwap включается в research только для распознанного runtime hash
+с проверенной 30 bps моделью, остальные реализации остаются inventory-only. v4 намеренно не включён в этот вывод: у
 PoolManager нет перечисления пулов, поэтому для него нужен checkpointed crawler
 `Initialize` events.
 
@@ -520,3 +520,34 @@ content estimate 2050105091 wei. Net с исходным simulation address со
 реальный доход, доступность включения и окупаемость deployment не подтверждены.
 Артефакты: [EVM и оба fee расчёта](docs/validation/native-content-fees-59200457.json),
 [чувствительность к адресу и nonce](docs/validation/native-fee-sensitivity-59200457.json).
+
+
+## DyorSwap: runtime-scoped 30 bps
+
+Inventory распознаёт известную DyorSwap pair реализацию по Keccak runtime:
+`0xe21efb434c9e1a20cdd4d9df255bcade55c20e175c5d23b27f7fc3290ca96ef1`.
+Её invariant использует `balance * 10000 - amountIn * 30`. Code читается
+на том же sealed block; только непустые recent pairs с этим hash получают
+`fee_bps=30`. Неизвестный runtime остаётся без fee и исключается из research.
+Новый inventory проверяет chain ID/hash и сохраняет block hash.
+
+`scan-cycles` и `scan-three-hop` принимают venue `dyorswap_v2`, повторно проверяя
+runtime на quote block. `simulate-cycle` проверяет его ещё раз и использует
+существующий V2 kind=4. Отдельный contract adapter не добавлялся.
+Это research support; token transfer taxes и нестандартные transfers требуют
+полной симуляции. Политика торгового allowlist автоматически не расширяется.
+Старые inventory без runtime evidence нужно обновить через `inventory`.
+
+На block 59202817 два основных DyorSwap пула имеют одинаковый подтверждённый
+runtime. 11 full-route EVM результатов в обоих направлениях и трёх размерах
+точно совпали с расчётом; они убыточны. Три отрицательных контроля с 29 bps
+отклонились с `Dyor: K`. Недостаточное funding в одном дополнительном размере
+не засчитано как подтверждение. Артефакт:
+[dyor-fee-parity-59202817](docs/validation/dyor-fee-parity-59202817.json).
+Свежий inventory block 59203033: 447 DyorSwap pairs, 19 recent/nonzero;
+все 19 имеют распознанный runtime:
+[dyor-inventory-59203033](docs/validation/dyor-inventory-59203033.json).
+
+Обычный `scan-cycles` на block 59203114 проверил 22 двухшаговых WETH цикла
+при input 10^14 wei, включая 10 с DyorSwap: все 22 получили quote,
+положительных gross нет. Capture: `docs/validation/dyor-inclusive-twohop-59203114.json[.gz]`.
