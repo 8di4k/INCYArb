@@ -13,6 +13,7 @@ from typing import Any
 import websockets
 
 from .rpc import ReadOnlyRpc, RpcError
+from .timing import payload_timing
 from .subblocks import Payload, PayloadCollector, verify_receipts, verify_sealed
 
 LOG = logging.getLogger(__name__)
@@ -50,6 +51,7 @@ async def observe(config: ObserverConfig) -> dict[str, int]:
                     )
                     try:
                         raw = await asyncio.wait_for(ws.recv(), timeout=remaining)
+                        received_monotonic, received_at_unix = time.monotonic(), time.time()
                     except TimeoutError:
                         break
                     try:
@@ -57,7 +59,13 @@ async def observe(config: ObserverConfig) -> dict[str, int]:
                     except json.JSONDecodeError:
                         LOG.warning("discarded malformed JSON stream message")
                         continue
-                    for payload in collector.add(message):
+                    completed = collector.add(message)
+                    active = collector.active_payload
+                    if active and active.messages and active.messages[-1] is message:
+                        active.message_timings.append({"index": message["index"],
+                                                       "received_monotonic": received_monotonic,
+                                                       "received_at_unix": received_at_unix})
+                    for payload in completed:
                         finished.add(
                             asyncio.create_task(
                                 _verify_and_record(payload, rpc, output, verify_slots, config.verify_receipt_logs)
@@ -95,9 +103,11 @@ async def _verify_and_record(
     verify_slots: asyncio.Semaphore,
     verify_receipt_logs: bool = True,
 ) -> dict[str, Any]:
+    queued, started = time.monotonic(), None
     receipt_verification: dict[str, Any] = {"requested": verify_receipt_logs, "verified": False, "differences": []}
     try:
         async with verify_slots:
+            started = time.monotonic()
             sealed = await rpc.sealed_block(payload.block_number)
             verification = verify_sealed(payload, sealed)
             verification["transaction_order_verified"] = verification["verified"]
@@ -118,6 +128,7 @@ async def _verify_and_record(
         if verify_receipt_logs:
             receipt_verification["differences"].append(f"RPC error: {exc}")
     record = payload.record()
+    record["timing"] = payload_timing(payload, queued, started, time.monotonic())
     record["captured_at_unix"] = time.time()
     record["sealed_verification"] = verification
     record["receipt_verification"] = receipt_verification

@@ -1230,3 +1230,31 @@ Captures: `subblock-search-baseline-59203420.json[.gz]`,
 `paper-peak-evm-59203443.json` в docs/validation. 218 Python-тестов проходят,
 включая сравнение incremental/full search, независимый EVM peak reference,
 обнаружение несовместимых snapshots, gaps, duplicates и endpoint tampering.
+
+
+## 36. Receive-time измерения observer
+
+`observe` сохраняет локальное receive UTC/monotonic сразу после ws.recv и до
+parse, отдельно от исходного stream message. Тiming охватывает inter-arrival,
+payload span, verification queue wait, verification work и завершение сверки
+после последнего arrival. Неполные/malformed timings не создают выдуманных
+интервалов и не меняют canonical verdict; старые captures остаются без arrival
+measurement. `capture-timing` выдаёт median/p95/min/max со счётчиками samples.
+Header timestamp deltas не объявляются сетевой latency: серверный emission
+clock неизвестен, block timestamps могут опережать локальный arrival.
+
+Новый sample requested duration 20 s дал 15/15 verified payloads:
+median inter-arrival 0,195535 s; arrival span 0,805352 s;
+verification queue 0,405894 s; verification work 2,012753 s;
+complete-after-last-arrival 2,605375 s median, 27,111974 s max.
+Work max 26,399294 s включает RPC/retries/rate waits, не только CPU.
+Первое arrival минус header median −0,912378 s, последнее −0,106872 s;
+это clock/timestamp scheduling observation, не отрицательная network latency.
+Полный timed capture и SHA-256 summary: `observer-timing-2026-10-22.jsonl.gz`
+и `.json` в docs/validation.
+
+Для одно-блочных возможностей full sealed verification слишком поздняя часть
+pipeline. Нужен provisional paper receive path с последующей canonical сверкой;
+реальное исполнение и profitability из этого timing sample не следуют.
+228 Python-тестов проходят, включая UTC jump при monotonic интервалах,
+malformed/missing timing, сохранность raw messages и совместимость старых captures.

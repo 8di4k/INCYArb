@@ -1,0 +1,67 @@
+{
+  "source": "local_observer_timing_summary",
+  "summary": {
+    "records": 15,
+    "complete_timing_records": 15,
+    "canonical_verified_records": 15,
+    "receipt_verified_records": 15
+  },
+  "seconds": {
+    "payload_arrival_span_seconds": {
+      "samples": 15,
+      "minimum": 0.6268352810002398,
+      "median": 0.8053517820007983,
+      "p95": 1.179606622999927,
+      "maximum": 1.179606622999927
+    },
+    "first_arrival_minus_header_seconds": {
+      "samples": 15,
+      "minimum": -0.9175646305084229,
+      "median": -0.9123775959014893,
+      "p95": -0.7330429553985596,
+      "maximum": -0.7330429553985596
+    },
+    "last_arrival_minus_header_seconds": {
+      "samples": 15,
+      "minimum": -0.1122128963470459,
+      "median": -0.1068720817565918,
+      "p95": 0.26691603660583496,
+      "maximum": 0.26691603660583496
+    },
+    "verification_queue_wait_seconds": {
+      "samples": 15,
+      "minimum": 1.0589999874355271e-05,
+      "median": 0.40589433799868857,
+      "p95": 0.5179154870002094,
+      "maximum": 0.5179154870002094
+    },
+    "verification_work_seconds": {
+      "samples": 15,
+      "minimum": 1.993661587999668,
+      "median": 2.012753311000779,
+      "p95": 26.399293781998495,
+      "maximum": 26.399293781998495
+    },
+    "verification_complete_after_last_arrival_seconds": {
+      "samples": 15,
+      "minimum": 2.3299249909996433,
+      "median": 2.6053748860013,
+      "p95": 27.111973986999146,
+      "maximum": 27.111973986999146
+    },
+    "inter_arrival_seconds": {
+      "samples": 75,
+      "minimum": 7.452600038959645e-05,
+      "median": 0.19553502099915931,
+      "p95": 0.26833949600040796,
+      "maximum": 0.9657261199990899
+    }
+  },
+  "warning": "Local receive/processing measurements only. No sequencer emission timestamp, clock-sync calibration, one-way network latency, trade execution, or profitability measurement.",
+  "file": "observer-timing-2026-10-22.jsonl.gz",
+  "sha256": "1744a398596554c2b33108e31ebe78869f9034fd1aee80c41ff7ccd7d257ac24",
+  "raw_sha256": "0347ade40c91f41fbf3810b4f4fe88fecaa46f56fe6f6e10a89ad9fde2a00bd1",
+  "requested_duration_seconds": 20,
+  "first_block": 59204307,
+  "last_block": 59204321
+}
