@@ -427,3 +427,37 @@ swap создаёт дельту без физического займа, вк�
 работают только с ERC-20. Финальная native прибыль уходит непосредственно на
 beneficiary. Executor не получает ETH, wrap/unwrap шаги не добавлялись.
 Полный hypothetical вызов по-прежнему не требует деплоя или подписи.
+
+
+## Локальный подбор объёма v4
+
+`local-v4-scan` загружает ограниченное окно CL ticks на одном sealed block,
+строит native/ERC-20 v4 циклы и подбирает raw input логарифмической сеткой
+с уточнением локальных максимумов. Независимые локальные leg quotes кэшируются
+с ограничением памяти. Неполные fills и выход за загруженный диапазон отвергаются.
+Это ограниченный поиск; отсутствие кандидатов не доказывает отсутствие арбитража.
+
+```bash
+python -m incy_arb local-v4-scan \
+  --v4-discovery data/market-2026-10-22/v4-discovery.json \
+  --v4-state data/market-2026-10-22/v4-state.json \
+  --min-amount 1000000000 --max-amount 100000000000000000 \
+  --max-steps 3 --validate-top 3 --output data/local-v4-scan.json
+```
+
+По умолчанию стартовая currency — native ETH, nominal fee cap — 10000 pips
+(1%), размер — в raw units стартовой currency. `--currency ADDRESS` можно
+повторять для явного ограничения графа; стартовую currency тоже нужно включить.
+`--block-number` закрепляет исторический блок. Snapshot содержит все локальные
+данные для replay. Верхние `--validate-top` кандидаты проходят полную InkArb
+симуляцию и консервативный fee budget. Только совпавшая EVM quote с положительным
+результатом после бюджета учитывается в `simulated_positive_after_budget`.
+
+На block 59200457 подбор нашёл ETH→USDt0→ETH с input 2464973735522 wei:
+полная EVM симуляция подтвердила gross +2508382745 wei точно, но net после
+бюджета комиссии составил −1188693246 wei. На block 59201263 поиск по 44 пулам
+и 128 циклам занял 0,095 секунды CPU после загрузки snapshots: 8 gross-кандидатов,
+3 успешные полные симуляции, 0 положительных результатов после fee budget.
+Артефакты: [summary](docs/validation/local-v4-sized-59201263.json),
+[первый EVM результат](docs/validation/native-positive-before-fees-59200457.json).
+Время CPU не включает RPC, загрузку ticks и EVM проверку.

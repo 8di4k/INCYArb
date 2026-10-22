@@ -1056,3 +1056,27 @@ wrap/unwrap и хранения ETH в executor. `eth_getBalance` использ
 127 Python- и 16 Solidity-тестов проходят. Новые contract tests проверяют
 native выплату, нулевую native custody executor, ERC-20→native→ERC-20 путь без
 физического ETH баланса и отказ до native передачи на внешний V2 шаг.
+
+
+## 30. Локальный подбор размера и независимая проверка
+
+Добавлен `local-v4-scan`: snapshots static zero-hook v4 на общем block/hash,
+полные CL fills, логарифмическая сетка и уточнение максимумов, ограниченный
+кэш leg quotes. Граф ограничивается currency/fee/max steps до загрузки ticks.
+Snapshots, диапазон поиска и диагностика всех циклов сохраняются. Это ограниченный
+поиск, не доказательство глобального максимума. Верхние кандидаты независимо
+проверяются полным InkArb вызовом и консервативным бюджетом OP fees.
+
+На block 59200457 впервые подтверждён положительный gross: ETH→USDt0→ETH,
+input 2464973735522 wei, gross +2508382745 wei, quote_difference=0.
+Gas estimate 110041; полный fee budget 3697075991 wei, net −1188693246 wei.
+Положительный gross не превращается в утверждение об экономической прибыли.
+Core snapshots и EVM ответ сохранены в `docs/validation/native-local-core-59200457.json.gz`
+и `native-positive-before-fees-59200457.json`.
+
+Повтор CLI на block 59201263: 44 пула, 128 циклов, 7562 вычисленных leg quotes,
+20755 cache hits, 0,09484 секунды CPU. Найдено 8 положительных local gross,
+три верхних кандидата успешно симулированы, все отрицательны после бюджета fees.
+Полный snapshot и SHA-256 summary: `local-v4-sized-59201263.json[.gz]`.
+141 Python-тест проходит, включая replay первого EVM-подтверждённого optimum,
+блоковую согласованность, ограничения кэша и условия net promotion.
