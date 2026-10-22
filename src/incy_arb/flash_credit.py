@@ -13,6 +13,7 @@ from .rpc import ReadOnlyRpc
 
 
 POOL_MANAGER = "0x360e68faccca8ca495c1b759fd9eee466db9fb32"
+INT128_MAX = (1 << 127) - 1
 
 
 @dataclass(frozen=True)
@@ -72,6 +73,8 @@ async def snapshot_flash_capacity(config: FlashCapacityConfig) -> dict[str, Any]
             "symbol": symbol,
             "decimals": decimals,
             "pool_manager_balance": str(balance),
+            "take_accounting_limit": str(INT128_MAX),
+            "maximum_single_take": str(min(balance, INT128_MAX)),
             "display_balance": format_units(balance, decimals),
             "has_physical_flash_capacity": balance > 0,
         })
@@ -83,7 +86,8 @@ async def snapshot_flash_capacity(config: FlashCapacityConfig) -> dict[str, Any]
         "generated_at_unix": time.time(),
         "balances": balances,
         "warning": (
-            "A balance is only the physical upper ceiling for take(). Apply a safety margin, token policy, "
+            "Capacity is capped by both the token balance and PoolManager's signed-int128 accounting. "
+            "Apply a safety margin, token policy, "
             "route liquidity, pending-state checks, and exact execution simulation before using it."
         ),
     }
