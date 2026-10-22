@@ -1,0 +1,21 @@
+{
+  "start_block": 59203420,
+  "end_block": 59203460,
+  "summary": {
+    "blocks": 40,
+    "subblocks": 240,
+    "pools": 1,
+    "applied_events": {
+      "swap": 2
+    },
+    "matches": 1,
+    "differences": 0
+  },
+  "excluded_pools": {
+    "0x91e534095809cb6b3362753c5f34364c9e7ceca44c4708fdce4df4807fd1e7e0": "hooks_or_unsupported_fee"
+  },
+  "file": "subblock-v4-replay-59203420.json.gz",
+  "sha256": "f8f06d36c4954576a59c4837c0eb83de6b4ea225b224604cf5144d6dacfed0cc",
+  "raw_sha256": "a42ccbbe8a0eba65c3f5123b5b00103536395d0748b059b24771bdd5d6b6e7bd",
+  "scope": "Post-hoc reconstruction after full canonical verification. No live availability, latency, prefix execution, or profitability claim. Only supported pools with captured pricing events are tracked."
+}

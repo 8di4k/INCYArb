@@ -551,3 +551,39 @@ runtime. 11 full-route EVM результатов в обоих направле
 Обычный `scan-cycles` на block 59203114 проверил 22 двухшаговых WETH цикла
 при input 10^14 wei, включая 10 с DyorSwap: все 22 получили quote,
 положительных gross нет. Capture: `docs/validation/dyor-inclusive-twohop-59203114.json[.gz]`.
+
+
+## Replay по границам subblocks
+
+```bash
+python -m incy_arb observe --duration 120 --output data/capture.jsonl
+python -m incy_arb subblock-v4-replay \
+  --capture data/capture.jsonl --v4-discovery data/market-2026-10-22/v4-discovery.json \
+  --output data/subblock-v4-replay.json
+```
+
+Команда выбирает pre-existing static zero-hook v4 пулы с pricing events в
+capture и загружает initial state на блоке перед первым payload. Capture должен
+содержать 1–256 полных последовательных блоков; порядок завершения observer
+tasks сортируется, а пропуски/дубликаты запрещены. Raw payload каждый раз
+пересобирается, transaction hashes/header и receipt logs заново проверяются
+по canonical RPC. Сохранённые `verified` флаги не заменяют эту проверку.
+
+Логи внутри каждой границы применяются в порядке raw transactions, затем
+receipt logs. Итоговая модель каждого блока продвигается атомарно. Prefix
+pricing records не получают sealed block tag: частичный префикс не является
+состоянием всего блока. Конечный price/tick/liquidity/fees/bitmap независимо
+сравнивается со StateView в исходном tick window. Hooks, dynamic fee, неизвестные
+keys и инициализированные во время capture пулы перечисляются в исключениях.
+
+Реальный capture blocks 59203421–59203460: 40 blocks, 240 subblocks,
+2 Swap поддерживаемого пула, точное совпадение конечного состояния:
+[subblock-v4-replay-59203420](docs/validation/subblock-v4-replay-59203420.json).
+Предыдущее окно 118 полностью verified blocks не содержало supported pricing
+переходов: события 17 v4 pool IDs относились к hooks/dynamic fee. Оно сохранено
+отдельно: [subblock-coverage-59203230](docs/validation/subblock-coverage-59203230.json).
+
+Это post-hoc реконструкция после полной canonical проверки; она не измеряет
+время получения preconfirmation и не подтверждает исполнение сделки на префиксе.
+Команда проверяет state replay, поиск торговых кандидатов между границами ещё
+не подключён. Captures с gaps требуют нового непрерывного окна.
