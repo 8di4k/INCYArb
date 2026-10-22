@@ -240,3 +240,43 @@ PoolManager; для первого v4-шага учитывается `int128`, 
 моделируют взаимодействие нескольких v4-шагов внутри одного PoolManager.
 Положительный gross PnL также не подтверждает прибыль после газа или
 исполнимость маршрута.
+
+## Полная симуляция цикла
+
+Сохраните результаты нового fixed-amount или sizing scan с `--output data/scan.json`,
+затем проверьте выбранный finding:
+
+```bash
+/workspace/.venvs/arbitr/bin/python -m incy_arb simulate-cycle \
+  --scan data/scan.json --finding 0 --output data/simulation.json
+```
+
+В новом scan каждый finding содержит `simulation_route` с определениями шагов
+и V2 fee, прочитанной на quote block. Старые captures без этого поля нужно
+пересоздать. Симулятор принимает volatile V2, Slipstream и v4 с нулевыми hooks
+и статической fee; stable Velodrome V2 и adapters отклоняются.
+
+`InkArb` — производный от `Arbitr/XArb2` контракт без X Layer-адаптеров.
+Сначала `eth_call` конструктора создаёт runtime с Ink PoolManager в immutable;
+затем state overrides подставляют runtime, executor permission и ETH balance
+двух фиктивных аккаунтов. Кодом getter-ов проверяются immutable и storage layout.
+Рыночные контракты, токены, резервы и балансы PoolManager не подменяются.
+Все вызовы используют quote block; его hash проверяется до и после расчёта.
+
+`success` означает успешное гипотетическое исполнение всего круга; `gas_estimate`
+— результат `eth_estimateGas` полного вызова, а не сумма оценок Quoter. Ошибки
+RPC, ошибки оценки газа и reorg не превращаются в успешный результат.
+Убыточный круг возвращает диагностический revert `NegativeProfit(int256)`:
+`simulated_gross_pnl` сохраняет точный отрицательный результат, а `quote_difference`
+показывает отклонение от последовательных котировок. Поддержки деплоя, ключей,
+подписей и отправки транзакций нет. Стоимость L1/operator fee на этом этапе
+ещё не включена в результат симуляции.
+
+Артефакт `src/incy_arb/artifacts/InkArb.json` содержит compiler/settings,
+source hashes и проверенный storage layout. Пересборка:
+
+```bash
+python scripts/build_simulator.py /path/to/solc-0.8.28
+forge test --root contracts
+python -m pytest
+```

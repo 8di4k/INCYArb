@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import logging
 from pathlib import Path
 
@@ -13,6 +14,7 @@ from .quotes import V2QuoteRequest, quote_slipstream_live, quote_v2_live, quote_
 from .v4_state import V4StateConfig, snapshot_v4_state
 from .research import CycleScanConfig, ThreeHopConfig, TwoHopConfig, scan_cycles, scan_three_hop, scan_two_hop_slipstream
 from .flash_credit import FlashCapacityConfig, snapshot_flash_capacity
+from .simulation import simulate_scan
 
 
 def _start_amount(value: str) -> tuple[str, int]:
@@ -108,6 +110,12 @@ def main() -> int:
     cycles.add_argument("--min-steps", type=int, default=2)
     cycles.add_argument("--max-steps", type=int, default=4)
     cycles.add_argument("--rpc-url", default=INK_RPC)
+    cycles.add_argument("--output", type=Path, help="save full scan as JSON for simulate-cycle")
+    simulation = subparsers.add_parser("simulate-cycle", help="simulate one full scan finding via sealed eth_call overrides")
+    simulation.add_argument("--scan", type=Path, required=True)
+    simulation.add_argument("--finding", type=int, default=0)
+    simulation.add_argument("--rpc-url", default=INK_RPC)
+    simulation.add_argument("--output", type=Path)
     flash = subparsers.add_parser("flash-capacity", help="snapshot PoolManager token balances at one sealed block")
     flash.add_argument("--token", action="append", required=True)
     flash.add_argument("--output", type=Path, default=FlashCapacityConfig.output)
@@ -168,6 +176,8 @@ def main() -> int:
                 tuple(args.start_token), args.max_steps, args.min_steps, tuple(args.start_amount),
                 tuple(args.size_range), args.size_grid_points, args.size_refinement_iterations,
             )))
+        elif args.command == "simulate-cycle":
+            result = asyncio.run(simulate_scan(json.loads(args.scan.read_text()), args.rpc_url, args.finding))
         else:
             flash_result = asyncio.run(snapshot_flash_capacity(
                 FlashCapacityConfig(tuple(args.token), args.output, args.rpc_url)
@@ -176,7 +186,12 @@ def main() -> int:
                       "balances": flash_result["balances"]}
     except KeyboardInterrupt:
         return 130
-    print(result)
+    if args.command in ("scan-cycles", "simulate-cycle") and args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps(result, indent=2) + "\n")
+        print({"output": str(args.output), "status": result.get("status"), "findings": len(result.get("findings", []))})
+    else:
+        print(result)
     return 0
 
 
