@@ -8,7 +8,7 @@ from eth_utils import is_address
 
 from .abi import decode_result, encode_call, hex_bytes
 from .flash_credit import NATIVE_CURRENCY
-from .rpc import ReadOnlyRpc
+from .rpc import ReadOnlyRpc, RpcError
 
 GAS_PRICE_ORACLE = "0x420000000000000000000000000000000000000f"
 WETH = "0x4200000000000000000000000000000000000006"
@@ -47,6 +47,18 @@ async def fee_budget(rpc: ReadOnlyRpc, calldata: bytes, target: str, block: int,
     # The deployed oracle adds its own 68-byte signature allowance. Do not add it twice.
     l1_fee = await read("getL1FeeUpperBound(uint256)", len(envelope))
     operator_fee = await read("getOperatorFee(uint256)", gas_limit)
+    try:
+        raw = await rpc.contract_call(GAS_PRICE_ORACLE, encode_call("getL1Fee(bytes)", ["bytes"], [envelope]), block)
+        content_l1 = decode_result(["uint256"], hex_bytes(raw))[0]
+        content_estimate = {
+            "status": "estimated", "method": "getL1Fee(bytes)",
+            "l1_fee_estimate": str(content_l1),
+            "total_fee_estimate_wei": str(gas_limit * maximum + content_l1 + operator_fee),
+            "unsigned_transaction": "0x" + envelope.hex(),
+            "warning": "Compression estimate for this exact unsigned destination/nonce/calldata. The oracle adds its own signature allowance. Hypothetical executor address and future inclusion fees can differ.",
+        }
+    except RpcError as error:
+        content_estimate = {"status": "unavailable", "error": str(error), "rpc_code": error.code}
     after = await rpc.sealed_block(block)
     if not after or after.get("hash") != before["hash"]:
         raise RuntimeError("fee block changed during reads; discard budget")
@@ -58,6 +70,7 @@ async def fee_budget(rpc: ReadOnlyRpc, calldata: bytes, target: str, block: int,
         "max_priority_fee_per_gas": str(priority_fee), "l2_fee_at_maximum": str(gas_limit * maximum),
         "l1_fee_upper_estimate": str(l1_fee), "operator_fee_estimate": str(operator_fee),
         "total_fee_budget_wei": str(gas_limit * maximum + l1_fee + operator_fee),
+        "content_based_estimate": content_estimate,
         "warning": "Pinned fee estimate, not an inclusion guarantee. Fjord compression bound is statistical; future fees may change.",
     }
 
@@ -74,6 +87,17 @@ def assess_net_profit(simulation: dict[str, Any], budget: dict[str, Any]) -> dic
     if simulation["start_token"].lower() not in (WETH, NATIVE_CURRENCY):
         return {"status": "start_token_valuation_required", "start_token": simulation["start_token"]}
     net = int(simulation["simulated_gross_pnl"]) - int(budget["total_fee_budget_wei"])
-    return {"status": "estimated_positive" if net > 0 else "not_positive_after_fee_budget",
+    result: dict[str, Any] = {"status": "estimated_positive" if net > 0 else "not_positive_after_fee_budget",
             "estimated_net_pnl_native_wei": str(net),
             "warning": "Native ETH/WETH valued in ETH wei. Estimate excludes deployment, capital provisioning, and payout conversion."}
+    content = budget.get("content_based_estimate", {})
+    if content.get("status") == "estimated":
+        content_net = int(simulation["simulated_gross_pnl"]) - int(content["total_fee_estimate_wei"])
+        result["content_based_estimate"] = {
+            "status": "estimated_positive" if content_net > 0 else "not_positive_after_content_estimate",
+            "estimated_net_pnl_native_wei": str(content_net),
+            "warning": "Supplemental compression estimate only; does not change the upper-budget assessment or prove live profitability.",
+        }
+    else:
+        result["content_based_estimate"] = {"status": "unavailable"}
+    return result

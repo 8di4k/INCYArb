@@ -1,0 +1,53 @@
+{
+  "block_number": 59200457,
+  "block_hash": "0x8db30a49d47dbec7011d92b5c4665ecd302425f81e492b2cba6f8f70906d1935",
+  "gross": "2508382745",
+  "calldata": "0x61461954000000000000000000000000000000000000000000000000000000000000023debe2466200000000000000000000000000000000038753c9020200c29006150606b650577bbe7b6248f58470c100004b00000100000000000000000000000000000000000000000200000000000000000000000000000000000000000001f400003c0000000000000000000000000000000000000000",
+  "gas_limit": 132050,
+  "max_fee_per_gas": "566",
+  "results": [
+    {
+      "hypothetical_destination": "0x7b7f4c397b82ecd885000eea7bf797db883de47c",
+      "nonce": 0,
+      "l1_content_estimate": "2145391794",
+      "total_fee_estimate": "2220132094",
+      "net_estimate": "288250651"
+    },
+    {
+      "hypothetical_destination": "0x7b7f4c397b82ecd885000eea7bf797db883de47c",
+      "nonce": 4294967296,
+      "l1_content_estimate": "2256559614",
+      "total_fee_estimate": "2331299914",
+      "net_estimate": "177082831"
+    },
+    {
+      "hypothetical_destination": "0x7bb4f54b427738d47e8f1389f54bcc16d9b1e51c",
+      "nonce": 0,
+      "l1_content_estimate": "2145391794",
+      "total_fee_estimate": "2220132094",
+      "net_estimate": "288250651"
+    },
+    {
+      "hypothetical_destination": "0x7bb4f54b427738d47e8f1389f54bcc16d9b1e51c",
+      "nonce": 4294967296,
+      "l1_content_estimate": "2256559614",
+      "total_fee_estimate": "2331299914",
+      "net_estimate": "177082831"
+    },
+    {
+      "hypothetical_destination": "0x83e30219c6e4a3308e02571145262d1f69280fcd",
+      "nonce": 0,
+      "l1_content_estimate": "2145391794",
+      "total_fee_estimate": "2220132094",
+      "net_estimate": "288250651"
+    },
+    {
+      "hypothetical_destination": "0x83e30219c6e4a3308e02571145262d1f69280fcd",
+      "nonce": 4294967296,
+      "l1_content_estimate": "2256559614",
+      "total_fee_estimate": "2331299914",
+      "net_estimate": "177082831"
+    }
+  ],
+  "warning": "Hypothetical destination and nonce sensitivity only. No deployed executor, signed transaction, or inclusion guarantee."
+}
