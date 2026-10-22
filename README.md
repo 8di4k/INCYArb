@@ -338,3 +338,13 @@ net PnL не объявляется. Недоступность fee oracle ил�
 overrides. Scan проверяет chain ID и hash блока до/после, сохраняет
 `quote_block_hash` и статистику `quote_cache`. Симулятор отклоняет scan, если
 его hash больше не соответствует блоку. Замена блока требует пересканирования.
+
+## Воспроизводимый рыночный capture
+
+Полный исторический v4 inventory, StateView snapshot, AMM inventory,
+сканы и свежий subblock capture сохранены в
+[docs/validation/market-2026-10-22](docs/validation/market-2026-10-22/README.md).
+Данные сжаты gzip; manifest содержит SHA-256 исходных и сжатых файлов.
+`scan-cycles --block-number N` позволяет повторить котирование на конкретном
+историческом sealed block (нужен RPC с historical state). Без этого параметра
+сохраняется поиск на новом sealed block.

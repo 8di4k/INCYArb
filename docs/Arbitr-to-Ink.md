@@ -958,3 +958,29 @@ Scanner проверяет RPC chain ID и hash блока до и после ч
 заменён после scan. Это исключает незаметное смешивание старой котировки с
 новым блоком той же высоты. 85 Python-тестов включают границу памяти кэша,
 различение transport/revert, fail-fast и оба сценария замены блока.
+
+## 26. Полный captured v4 universe и широкий проход
+
+История Initialize дочитана полностью: 4603 уникальных pool IDs на 93 страницах,
+invalid Initialize=0. Новейший захваченный Initialize — block 59187626;
+это граница captured explorer head, а не обещание непрерывного учёта новых пулов.
+StateView на block 59196963 прочитал все 4603 пула: 1152 с положительной
+liquidity и 121 с ERC-20 currencies, zero hooks и static fee.
+
+Исследовательский AMM inventory на block 59196936 использовал reserve-age
+threshold 86400 секунд. На block 59197361 проверены 428 циклов WETH длиной
+2–4 шага (340 полных quotes); на block 59197505 — 1398 циклов USDt0, USDC и
+USDC.e (1243 полных quotes). Положительного gross PnL на выбранных размерах
+не найдено. Это 1826 структурных вариантов и 1583 полные котировки; результаты
+нельзя распространять на непрокотированные пути, все размеры и другие блоки.
+
+Полный v4→v4 маршрут USDC→USDt0→USDC на block 59197217 дал −398827 raw USDC,
+точно совпав с Quoter; он корректно откатился. Артефакт:
+`docs/validation/v4-full-route-59197217.json`.
+
+Для воспроизводимости добавлен `scan-cycles --block-number`, все исходные
+снимки и результаты сохранены в gzip с SHA-256 manifest:
+`docs/validation/market-2026-10-22/README.md`.
+Повтор 12 двухшаговых WETH quotes на историческом block 59197217 дал ноль
+различий. Свежий 20-секундный subblock capture: 18 завершённых payload,
+18/18 sealed-verified, invalid=0. 86 Python-тестов проходят.
