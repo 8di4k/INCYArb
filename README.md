@@ -495,3 +495,28 @@ Capture [v4-replay-59201002](docs/validation/v4-replay-59201002.json) подтв
 и 862 цикла за 0,603 секунды CPU: 17 gross-кандидатов, 5 точных успешных EVM
 симуляций, 0 положительных после верхнего fee budget. Snapshot:
 [local-v4-allfees-59201725](docs/validation/local-v4-allfees-59201725.json).
+
+
+## Оценка L1 fee со сжатием calldata
+
+`simulate-cycle` и проверка кандидатов сохраняют два расчёта комиссии:
+основной `total_fee_budget_wei` использует `getL1FeeUpperBound`, дополнительный
+`content_based_estimate` — `getL1Fee(bytes)` для точного unsigned type-2 envelope.
+Oracle сам добавляет 68 bytes signature allowance в обоих методах. Подпись не
+создаётся. Дополнительный расчёт использует тот же padded gas limit, max fee
+и operator fee; serialized envelope сохраняется для проверки destination,
+nonce и calldata. Ошибка дополнительного метода не стирает основной budget.
+
+`net_profit_assessment.status` и счётчик `simulated_positive_after_budget`
+по-прежнему опираются на верхнюю оценку. Вложенный `content_based_estimate`
+показывает более узкую оценку отдельно. Гипотетический адрес executor может
+сжиматься лучше реального; nonce, calldata и цены включения тоже влияют на fee.
+
+На block 59200457 при gross +2508382745 wei: L1 upper 3622335691 wei против
+content estimate 2050105091 wei. Net с исходным simulation address составляет
++383537354 wei по content estimate и −1188693246 wei по upper budget.
+Три тестовых адреса и nonce 0/2^32 дают +177082831…+288250651 wei, всего
+0,177…0,288 gwei расчётного остатка. Это крайне малая историческая величина;
+реальный доход, доступность включения и окупаемость deployment не подтверждены.
+Артефакты: [EVM и оба fee расчёта](docs/validation/native-content-fees-59200457.json),
+[чувствительность к адресу и nonce](docs/validation/native-fee-sensitivity-59200457.json).

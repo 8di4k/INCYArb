@@ -1106,3 +1106,24 @@ Preconfirmation replay и latency пока не реализованы.
 862 цикла на block 59201725. Найдено 17 positive gross; 5 верхних EVM проверок
 успешны с quote_difference=0, все ниже верхнего fee budget. CPU 0,6034 секунды
 после загрузки состояния. Capture: `local-v4-allfees-59201725.json[.gz]`.
+
+
+## 32. Content-based L1 fee рядом с верхней оценкой
+
+Fjord `getL1Fee(bytes)` оценивает сжатие переданного unsigned RLP, добавляя
+68 signature bytes самостоятельно. Добавлен второй расчёт к прежнему
+`getL1FeeUpperBound`; оба используют один block/hash, padded gas, max fee и
+operator fee. Сохраняется unsigned envelope. Ошибка дополнительного RPC
+помечает его unavailable, не обнуляя и не скрывая основной fee budget.
+Основной net status и счётчик скана не меняют критерий при положительном
+content estimate. Stablecoin amounts по-прежнему требуют отдельной ETH valuation.
+
+Повтор полной симуляции block 59200457 точно подтвердил gross 2508382745 wei.
+Content L1 2050105091 wei против upper 3622335691 wei. Content net +383537354 wei;
+upper net −1188693246 wei. Замена simulation destination на три тестовых адреса
+и nonce 0/2^32 оставляет +177082831…+288250651 wei. Это лишь 0,177…0,288 gwei,
+не подтверждённый реальный доход. Гипотетический executor, nonce, signature
+allowance, future fees и inclusion сохраняют ограничения оценки.
+Captures: `native-content-fees-59200457.json`, `native-fee-sensitivity-59200457.json`.
+175 Python-тестов проходят, включая недоступный content method и запрет
+повышать отрицательный основной net status по положительной дополнительной оценке.

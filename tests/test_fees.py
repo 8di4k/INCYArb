@@ -32,6 +32,7 @@ class FeeRpc:
         self.reads = 0
         self.reorg = False
         self.unavailable = False
+        self.content_unavailable = False
     async def chain_id(self): return 57073
     async def sealed_block(self, block):
         assert block == 123
@@ -39,6 +40,11 @@ class FeeRpc:
         return {'hash': '0xbb' if self.reorg and self.reads > 1 else '0xaa', 'baseFeePerGas': '0x5'}
     async def contract_call(self, target, data, block):
         assert block == 123
+        if data[:4] == function_selector('getL1Fee(bytes)'):
+            envelope = decode(['bytes'], data[4:])[0]
+            self.calls.append((data[:4], envelope))
+            if self.content_unavailable: raise RpcError('content estimation unavailable', code=-32601)
+            return '0x' + encode(['uint256'], [1000]).hex()
         self.calls.append((data[:4], decode(['uint256'], data[4:])[0]))
         if self.unavailable: raise RpcError('unsupported method', code=3)
         value = 2000 if data[:4] == function_selector('getL1FeeUpperBound(uint256)') else 300
@@ -52,7 +58,11 @@ def test_budget_sums_l2_l1_and_operator_at_one_block_without_double_signature_pa
     assert result['l2_fee_at_maximum'] == '2400000'
     assert result['total_fee_budget_wei'] == '2402300'
     assert rpc.calls == [(function_selector('getL1FeeUpperBound(uint256)'), result['unsigned_transaction_size']),
-                         (function_selector('getOperatorFee(uint256)'), 200000)]
+                         (function_selector('getOperatorFee(uint256)'), 200000),
+                         (function_selector('getL1Fee(bytes)'), unsigned_envelope(b'\xaa' * 140, TARGET, 200000, 12, 2))]
+    assert result['content_based_estimate']['total_fee_estimate_wei'] == '2401300'
+    assert result['content_based_estimate']['l1_fee_estimate'] == '1000'
+    assert bytes.fromhex(result['content_based_estimate']['unsigned_transaction'][2:]) == rpc.calls[-1][1]
 
 
 def test_oracle_failure_does_not_default_l1_or_operator_to_zero():
@@ -102,3 +112,29 @@ def test_fee_budget_cannot_be_applied_to_another_block():
 @pytest.mark.parametrize('gas,maximum,priority,nonce', [(0,1,0,0), (1,1,2,0), (1,1,-1,0), (1,1,0,-1)])
 def test_invalid_transaction_envelope_values_are_rejected(gas,maximum,priority,nonce):
     with pytest.raises(ValueError): unsigned_envelope(b'', TARGET, gas, maximum, priority, nonce)
+
+
+
+def test_content_estimation_failure_preserves_successful_upper_budget():
+    rpc = FeeRpc(); rpc.content_unavailable = True
+    result = asyncio.run(fee_budget(rpc, b'\xaa' * 140, TARGET, 123, 200000))
+    assert result['status'] == 'estimated' and result['total_fee_budget_wei'] == '2002300'
+    assert result['content_based_estimate']['status'] == 'unavailable'
+    assert 'total_fee_estimate_wei' not in result['content_based_estimate']
+
+
+def test_positive_compression_estimate_never_promotes_negative_upper_budget():
+    value = budget()
+    value['content_based_estimate'] = {'status': 'estimated', 'total_fee_estimate_wei': '3000'}
+    result = assess_net_profit(simulation(profit='4000'), value)
+    assert result['status'] == 'not_positive_after_fee_budget'
+    assert result['estimated_net_pnl_native_wei'] == '-1000'
+    assert result['content_based_estimate']['status'] == 'estimated_positive'
+    assert result['content_based_estimate']['estimated_net_pnl_native_wei'] == '1000'
+
+
+def test_compression_estimate_does_not_convert_stablecoin_pnl_to_eth():
+    value = budget()
+    value['content_based_estimate'] = {'status': 'estimated', 'total_fee_estimate_wei': '3000'}
+    result = assess_net_profit(simulation(TARGET, '100000'), value)
+    assert result['status'] == 'start_token_valuation_required' and 'content_based_estimate' not in result

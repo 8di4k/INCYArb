@@ -1,0 +1,61 @@
+{
+  "chain_id": 57073,
+  "source": "sealed_eth_call_with_simulator_code_override",
+  "block_number": 59200457,
+  "block_hash": "0x8db30a49d47dbec7011d92b5c4665ecd302425f81e492b2cba6f8f70906d1935",
+  "finding_index": 0,
+  "start_token": "0x0000000000000000000000000000000000000000",
+  "quoted_gross_pnl": "2508382745",
+  "calldata": "0x61461954000000000000000000000000000000000000000000000000000000000000023debe2466200000000000000000000000000000000038753c9020200c29006150606b650577bbe7b6248f58470c100004b00000100000000000000000000000000000000000000000200000000000000000000000000000000000000000001f400003c0000000000000000000000000000000000000000",
+  "creation_sha256": "3d426e606e2b122157c56bf3d6088ac8fceec9fe1bc16b7fc09804ce49058c17",
+  "runtime_keccak256": "0xfe618d732cae2ba714ca8e9d87858f5706a15e527d0b15a25a981250f6cb5529",
+  "overridden_accounts": [
+    "0x00000000000000000000000000000000000a4b17",
+    "0x00000000000000000000000000000000000a4b18"
+  ],
+  "market_state_overridden": false,
+  "warning": "Hypothetical executor only. No deployment, execution permission, or net-profit claim.",
+  "status": "success",
+  "simulated_gross_pnl": "2508382745",
+  "quote_difference": "0",
+  "gas_estimate": 110041,
+  "fee_budget": {
+    "chain_id": 57073,
+    "status": "estimated",
+    "block_number": 59200457,
+    "block_hash": "0x8db30a49d47dbec7011d92b5c4665ecd302425f81e492b2cba6f8f70906d1935",
+    "gas_price_oracle": "0x420000000000000000000000000000000000000f",
+    "transaction_type": 2,
+    "destination": "0x00000000000000000000000000000000000a4b17",
+    "nonce": 0,
+    "unsigned_transaction_size": 194,
+    "gas_limit": 132050,
+    "base_fee_per_gas": "283",
+    "max_fee_per_gas": "566",
+    "max_priority_fee_per_gas": "0",
+    "l2_fee_at_maximum": "74740300",
+    "l1_fee_upper_estimate": "3622335691",
+    "operator_fee_estimate": "0",
+    "total_fee_budget_wei": "3697075991",
+    "content_based_estimate": {
+      "status": "estimated",
+      "method": "getL1Fee(bytes)",
+      "l1_fee_estimate": "2050105091",
+      "total_fee_estimate_wei": "2124845391",
+      "unsigned_transaction": "0x02f8bf82def18080820236830203d29400000000000000000000000000000000000a4b1780b89a61461954000000000000000000000000000000000000000000000000000000000000023debe2466200000000000000000000000000000000038753c9020200c29006150606b650577bbe7b6248f58470c100004b00000100000000000000000000000000000000000000000200000000000000000000000000000000000000000001f400003c0000000000000000000000000000000000000000c0",
+      "warning": "Compression estimate for this exact unsigned destination/nonce/calldata. The oracle adds its own signature allowance. Hypothetical executor address and future inclusion fees can differ."
+    },
+    "warning": "Pinned fee estimate, not an inclusion guarantee. Fjord compression bound is statistical; future fees may change.",
+    "gas_margin_bps": 2000
+  },
+  "net_profit_assessment": {
+    "status": "not_positive_after_fee_budget",
+    "estimated_net_pnl_native_wei": "-1188693246",
+    "warning": "Native ETH/WETH valued in ETH wei. Estimate excludes deployment, capital provisioning, and payout conversion.",
+    "content_based_estimate": {
+      "status": "estimated_positive",
+      "estimated_net_pnl_native_wei": "383537354",
+      "warning": "Supplemental compression estimate only; does not change the upper-budget assessment or prove live profitability."
+    }
+  }
+}
