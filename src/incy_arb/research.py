@@ -13,7 +13,7 @@ from .inventory import VELODROME_V2_FACTORY
 from .observer import INK_RPC
 from .quotes import SLIPSTREAM_QUOTER, constant_product_out, decode_slipstream_quote
 from .rpc import ReadOnlyRpc, RpcError
-from .flash_credit import POOL_MANAGER
+from .flash_credit import INT128_MAX, POOL_MANAGER
 
 
 VELODROME_ROUTER = "0x3a63171dd9bebf4d07bc782fecc7eb0b890c2a45"
@@ -157,6 +157,19 @@ def xarb2_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tup
         elif venue not in ("velodrome_v2", "uniswap_v2", "slipstream", "uniswap_v4"):
             reasons.append(f"unsupported_venue:{venue}")
     return not reasons, list(dict.fromkeys(reasons))
+
+
+def initial_flash_capacity(
+    path: list[tuple[str, dict[str, Any], str, str]], amount: int, pool_manager_balance: int
+) -> tuple[bool, bool, list[str]]:
+    """Check only the first funding action; full-route simulation remains required."""
+    initial_take_required = bool(path) and path[0][0] != "uniswap_v4"
+    reasons: list[str] = []
+    if amount > INT128_MAX:
+        reasons.append("amount_exceeds_int128_delta")
+    if initial_take_required and amount > pool_manager_balance:
+        reasons.append("insufficient_pool_manager_balance_for_initial_take")
+    return not reasons, initial_take_required, reasons
 
 
 def _eligible_v4_pools(discovery: dict[str, Any], state: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
@@ -343,6 +356,10 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                     valid = False
                 if valid and value is not None:
                     compatible, compatibility_reasons = xarb2_compatibility(path)
+                    start_balance = flash_balances.get(path[0][2], 0)
+                    capacity_ok, initial_take_required, capacity_reasons = initial_flash_capacity(
+                        path, amount, start_balance
+                    )
                     findings.append({
                         "tokens": [path[0][2]] + [edge[3] for edge in path],
                         "pools": [edge[1]["address"].lower() for edge in path],
@@ -351,8 +368,10 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                         "profitable_before_gas": value > amount, "quoter_gas_estimate": quoted_gas,
                         "xarb2_execution_compatible": compatible,
                         "xarb2_incompatibility_reasons": compatibility_reasons,
-                        "pool_manager_balance": str(flash_balances.get(path[0][2], 0)),
-                        "flash_capacity_sufficient": amount <= flash_balances.get(path[0][2], 0),
+                        "pool_manager_balance": str(start_balance),
+                        "initial_take_required": initial_take_required,
+                        "flash_capacity_sufficient": capacity_ok,
+                        "flash_capacity_reasons": capacity_reasons,
                     })
     return {
         "chain_id": 57073, "source": "sealed_rpc_multi_venue_quotes", "quote_block_number": block,
