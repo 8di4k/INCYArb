@@ -28,6 +28,17 @@ def _start_amount(value: str) -> tuple[str, int]:
     return token.lower(), amount
 
 
+def _size_range(value: str) -> tuple[str, int, int]:
+    token, separator, bounds = value.partition("=")
+    try:
+        minimum, maximum = (int(part) for part in bounds.split(":"))
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("expected TOKEN=MIN_RAW:MAX_RAW") from exc
+    if not separator or not token or minimum <= 0 or maximum < minimum:
+        raise argparse.ArgumentTypeError("expected TOKEN=MIN_RAW:MAX_RAW with 0 < MIN_RAW <= MAX_RAW")
+    return token.lower(), minimum, maximum
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only Ink subblock observer")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -90,6 +101,10 @@ def main() -> int:
     cycles.add_argument("--amount", type=int, action="append", default=[], help="fallback raw amount for every start token")
     cycles.add_argument("--start-amount", type=_start_amount, action="append", default=[], metavar="TOKEN=RAW_AMOUNT",
                         help="raw amount for one start token; repeat per token to scan several sizes")
+    cycles.add_argument("--size-range", type=_size_range, action="append", default=[], metavar="TOKEN=MIN_RAW:MAX_RAW",
+                        help="optimize raw input size for this token instead of fixed amounts; repeat per token")
+    cycles.add_argument("--size-grid-points", type=int, default=CycleScanConfig.size_grid_points)
+    cycles.add_argument("--size-refinement-iterations", type=int, default=CycleScanConfig.size_refinement_iterations)
     cycles.add_argument("--min-steps", type=int, default=2)
     cycles.add_argument("--max-steps", type=int, default=4)
     cycles.add_argument("--rpc-url", default=INK_RPC)
@@ -151,6 +166,7 @@ def main() -> int:
             result = asyncio.run(scan_cycles(CycleScanConfig(
                 args.inventory, tuple(args.amount), args.rpc_url, args.v4_discovery, args.v4_state,
                 tuple(args.start_token), args.max_steps, args.min_steps, tuple(args.start_amount),
+                tuple(args.size_range), args.size_grid_points, args.size_refinement_iterations,
             )))
         else:
             flash_result = asyncio.run(snapshot_flash_capacity(
