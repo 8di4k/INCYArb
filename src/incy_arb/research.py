@@ -14,6 +14,7 @@ from .observer import INK_RPC
 from .quotes import SLIPSTREAM_QUOTER, constant_product_out, decode_slipstream_quote
 from .rpc import ReadOnlyRpc, RpcError
 from .flash_credit import INT128_MAX, POOL_MANAGER
+from .sizing import optimize_size_async
 
 
 VELODROME_ROUTER = "0x3a63171dd9bebf4d07bc782fecc7eb0b890c2a45"
@@ -39,6 +40,9 @@ class CycleScanConfig(TwoHopConfig):
     max_steps: int = 4
     min_steps: int = 2
     start_amounts: tuple[tuple[str, int], ...] = ()
+    size_ranges: tuple[tuple[str, int, int], ...] = ()
+    size_grid_points: int = 17
+    size_refinement_iterations: int = 16
 
 
 def overlapping_slipstream_pairs(inventory: dict[str, Any]) -> list[tuple[dict[str, Any], dict[str, Any]]]:
@@ -298,9 +302,50 @@ async def scan_three_hop(config: ThreeHopConfig) -> dict[str, Any]:
             "warning": "Research only: V2 transfer-tax, all gas conversion, token risk, and execution permission are excluded."}
 
 
+async def _quote_cycle(
+    rpc: ReadOnlyRpc, block: int, path: list[tuple[str, dict[str, Any], str, str]],
+    amount: int, current_v2: dict[str, dict[str, int]],
+) -> tuple[int, int] | None:
+    value, quoted_gas, valid = amount, 0, True
+    try:
+        for venue, pool, token_in, token_out in path:
+            if venue in ("velodrome_v2", "uniswap_v2"):
+                current = current_v2.get(pool["address"].lower())
+                if current is None:
+                    valid = False; break
+                if pool.get("stable"):
+                    value = await _quote_stable_v2(rpc, block, token_in, token_out, value)
+                else:
+                    r_in, r_out = ((current["reserve0"], current["reserve1"])
+                                   if token_in == pool["token0"].lower()
+                                   else (current["reserve1"], current["reserve0"]))
+                    value = constant_product_out(value, r_in, r_out, current["fee_bps"])
+                    if value is None:
+                        valid = False; break
+            elif venue == "slipstream":
+                quote = await _quote(rpc, block, token_in, token_out, value, int(pool["tick_spacing"]))
+                value, quoted_gas = quote["amount_out"], quoted_gas + quote["gas_estimate"]
+            else:
+                value, gas = await _quote_v4(rpc, block, pool, token_in, value)
+                quoted_gas += gas
+    except RpcError:
+        return None
+    return (value, quoted_gas) if valid and value is not None else None
+
+
 async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
     if not 2 <= config.min_steps <= config.max_steps <= 8:
         raise ValueError("cycle step range must satisfy 2 <= min_steps <= max_steps <= 8")
+    ranges: dict[str, tuple[int, int]] = {}
+    for token, minimum, maximum in config.size_ranges:
+        token = token.lower()
+        if token in ranges or minimum <= 0 or maximum < minimum:
+            raise ValueError("size ranges require a unique token and 0 < minimum <= maximum")
+        if token not in {start.lower() for start in config.starts}:
+            raise ValueError("size range token must be a configured start token")
+        ranges[token] = (minimum, maximum)
+    if config.size_grid_points < 3 or config.size_refinement_iterations < 0:
+        raise ValueError("sizing requires at least 3 grid points and nonnegative refinement iterations")
     amounts_by_start: dict[str, list[int]] = defaultdict(list)
     for token, amount in config.start_amounts:
         amounts_by_start[token.lower()].append(amount)
@@ -308,15 +353,19 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
         amount <= 0 for amounts in amounts_by_start.values() for amount in amounts
     ):
         raise ValueError("amounts must be positive")
-    missing_amounts = [start for start in config.starts if start.lower() not in amounts_by_start and not config.amounts]
+    missing_amounts = [start for start in config.starts
+                       if start.lower() not in amounts_by_start and start.lower() not in ranges and not config.amounts]
     if missing_amounts:
         raise ValueError(f"no amount configured for start tokens: {', '.join(missing_amounts)}")
     inventory = json.loads(config.inventory.read_text(encoding="utf-8"))
     discovery = json.loads(config.v4_discovery.read_text(encoding="utf-8"))
     state = json.loads(config.v4_state.read_text(encoding="utf-8"))
+    if inventory.get("chain_id") != 57073 or discovery.get("chain_id") != 57073 or state.get("chain_id") != 57073:
+        raise ValueError("cycle scan requires Ink inventory, v4 discovery, and v4 state")
     pools = _research_pools(inventory) + _eligible_v4_pools(discovery, state)
     paths = [path for path in cycle_paths(pools, config.starts, config.max_steps) if len(path) >= config.min_steps]
     findings: list[dict[str, Any]] = []
+    sizing: list[dict[str, Any]] = []
     async with ReadOnlyRpc(config.rpc_url) as rpc:
         block = await rpc.block_number()
         sealed = await rpc.sealed_block(block)
@@ -329,31 +378,47 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
         for path in paths:
             path_amounts = (tuple(amounts_by_start[path[0][2]])
                             if path[0][2] in amounts_by_start else config.amounts)
+            quote_cache: dict[int, tuple[int, int] | None] = {}
+
+            async def quote_amount(amount: int) -> tuple[int, int] | None:
+                if amount not in quote_cache:
+                    quote_cache[amount] = await _quote_cycle(rpc, block, path, amount, current_v2)
+                return quote_cache[amount]
+
+            size_metadata = None
+            if path[0][2] in ranges:
+                minimum, maximum = ranges[path[0][2]]
+                # An internal v4 swap opens a delta without taking the start currency.
+                capacity = INT128_MAX if path[0][0] == "uniswap_v4" else flash_balances.get(path[0][2], 0)
+
+                async def quote_output(amount: int) -> int | None:
+                    quoted = await quote_amount(amount)
+                    return quoted[0] if quoted is not None else None
+
+                best = await optimize_size_async(
+                    quote_output, minimum, maximum, capacity,
+                    grid_points=config.size_grid_points,
+                    refinement_iterations=config.size_refinement_iterations,
+                )
+                size_metadata = {
+                    "pools": [edge[1]["address"].lower() for edge in path],
+                    "start_token": path[0][2], "minimum": str(minimum), "maximum": str(maximum),
+                    "evaluations": len(quote_cache),
+                    "failed_quotes": sum(value is None for value in quote_cache.values()),
+                    "status": ("positive_gross_quote" if best is not None else
+                               "flash_balance_unavailable" if path[0][0] != "uniswap_v4" and path[0][2] not in flash_balances else
+                               "insufficient_accounting_capacity" if minimum > INT128_MAX else
+                               "insufficient_initial_capacity" if capacity < minimum else
+                               "all_quotes_failed" if all(value is None for value in quote_cache.values()) else
+                               "no_positive_gross_quote"),
+                    "effective_max": str(min(maximum, capacity, INT128_MAX)),
+                }
+                sizing.append(size_metadata)
+                path_amounts = (best.amount_in,) if best is not None else ()
             for amount in path_amounts:
-                value, quoted_gas, valid = amount, 0, True
-                try:
-                    for venue, pool, token_in, token_out in path:
-                        if venue in ("velodrome_v2", "uniswap_v2"):
-                            current = current_v2.get(pool["address"].lower())
-                            if current is None:
-                                valid = False; break
-                            if pool.get("stable"):
-                                value = await _quote_stable_v2(rpc, block, token_in, token_out, value)
-                            else:
-                                r_in, r_out = ((current["reserve0"], current["reserve1"])
-                                               if token_in == pool["token0"].lower()
-                                               else (current["reserve1"], current["reserve0"]))
-                                value = constant_product_out(value, r_in, r_out, current["fee_bps"])
-                                if value is None:
-                                    valid = False; break
-                        elif venue == "slipstream":
-                            quote = await _quote(rpc, block, token_in, token_out, value, int(pool["tick_spacing"]))
-                            value, quoted_gas = quote["amount_out"], quoted_gas + quote["gas_estimate"]
-                        else:
-                            value, gas = await _quote_v4(rpc, block, pool, token_in, value)
-                            quoted_gas += gas
-                except RpcError:
-                    valid = False
+                quoted = await quote_amount(amount)
+                valid = quoted is not None
+                value, quoted_gas = quoted if quoted is not None else (None, 0)
                 if valid and value is not None:
                     compatible, compatibility_reasons = xarb2_compatibility(path)
                     start_balance = flash_balances.get(path[0][2], 0)
@@ -372,6 +437,7 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                         "initial_take_required": initial_take_required,
                         "flash_capacity_sufficient": capacity_ok,
                         "flash_capacity_reasons": capacity_reasons,
+                        "sizing": size_metadata,
                     })
     return {
         "chain_id": 57073, "source": "sealed_rpc_multi_venue_quotes", "quote_block_number": block,
@@ -379,6 +445,8 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
         "min_steps": config.min_steps, "max_steps": config.max_steps,
         "pool_manager": POOL_MANAGER,
         "start_flash_capacity": {token: str(amount) for token, amount in flash_balances.items()},
-        "structural_cycles": len(paths), "findings": findings,
+        "structural_cycles": len(paths), "findings": findings, "sizing": sizing,
+        "sizing_options": {"grid_points": config.size_grid_points,
+                           "refinement_iterations": config.size_refinement_iterations},
         "warning": "Research only: gross PnL excludes total execution gas, token risk, and execution permission.",
     }

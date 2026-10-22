@@ -1,0 +1,52 @@
+{
+  "chain_id": 57073,
+  "source": "sealed_rpc_multi_venue_quotes",
+  "quote_block_number": 59195160,
+  "quote_block_timestamp": 1792693571,
+  "start_tokens": [
+    "0x0200c29006150606b650577bbe7b6248f58470c1"
+  ],
+  "min_steps": 2,
+  "max_steps": 2,
+  "pool_manager": "0x360e68faccca8ca495c1b759fd9eee466db9fb32",
+  "start_flash_capacity": {
+    "0x0200c29006150606b650577bbe7b6248f58470c1": "1229859210916"
+  },
+  "structural_cycles": 2,
+  "findings": [],
+  "sizing": [
+    {
+      "pools": [
+        "0xfd18e52d312ed3af76617b9103632987f6d50e9f",
+        "0x565d43daf06d7a2fbe600b2d063a369572c5ee3e"
+      ],
+      "start_token": "0x0200c29006150606b650577bbe7b6248f58470c1",
+      "minimum": "100000",
+      "maximum": "100000000",
+      "evaluations": 36,
+      "failed_quotes": 0,
+      "status": "no_positive_gross_quote",
+      "effective_max": "100000000"
+    },
+    {
+      "pools": [
+        "0x565d43daf06d7a2fbe600b2d063a369572c5ee3e",
+        "0xfd18e52d312ed3af76617b9103632987f6d50e9f"
+      ],
+      "start_token": "0x0200c29006150606b650577bbe7b6248f58470c1",
+      "minimum": "100000",
+      "maximum": "100000000",
+      "evaluations": 36,
+      "failed_quotes": 0,
+      "status": "no_positive_gross_quote",
+      "effective_max": "100000000"
+    }
+  ],
+  "warning": "Research only: gross PnL excludes total execution gas, token risk, and execution permission.",
+  "validation_scope": "Two-step cycles from current V2/Slipstream inventory; v4 excluded from this bounded smoke check.",
+  "sizing_options": {
+    "grid_points": 17,
+    "refinement_iterations": 16
+  },
+  "inventory_block_number": 59195083
+}
