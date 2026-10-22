@@ -163,6 +163,13 @@ def xarb2_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tup
     return not reasons, list(dict.fromkeys(reasons))
 
 
+def ink_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tuple[bool, list[str]]:
+    """InkArb supports native stable V2 steps; upstream XArb2 does not."""
+    reasons = [f"unsupported_venue:{venue}" for venue, _pool, _token_in, _token_out in path
+               if venue not in ("velodrome_v2", "uniswap_v2", "slipstream", "uniswap_v4")]
+    return not reasons, list(dict.fromkeys(reasons))
+
+
 def initial_flash_capacity(
     path: list[tuple[str, dict[str, Any], str, str]], amount: int, pool_manager_balance: int
 ) -> tuple[bool, bool, list[str]]:
@@ -421,6 +428,7 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                 value, quoted_gas = quoted if quoted is not None else (None, 0)
                 if valid and value is not None:
                     compatible, compatibility_reasons = xarb2_compatibility(path)
+                    ink_compatible, ink_reasons = ink_compatibility(path)
                     start_balance = flash_balances.get(path[0][2], 0)
                     capacity_ok, initial_take_required, capacity_reasons = initial_flash_capacity(
                         path, amount, start_balance
@@ -433,6 +441,8 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                         "profitable_before_gas": value > amount, "quoter_gas_estimate": quoted_gas,
                         "xarb2_execution_compatible": compatible,
                         "xarb2_incompatibility_reasons": compatibility_reasons,
+                        "ink_execution_compatible": ink_compatible,
+                        "ink_incompatibility_reasons": ink_reasons,
                         "pool_manager_balance": str(start_balance),
                         "initial_take_required": initial_take_required,
                         "flash_capacity_sufficient": capacity_ok,

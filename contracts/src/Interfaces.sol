@@ -50,3 +50,7 @@ interface IERC4626 {
     function deposit(uint256 assets, address receiver) external returns (uint256 shares);
     function redeem(uint256 shares, address receiver, address owner) external returns (uint256 assets);
 }
+
+interface IVelodromePair is IV2Pair {
+    function getAmountOut(uint256 amountIn, address tokenIn) external view returns (uint256);
+}

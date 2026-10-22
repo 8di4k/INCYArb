@@ -90,6 +90,16 @@ contract Pair {
     }
 }
 
+// A distinct quote function ensures stable steps cannot accidentally use the volatile 30 bps formula.
+contract StablePair is Pair {
+    constructor(Token a, Token b, uint112 x, uint112 y) Pair(a,b,x,y) {}
+    function getAmountOut(uint256 amount, address input) external view returns (uint256) {
+        (uint256 reserveIn, uint256 reserveOut) = input == address(token0) ? (r0,r1) : (r1,r0);
+        uint256 afterFee=amount*9300;
+        return afterFee*reserveOut/(reserveIn*10000+afterFee);
+    }
+}
+
 contract EvilPool {
     uint256 public mode;
     function setMode(uint256 next) external { mode=next; }
@@ -154,6 +164,25 @@ contract InkArbTest {
         bytes memory first=abi.encodePacked(uint8(2),address(b),uint24(3000),int24(60),address(0));
         uint256 profit=run(bytes.concat(header(1000,1),first,v2(p2,a)));
         require(profit > 900 && a.balanceOf(PAYOUT)==profit,"delta-funded payout");
+    }
+    function stable(Pair pool, Token output) internal pure returns (bytes memory) {
+        return abi.encodePacked(uint8(5),address(pool),address(output));
+    }
+    function testStableFirstUsesPoolQuoteAndPaysExactProfit() public {
+        StablePair pool=new StablePair(a,b,100000,200000);
+        a.mint(address(pool),100000); b.mint(address(pool),200000);
+        uint256 profit=run(bytes.concat(header(1000,1),stable(pool,b),v2(p2,a)));
+        require(profit > 750 && profit < 850,"must use distinct pool quote");
+        require(a.balanceOf(PAYOUT)==profit,"payout");
+        require(manager.delta(manager.key(address(arb),address(b)))==0,"settle");
+    }
+    function testStableSecondReceivesPreviousOutputDirectly() public {
+        StablePair pool=new StablePair(a,b,100000,100000);
+        a.mint(address(pool),100000); b.mint(address(pool),100000);
+        uint256 profit=run(bytes.concat(header(1000,1),v2(p1,b),stable(pool,a)));
+        require(profit > 750 && profit < 850,"must quote actual placed input");
+        require(a.balanceOf(PAYOUT)==profit,"payout");
+        require(a.balanceOf(address(arb))==0 && b.balanceOf(address(arb))==0,"no executor balance");
     }
     function testRejectsUnauthorizedExecute() public {
         bytes memory data=bytes.concat(header(1000,0),v2(p1,b),v2(p2,a));

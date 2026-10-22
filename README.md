@@ -257,8 +257,8 @@ PoolManager; для первого v4-шага учитывается `int128`, 
 
 В новом scan каждый finding содержит `simulation_route` с определениями шагов
 и V2 fee, прочитанной на quote block. Старые captures без этого поля нужно
-пересоздать. Симулятор принимает volatile V2, Slipstream и v4 с нулевыми hooks
-и статической fee; stable Velodrome V2 и adapters отклоняются.
+пересоздать. Симулятор принимает volatile V2, stable Velodrome V2, Slipstream и
+v4 с нулевыми hooks и статической fee; adapters и native currencies отклоняются.
 
 `InkArb` — производный от `Arbitr/XArb2` контракт без X Layer-адаптеров.
 Сначала `eth_call` конструктора создаёт runtime с Ink PoolManager в immutable;
@@ -308,3 +308,19 @@ python -m pytest
 net PnL не объявляется. Недоступность fee oracle или оценки газа тоже исключает
 такое заключение. Убыточный откат не получает оценку газа успешной сделки.
 Оценка не включает деплой, подготовку капитала или внешний вывод средств.
+
+
+## Stable Velodrome V2 в симуляции
+
+Для stable-пары InkArb использует отдельный packed kind `5 | pool(20) | tokenOut(20)`.
+Он читает фактически поступивший в пару input (`balanceOf - reserveIn`) и
+вызывает её `getAmountOut(input, tokenIn)`. Так используется invariant,
+нормализация decimals и текущая fee самой пары. Формула volatile V2 и её
+упакованная fee к этому шагу не применяются. Выход может сразу передаваться
+на следующий V2/stable V2 пул; финальная прибыль и все дельты по-прежнему
+проверяются внутри одного `PoolManager.unlock`.
+
+`ink_execution_compatible` отражает поддержку текущим InkArb. Поле
+`xarb2_execution_compatible` сохраняет совместимость с исходным X Layer XArb2,
+который stable kind не поддерживает. Доступность этого шага расширяет
+исследовательское покрытие и не заменяет token/pool allowlist для торговли.
