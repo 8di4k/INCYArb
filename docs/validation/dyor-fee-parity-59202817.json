@@ -1,0 +1,20 @@
+{
+  "quote_block_number": 59202817,
+  "quote_block_hash": "0xf6735a4ba9f67d90fe65ab0cbc32d6afe371d6fd176e7f7b1ce727cde430fb69",
+  "dyor_runtime_hashes": {
+    "0x70235c53d7bc6fb43250cf739ae029e8023a5101": "0xe21efb434c9e1a20cdd4d9df255bcade55c20e175c5d23b27f7fc3290ca96ef1",
+    "0x73a09cd53871b2ac4f5e08b89eb2e25e1959d92a": "0xe21efb434c9e1a20cdd4d9df255bcade55c20e175c5d23b27f7fc3290ca96ef1"
+  },
+  "local_study": {
+    "pools": 6,
+    "cycles": 8,
+    "positive_gross": 0
+  },
+  "fee_parity_matches": 11,
+  "understated_fee_K_reverts": 3,
+  "warning": "Losing routes confirm fee arithmetic, not profitability. One stablecoin-input sample and its negative control failed for insufficient PoolManager funds, so they are not fee confirmations.",
+  "file": "dyor-fee-parity-59202817.json.gz",
+  "sha256": "40924cb2f6592eb6a899c28afb65538fcc87b3e5173dff80cc9abf88b2d951ae",
+  "raw_sha256": "a461774908122b1e0ea1fae714edfc5174231adb77f8592fb94cb0f6561415af",
+  "registered_runtime_validation": "NegativeProfit with quote_difference=0"
+}

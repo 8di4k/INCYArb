@@ -10,12 +10,12 @@ from typing import Any, Iterable
 
 from .abi import ReadCall, decode_result, encode_call
 from .observer import INK_RPC
+from .dyor import DYORSWAP_FACTORY, dyor_fee_metadata
 from .rpc import ReadOnlyRpc
 
 VELODROME_V2_FACTORY = "0x31832f2a97fd20664d76cc421207669b55ce4bc0"
 SLIPSTREAM_FACTORY = "0x718e46d0962a66942e233760a8bd6038ce54edcd"
 UNISWAP_V2_FACTORY = "0xfe57a6ba1951f69ae2ed4abe23e0f095df500c04"
-DYORSWAP_FACTORY = "0x6c86ab200661512fdbd27da4bb87df15609a2806"
 
 
 @dataclass(frozen=True)
@@ -184,6 +184,10 @@ async def _uniswap_style_v2_pools(
             "has_nonzero_reserves": reserve0 > 0 and reserve1 > 0,
             "recently_updated": reserve_age <= max_stale_seconds,
         })
+    if factory == DYORSWAP_FACTORY:
+        for pair in out:
+            if pair["has_nonzero_reserves"] and pair["recently_updated"]:
+                pair.update(await dyor_fee_metadata(rpc, pair["address"], block))
     return out
 
 
@@ -225,6 +229,8 @@ async def _slipstream_pools(rpc: ReadOnlyRpc, block: int, batch_size: int) -> li
 async def build_inventory(config: InventoryConfig) -> dict[str, Any]:
     """Write a single block-pinned inventory; no transaction is constructed or sent."""
     async with ReadOnlyRpc(config.rpc_url) as rpc:
+        if await rpc.chain_id() != 57073:
+            raise ValueError("inventory requires Ink RPC")
         block = await rpc.block_number()
         sealed = await rpc.sealed_block(block)
         if sealed is None:
@@ -248,9 +254,13 @@ async def build_inventory(config: InventoryConfig) -> dict[str, Any]:
             for side in ("token0", "token1")
         }
         token_metadata = await _token_metadata(rpc, tokens, block, config.batch_size)
+        after = await rpc.sealed_block(block)
+        if not after or after.get("hash") != sealed.get("hash"):
+            raise RuntimeError("inventory block replaced during reads")
     output = {
         "chain_id": 57073,
         "block_number": block,
+        "block_hash": sealed["hash"],
         "block_timestamp": block_timestamp,
         "generated_at_unix": time.time(),
         "tokens": token_metadata,
@@ -270,6 +280,7 @@ async def build_inventory(config: InventoryConfig) -> dict[str, Any]:
             "dyorswap_v2_total": len(dyorswap_v2),
             "dyorswap_v2_nonzero_reserves": sum(pool["has_nonzero_reserves"] for pool in dyorswap_v2),
             "dyorswap_v2_recently_updated": sum(pool["recently_updated"] for pool in dyorswap_v2),
+            "dyorswap_v2_recognized_fee": sum(pool.get("fee_model") == "recognized_dyor_30bps_runtime" for pool in dyorswap_v2),
             "freshness_window_seconds": config.max_stale_seconds,
         },
     }

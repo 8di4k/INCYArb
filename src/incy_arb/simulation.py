@@ -12,6 +12,7 @@ from eth_utils import is_address, keccak
 
 from .abi import decode_result, encode_call, function_selector, hex_bytes
 from .flash_credit import INT128_MAX, NATIVE_CURRENCY, POOL_MANAGER
+from .dyor import dyor_fee_metadata
 from .fees import assess_net_profit, fee_budget
 from .rpc import ReadOnlyRpc, RpcError
 
@@ -60,7 +61,7 @@ def encode_simulation_route(route: dict[str, Any], block: int, min_profit: int =
             raise ValueError("native currency is supported only by v4 steps")
         if venue == "slipstream":
             packed += b"\x01" + _address(identity) + _address(output)
-        elif venue in ("uniswap_v2", "velodrome_v2"):
+        elif venue in ("uniswap_v2", "velodrome_v2", "dyorswap_v2"):
             if pool.get("stable"):
                 if venue != "velodrome_v2":
                     raise ValueError("stable execution kind is only supported for Velodrome V2")
@@ -145,6 +146,11 @@ async def simulate_finding(
         raise RuntimeError("could not pin simulation block hash")
     if scan.get("quote_block_hash") and scan["quote_block_hash"] != before["hash"]:
         raise RuntimeError("scan block hash no longer matches the simulation block; rescan")
+    for step in finding["simulation_route"]["steps"]:
+        if step["venue"] == "dyorswap_v2":
+            metadata = await dyor_fee_metadata(rpc, step["pool"]["address"], block)
+            if metadata["fee_bps"] != step["pool"].get("fee_bps") or metadata["fee_bps"] is None:
+                raise ValueError("DyorSwap simulation requires a recognized pinned runtime and matching fee")
     if await rpc.code_at(SIM_ADDRESS, block) != "0x" or await rpc.code_at(SIM_CALLER, block) != "0x":
         raise RuntimeError("simulation placeholder addresses are occupied")
     artifact = json.loads(files("incy_arb").joinpath("artifacts/InkArb.json").read_text())

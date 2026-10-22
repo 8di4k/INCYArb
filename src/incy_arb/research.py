@@ -1,7 +1,6 @@
 """Read-only structural route research.  Output is never an execution instruction."""
 from __future__ import annotations
 
-import asyncio
 import json
 import logging
 from collections import defaultdict
@@ -13,6 +12,7 @@ from .abi import ReadCall, decode_result, encode_call
 from .inventory import VELODROME_V2_FACTORY
 from .observer import INK_RPC
 from .quotes import SLIPSTREAM_QUOTER, constant_product_out, decode_slipstream_quote
+from .dyor import DYOR_30BPS_RUNTIME_HASH, DYORSWAP_FACTORY, dyor_fee_metadata
 from .rpc import PinnedQuoteCache, ReadOnlyRpc, RpcError
 from .flash_credit import INT128_MAX, NATIVE_CURRENCY, POOL_MANAGER
 from .sizing import optimize_size_async
@@ -110,6 +110,10 @@ def _research_pools(inventory: dict[str, Any]) -> list[tuple[str, dict[str, Any]
          if pool.get("has_nonzero_reserves") and pool.get("recently_updated")]
         + [("uniswap_v2", pool) for pool in inventory.get("uniswap_v2", [])
            if pool.get("has_nonzero_reserves") and pool.get("recently_updated") and pool.get("fee_bps") is not None]
+        + [("dyorswap_v2", pool) for pool in inventory.get("dyorswap_v2", [])
+           if pool.get("has_nonzero_reserves") and pool.get("recently_updated")
+           and pool.get("factory", "").lower() == DYORSWAP_FACTORY
+           and pool.get("runtime_code_hash") == DYOR_30BPS_RUNTIME_HASH and pool.get("fee_bps") == 30]
         + [("slipstream", pool) for pool in inventory.get("slipstream", []) if pool.get("has_positive_liquidity")]
     )
 
@@ -166,7 +170,7 @@ def xarb2_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tup
             reasons.append("native_currency_unsupported_by_xarb2")
         if venue == "velodrome_v2" and pool.get("stable"):
             reasons.append("velodrome_stable_requires_new_adapter")
-        elif venue not in ("velodrome_v2", "uniswap_v2", "slipstream", "uniswap_v4"):
+        elif venue not in ("velodrome_v2", "uniswap_v2", "dyorswap_v2", "slipstream", "uniswap_v4"):
             reasons.append(f"unsupported_venue:{venue}")
     return not reasons, list(dict.fromkeys(reasons))
 
@@ -175,7 +179,7 @@ def ink_compatibility(path: list[tuple[str, dict[str, Any], str, str]]) -> tuple
     """External steps require ERC-20; native currency remains internal to v4 until payout."""
     reasons = []
     for venue, _pool, token_in, token_out in path:
-        if venue not in ("velodrome_v2", "uniswap_v2", "slipstream", "uniswap_v4"):
+        if venue not in ("velodrome_v2", "uniswap_v2", "dyorswap_v2", "slipstream", "uniswap_v4"):
             reasons.append(f"unsupported_venue:{venue}")
         if venue != "uniswap_v4" and NATIVE_CURRENCY in (token_in.lower(), token_out.lower()):
             reasons.append("native_currency_requires_v4_step")
@@ -248,6 +252,8 @@ async def _current_v2(
         if venue == "velodrome_v2":
             fee_ok, fee = data[f"{address}:fee"]
             fee_bps = decode_result(["uint256"], fee)[0] if fee_ok else None
+        elif venue == "dyorswap_v2":
+            fee_bps = (await dyor_fee_metadata(rpc, address, block))["fee_bps"]
         else:
             fee_bps = pool.get("fee_bps")
         if reserves_ok and fee_bps is not None:
@@ -291,14 +297,14 @@ async def scan_three_hop(config: ThreeHopConfig) -> dict[str, Any]:
         if sealed is None:
             raise RuntimeError("could not pin a sealed block")
         current_v2 = await _current_v2(
-            rpc, block, [(venue, pool) for venue, pool in pools if venue in ("velodrome_v2", "uniswap_v2")]
+            rpc, block, [(venue, pool) for venue, pool in pools if venue in ("velodrome_v2", "uniswap_v2", "dyorswap_v2")]
         )
         for path in paths:
             for amount in config.amounts:
                 value, gas = amount, 0
                 valid = True
                 for venue, pool, token_in, token_out in path:
-                    if venue in ("velodrome_v2", "uniswap_v2"):
+                    if venue in ("velodrome_v2", "uniswap_v2", "dyorswap_v2"):
                         state = current_v2.get(pool["address"].lower())
                         if state is None:
                             valid = False; break
@@ -334,7 +340,7 @@ async def _quote_cycle(
         for venue, pool, token_in, token_out in path:
             if value <= 0:
                 return None
-            if venue in ("velodrome_v2", "uniswap_v2"):
+            if venue in ("velodrome_v2", "uniswap_v2", "dyorswap_v2"):
                 current = current_v2.get(pool["address"].lower())
                 if current is None:
                     valid = False; break
@@ -401,7 +407,7 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
         if sealed is None or not sealed.get("hash"):
             raise RuntimeError("could not pin a sealed block")
         current_v2 = await _current_v2(
-            rpc, block, [(venue, pool) for venue, pool in pools if venue in ("velodrome_v2", "uniswap_v2")]
+            rpc, block, [(venue, pool) for venue, pool in pools if venue in ("velodrome_v2", "uniswap_v2", "dyorswap_v2")]
         )
         flash_balances = await _flash_balances(rpc, block, config.starts)
         quote_rpc = PinnedQuoteCache(rpc, block)
@@ -475,7 +481,7 @@ async def scan_cycles(config: CycleScanConfig) -> dict[str, Any]:
                             "start_token": path[0][2], "amount_in": str(amount),
                             "steps": [{"venue": venue,
                                        "pool": ({**pool, "fee_bps": current_v2[pool["address"].lower()]["fee_bps"]}
-                                                if venue in ("velodrome_v2", "uniswap_v2") else pool),
+                                                if venue in ("velodrome_v2", "uniswap_v2", "dyorswap_v2") else pool),
                                        "token_in": token_in, "token_out": token_out}
                                       for venue, pool, token_in, token_out in path],
                         },

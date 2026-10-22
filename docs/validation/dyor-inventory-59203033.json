@@ -1,0 +1,22 @@
+{
+  "block_number": 59203033,
+  "block_hash": "0x7d27e893b3a8aa604b0545f8ed91df61d074865c1d2f2b5f883ff7b572c74a9a",
+  "summary": {
+    "velodrome_v2_total": 130,
+    "velodrome_v2_nonzero_reserves": 129,
+    "velodrome_v2_recently_updated": 32,
+    "slipstream_total": 26,
+    "slipstream_positive_liquidity": 9,
+    "uniswap_v2_total": 66,
+    "uniswap_v2_nonzero_reserves": 19,
+    "uniswap_v2_recently_updated": 3,
+    "dyorswap_v2_total": 447,
+    "dyorswap_v2_nonzero_reserves": 346,
+    "dyorswap_v2_recently_updated": 19,
+    "dyorswap_v2_recognized_fee": 19,
+    "freshness_window_seconds": 86400
+  },
+  "file": "dyor-inventory-59203033.json.gz",
+  "sha256": "9c76d2908940219bf3cbe683bcbb953035baa086d0076093684b94507c38105d",
+  "raw_sha256": "50e3ec7a806abc4f08746880915eda7a231ae404ec5c7d6d5ba4c21191c6d053"
+}

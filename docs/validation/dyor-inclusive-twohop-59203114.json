@@ -1,0 +1,11 @@
+{
+  "quote_block_number": 59203114,
+  "quote_block_hash": "0xf9cf49f2ce6b8e2f2bbc8c1ef4aa6b1853294f5ddd1a566cf0a57ca0874670bb",
+  "structural_cycles": 22,
+  "quoted_cycles": 22,
+  "dyor_cycles": 10,
+  "positive_gross": 0,
+  "file": "dyor-inclusive-twohop-59203114.json.gz",
+  "sha256": "0a285e20573c13f352de9340d5c2f3fbc0c97882e9ae72d0a96320cefb039db4",
+  "raw_sha256": "7edb5edbf7570f07b2a0271ff4128362730e1596b7834a6f341cc7bb335c0b0a"
+}
