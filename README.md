@@ -1,8 +1,13 @@
 # INCYArb
 
-Первый компонент переноса Arbitr на Ink — read-only observer. Он захватывает
-subblocks, сохраняет исходные сообщения для дальнейшего replay и сверяет каждый
-полностью увиденный payload с sealed блоком через HTTP RPC.
+Перенос Arbitr на Ink. Целевая стратегия — атомарные круги между площадкой
+с внешней оракульной ценой и AMM либо между двумя такими площадками, с
+финансированием через Uniswap v4. Круги только через пулы исключены из целевой
+стратегии; накопленные AMM replay и paper-результаты служат диагностикой.
+
+Уже реализованы read-only observer, inventory, модели пулов, replay и EVM
+симуляции. Пригодная оракульная сторона на Ink пока не подтверждена:
+[проверка площадок и xStocks](docs/Oracle-venues-Ink.md).
 
 Observer не содержит private key, подписи, `eth_sendRawTransaction` или кода
 исполнения сделок.
@@ -32,8 +37,23 @@ cd /workspace/INCYArb
 - raw transaction сравнивается с sealed `transactions` через `keccak(raw)`;
 - HTTP клиент реализует только read methods, нужные observer.
 
-Inventory пулов, котировки и paper-engine будут следующими слоями поверх этих
-проверенных captures.
+Inventory, котировки и offline paper-search используют эти проверенные captures.
+
+## Проверка оракульной площадки
+
+```bash
+/workspace/.venvs/arbitr/bin/python -m incy_arb oracle-venue-snapshot \
+  --inventory data/ink-pools.json --block-number 59205232 \
+  --output data/ink-oracle-venue.json
+```
+
+По умолчанию проверяется обнаруженный Kaliber: пары перечисляются целиком
+с ограничением числа страниц, адреса определяются только по точному хэшу пары
+из переданного inventory, обе стороны котируются на одном блоке. Неизвестные
+пары остаются неразрешёнными, revert сохраняется как ошибка. Смена hash блока
+прерывает проверку. `--venue` предназначен для кандидатов с тем же ABI; наличие
+кода или положительной котировки не подтверждает доступ, комиссии, атомарное
+исполнение или прибыль.
 
 ## Inventory AMM
 
