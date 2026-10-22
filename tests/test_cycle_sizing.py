@@ -48,12 +48,15 @@ def scan_setup(tmp_path, monkeypatch):
         async def __aexit__(self, *args):
             pass
 
+        async def chain_id(self):
+            return 57073
+
         async def block_number(self):
             return 123
 
         async def sealed_block(self, block):
             assert block == 123
-            return {'timestamp': '0x100'}
+            return {'timestamp': '0x100', 'hash': '0xaa'}
 
     async def current(rpc, block, pools):
         assert block == 123
@@ -163,3 +166,24 @@ def test_missing_balance_does_not_claim_observed_zero_balance(scan_setup, monkey
     assert result['findings'] == []
     assert all(row['status'] == 'flash_balance_unavailable' and row['evaluations'] == 0
                for row in result['sizing'])
+
+
+def test_scan_rejects_wrong_rpc_chain_before_quoting(scan_setup, monkeypatch):
+    parent = research.ReadOnlyRpc
+    class WrongChain(parent):
+        async def chain_id(self): return 196
+    monkeypatch.setattr(research,'ReadOnlyRpc',WrongChain)
+    with pytest.raises(ValueError,match='chain ID'):
+        asyncio.run(research.scan_cycles(scan_setup))
+
+
+def test_scan_discards_findings_if_its_pinned_block_is_replaced(scan_setup, monkeypatch):
+    parent = research.ReadOnlyRpc
+    class Reorg(parent):
+        def __init__(self,url): self.reads=0
+        async def sealed_block(self,block):
+            self.reads += 1
+            return {'hash': '0xaa' if self.reads == 1 else '0xbb','timestamp': '0x100'}
+    monkeypatch.setattr(research,'ReadOnlyRpc',Reorg)
+    with pytest.raises(RuntimeError,match='discard findings'):
+        asyncio.run(research.scan_cycles(scan_setup))

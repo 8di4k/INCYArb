@@ -80,6 +80,8 @@ class ReadOnlyRpc:
                 raise RpcError("eth_call returned non-hex result")
             except RpcError as exc:
                 last_error = exc
+                if exc.code in (3, -32601, -32602):
+                    raise  # Execution reverts and invalid/unsupported methods are deterministic.
                 if attempt + 1 < attempts:
                     await asyncio.sleep(0.3 * (attempt + 1))
         assert last_error is not None
@@ -120,3 +122,39 @@ class ReadOnlyRpc:
             if wait > 0:
                 await asyncio.sleep(wait)
             self._next_request_at = asyncio.get_running_loop().time() + 1 / self.requests_per_second
+
+
+class PinnedQuoteCache:
+    """Bounded cache for independent quotes at one sealed block, never simulation overrides."""
+
+    def __init__(self, rpc: ReadOnlyRpc, block: int, max_entries: int = 20_000) -> None:
+        if block < 0 or max_entries < 1:
+            raise ValueError("nonnegative pinned block and positive cache limit required")
+        self.rpc, self.block, self.max_entries = rpc, block, max_entries
+        self.entries: dict[tuple[str, bytes], str | RpcError] = {}
+        self.hits = 0
+        self.misses = 0
+
+    async def contract_call(self, target: str, data: bytes, block: int | str = "latest", attempts: int = 4) -> str:
+        if block != self.block:
+            raise ValueError("quote cache accepts only its pinned sealed block")
+        key = (target.lower(), data)
+        if key in self.entries:
+            self.hits += 1
+            cached = self.entries[key]
+            if isinstance(cached, RpcError):
+                raise RpcError(str(cached), code=cached.code, data=cached.data)
+            return cached
+        self.misses += 1
+        try:
+            value = await self.rpc.contract_call(target, data, block, attempts)
+        except RpcError as error:
+            if error.code == 3 and len(self.entries) < self.max_entries:
+                self.entries[key] = RpcError(str(error), code=error.code, data=error.data)
+            raise
+        if len(self.entries) < self.max_entries:
+            self.entries[key] = value
+        return value
+
+    def summary(self) -> dict[str, int]:
+        return {"hits": self.hits, "misses": self.misses, "entries": len(self.entries), "max_entries": self.max_entries}

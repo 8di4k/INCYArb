@@ -135,6 +135,8 @@ async def simulate_finding(
     before = await rpc.sealed_block(block)
     if not before or not before.get("hash"):
         raise RuntimeError("could not pin simulation block hash")
+    if scan.get("quote_block_hash") and scan["quote_block_hash"] != before["hash"]:
+        raise RuntimeError("scan block hash no longer matches the simulation block; rescan")
     if await rpc.code_at(SIM_ADDRESS, block) != "0x" or await rpc.code_at(SIM_CALLER, block) != "0x":
         raise RuntimeError("simulation placeholder addresses are occupied")
     artifact = json.loads(files("incy_arb").joinpath("artifacts/InkArb.json").read_text())
