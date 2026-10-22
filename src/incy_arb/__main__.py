@@ -21,6 +21,7 @@ from .v4_replay import read_scan, verify_v4_replay
 from .subblock_replay import verify_subblock_replay
 from .paper_search import paper_search
 from .timing import summarize_timing, read_timing_capture
+from .oracle_research import OracleSnapshotConfig, KALIBER_INK, snapshot_oracle_venue
 
 
 def _start_amount(value: str) -> tuple[str, int]:
@@ -172,6 +173,12 @@ def main() -> int:
     timing = subparsers.add_parser("capture-timing", help="summarize local message arrival and verification timing")
     timing.add_argument("--capture", type=Path, required=True)
     timing.add_argument("--output", type=Path, default=Path("data/ink-capture-timing.json"))
+    oracle = subparsers.add_parser("oracle-venue-snapshot", help="inspect registered oracle venue pairs and pinned quotes")
+    oracle.add_argument("--inventory", type=Path, required=True)
+    oracle.add_argument("--venue", default=KALIBER_INK)
+    oracle.add_argument("--block-number", type=int)
+    oracle.add_argument("--rpc-url", default=INK_RPC)
+    oracle.add_argument("--output", type=Path, default=Path("data/ink-oracle-venue.json"))
     flash = subparsers.add_parser("flash-capacity", help="snapshot PoolManager token balances at one sealed block")
     flash.add_argument("--token", action="append", required=True)
     flash.add_argument("--output", type=Path, default=FlashCapacityConfig.output)
@@ -245,6 +252,9 @@ def main() -> int:
                 json.loads(args.scan.read_text()), args.rpc_url, args.finding, args.step,
                 tuple(args.amount0), tuple(args.amount1), args.words_around,
             ))
+        elif args.command == "oracle-venue-snapshot":
+            result = asyncio.run(snapshot_oracle_venue(OracleSnapshotConfig(
+                args.inventory, args.venue, args.block_number, args.rpc_url)))
         elif args.command == "capture-timing":
             result = summarize_timing(read_timing_capture(args.capture))
         elif args.command == "paper-subblock-search":
@@ -269,7 +279,7 @@ def main() -> int:
                       "balances": flash_result["balances"]}
     except KeyboardInterrupt:
         return 130
-    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity", "local-v4-scan", "v4-replay", "subblock-v4-replay", "paper-subblock-search", "capture-timing") and args.output:
+    if args.command in ("scan-cycles", "simulate-cycle", "cl-parity", "local-v4-scan", "v4-replay", "subblock-v4-replay", "paper-subblock-search", "capture-timing", "oracle-venue-snapshot") and args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2) + "\n")
         if "summary" in result:

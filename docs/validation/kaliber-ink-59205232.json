@@ -1,0 +1,88 @@
+{
+  "chain_id": 57073,
+  "source": "pinned_oracle_venue_inventory_and_quote_probe",
+  "venue": "0xf639cf213b63f7e77d699ff686d591c0ba55fc63",
+  "block_number": 59205232,
+  "block_hash": "0x771ac7eeb4305acb266b0ef633d5ee2b73e95d4f1c31b56a6d793001aa8e4c3e",
+  "runtime_code_hash": "0xffbc0e738b4d4d5275d847a6949a49e1c3de31769cc0fcea4e4a6541752eba41",
+  "runtime_code_bytes": 22042,
+  "enumeration_complete": true,
+  "asset_scope": "Input inventory token addresses only; unmatched registered pair IDs stay unresolved. Symbols do not certify token issuers.",
+  "pools": [
+    {
+      "pair_id": "0x6ee444c16eec064b95d512a539ae8eec901aacf781d43360d6d7c9e703ea6db9",
+      "tokens_resolved": true,
+      "quotes": [
+        {
+          "token_in": "0x4200000000000000000000000000000000000006",
+          "token_out": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "amount_in": "40001000000000",
+          "status": "quote_reverted",
+          "rpc_code": 3,
+          "error": "execution reverted",
+          "revert_data": "0x2af96ae8",
+          "error_selector": "0x2af96ae8"
+        },
+        {
+          "token_in": "0x4200000000000000000000000000000000000006",
+          "token_out": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "amount_in": "400010000000000",
+          "status": "quote_reverted",
+          "rpc_code": 3,
+          "error": "execution reverted",
+          "revert_data": "0x2af96ae8",
+          "error_selector": "0x2af96ae8"
+        },
+        {
+          "token_in": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "token_out": "0x4200000000000000000000000000000000000006",
+          "amount_in": "50100",
+          "status": "quote_reverted",
+          "rpc_code": 3,
+          "error": "execution reverted",
+          "revert_data": "0x2af96ae8",
+          "error_selector": "0x2af96ae8"
+        },
+        {
+          "token_in": "0x2d270e6886d130d724215a266106e6832161eaed",
+          "token_out": "0x4200000000000000000000000000000000000006",
+          "amount_in": "501000",
+          "status": "quote_reverted",
+          "rpc_code": 3,
+          "error": "execution reverted",
+          "revert_data": "0x2af96ae8",
+          "error_selector": "0x2af96ae8"
+        }
+      ],
+      "execution_verified": false,
+      "balances": [
+        "40001000000000000",
+        "50100000"
+      ],
+      "base": "0x4200000000000000000000000000000000000006",
+      "quote": "0x2d270e6886d130d724215a266106e6832161eaed",
+      "base_metadata": {
+        "decimals": 18,
+        "symbol": "WETH"
+      },
+      "quote_metadata": {
+        "decimals": 6,
+        "symbol": "USDC"
+      }
+    }
+  ],
+  "references": {
+    "deployment": "https://github.com/DefiLlama/dimension-adapters/blob/5710ba6f10002d89bdf6c5698e5d7c9d50e4d1d9/dexs/aptos-caliber-prop-amm/index.ts",
+    "abi": "https://github.com/KyberNetwork/kyberswap-dex-lib/blob/b450e6ddc421104cafc4facd686ea55d1b0b7139/pkg/liquidity-source/caliberprop/abi/Caliber.json"
+  },
+  "summary": {
+    "registered_pairs": 1,
+    "resolved_pairs": 1,
+    "positive_balances_pairs": 1,
+    "quote_attempts": 4,
+    "positive_quotes": 0,
+    "reverted_quotes": 4
+  },
+  "strategy_status": "unconfirmed",
+  "warning": "Research only. Deployment and quotes do not establish oracle-lag edge, access/fee terms, atomic swap execution, issuer authenticity or net profitability. Pool-only routes are diagnostics, outside the target oracle-venue strategy."
+}
