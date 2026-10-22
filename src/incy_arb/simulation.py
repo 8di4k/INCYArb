@@ -12,6 +12,7 @@ from eth_utils import is_address, keccak
 
 from .abi import decode_result, encode_call, function_selector, hex_bytes
 from .flash_credit import INT128_MAX, POOL_MANAGER
+from .fees import assess_net_profit, fee_budget
 from .rpc import ReadOnlyRpc, RpcError
 
 SIM_ADDRESS = "0x00000000000000000000000000000000000a4b17"
@@ -115,7 +116,12 @@ def decode_simulation_error(error: RpcError) -> dict[str, Any]:
     return result
 
 
-async def simulate_finding(rpc: ReadOnlyRpc, scan: dict[str, Any], index: int = 0) -> dict[str, Any]:
+async def simulate_finding(
+    rpc: ReadOnlyRpc, scan: dict[str, Any], index: int = 0, *, gas_margin_bps: int = 2000,
+    max_fee: int | None = None, priority_fee: int = 0,
+) -> dict[str, Any]:
+    if not 0 <= gas_margin_bps <= 10_000 or priority_fee < 0 or (max_fee is not None and max_fee < 0):
+        raise ValueError("invalid gas margin or fee caps")
     if scan.get("chain_id") != 57073 or await rpc.chain_id() != 57073:
         raise ValueError("simulation requires Ink scan and RPC chain ID 57073")
     if not 0 <= index < len(scan["findings"]):
@@ -149,6 +155,7 @@ async def simulate_finding(rpc: ReadOnlyRpc, scan: dict[str, Any], index: int = 
     result: dict[str, Any] = {
         "chain_id": 57073, "source": "sealed_eth_call_with_simulator_code_override", "block_number": block,
         "block_hash": before["hash"], "finding_index": index,
+        "start_token": finding["simulation_route"]["start_token"],
         "quoted_gross_pnl": finding["gross_pnl"], "calldata": transaction["data"],
         "creation_sha256": hashlib.sha256(creation).hexdigest(),
         "runtime_keccak256": "0x" + keccak(hex_bytes(runtime)).hex(),
@@ -173,12 +180,29 @@ async def simulate_finding(rpc: ReadOnlyRpc, scan: dict[str, Any], index: int = 
         except RpcError as error:
             result["gas_estimate"] = None
             result["gas_error"] = decode_simulation_error(error)
+    if result["status"] == "success" and result.get("gas_estimate"):
+        gas_limit = min(GAS_LIMIT, (result["gas_estimate"] * (10_000 + gas_margin_bps) + 9999) // 10_000)
+        try:
+            result["fee_budget"] = await fee_budget(rpc, data, SIM_ADDRESS, block, gas_limit,
+                                                   max_fee=max_fee, priority_fee=priority_fee)
+            result["fee_budget"]["gas_margin_bps"] = gas_margin_bps
+        except (RpcError, RuntimeError) as error:
+            result["fee_budget"] = {"status": "unavailable", "error": str(error)}
+    else:
+        result["fee_budget"] = {"status": "not_estimated", "reason": "execution or gas estimate did not succeed"}
+    if result["fee_budget"].get("status") == "estimated" and result["fee_budget"]["block_hash"] != before["hash"]:
+        raise RuntimeError("fee budget block differs from simulation block; discard result")
+    result["net_profit_assessment"] = assess_net_profit(result, result["fee_budget"])
     after = await rpc.sealed_block(block)
     if not after or after.get("hash") != before["hash"]:
         raise RuntimeError("simulation block changed during reads; discard result")
     return result
 
 
-async def simulate_scan(scan: dict[str, Any], rpc_url: str, index: int = 0) -> dict[str, Any]:
+async def simulate_scan(
+    scan: dict[str, Any], rpc_url: str, index: int = 0, *, gas_margin_bps: int = 2000,
+    max_fee: int | None = None, priority_fee: int = 0,
+) -> dict[str, Any]:
     async with ReadOnlyRpc(rpc_url) as rpc:
-        return await simulate_finding(rpc, scan, index)
+        return await simulate_finding(rpc, scan, index, gas_margin_bps=gas_margin_bps,
+                                      max_fee=max_fee, priority_fee=priority_fee)

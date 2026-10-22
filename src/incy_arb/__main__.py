@@ -116,6 +116,9 @@ def main() -> int:
     simulation.add_argument("--finding", type=int, default=0)
     simulation.add_argument("--rpc-url", default=INK_RPC)
     simulation.add_argument("--output", type=Path)
+    simulation.add_argument("--gas-margin-bps", type=int, default=2000)
+    simulation.add_argument("--max-fee-per-gas", type=int, help="wei; defaults to twice the pinned base fee plus priority")
+    simulation.add_argument("--priority-fee-per-gas", type=int, default=0, help="wei")
     flash = subparsers.add_parser("flash-capacity", help="snapshot PoolManager token balances at one sealed block")
     flash.add_argument("--token", action="append", required=True)
     flash.add_argument("--output", type=Path, default=FlashCapacityConfig.output)
@@ -177,7 +180,11 @@ def main() -> int:
                 tuple(args.size_range), args.size_grid_points, args.size_refinement_iterations,
             )))
         elif args.command == "simulate-cycle":
-            result = asyncio.run(simulate_scan(json.loads(args.scan.read_text()), args.rpc_url, args.finding))
+            result = asyncio.run(simulate_scan(
+                json.loads(args.scan.read_text()), args.rpc_url, args.finding,
+                gas_margin_bps=args.gas_margin_bps, max_fee=args.max_fee_per_gas,
+                priority_fee=args.priority_fee_per_gas,
+            ))
         else:
             flash_result = asyncio.run(snapshot_flash_capacity(
                 FlashCapacityConfig(tuple(args.token), args.output, args.rpc_url)

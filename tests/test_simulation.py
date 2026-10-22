@@ -89,7 +89,7 @@ class FakeRpc:
     async def sealed_block(self, block):
         assert block == 123
         self.block_reads += 1
-        return {'hash': '0xbb' if self.reorg and self.block_reads > 1 else '0xaa'}
+        return {'hash': '0xbb' if self.reorg and self.block_reads > 1 else '0xaa', 'baseFeePerGas': '0x5'}
     async def code_at(self, address, block): return '0x'
     async def simulation_call(self, tx, block, overrides):
         assert block == 123
@@ -104,6 +104,9 @@ class FakeRpc:
         if data == function_selector('beneficiary()').hex(): return hex(int(SIM_CALLER,16))
         if isinstance(self.outcome, Exception): raise self.outcome
         return self.outcome
+    async def contract_call(self, target, data, block):
+        assert block == 123
+        return '0x' + encode(['uint256'], [5000]).hex()
     async def simulation_gas(self, tx, block, overrides):
         assert block == 123
         if self.gas_error: raise RpcError('unsupported overrides', code=-32602)
@@ -117,7 +120,9 @@ def test_success_reports_full_transaction_gas_and_quote_difference():
     assert result['simulated_gross_pnl'] == '305' and result['quote_difference'] == '5'
     assert result['gas_estimate'] == 210_000
     assert result['market_state_overridden'] is False
-    assert rpc.block_reads == 2
+    assert rpc.block_reads == 4
+    assert result["fee_budget"]["status"] == "estimated"
+    assert result["net_profit_assessment"]["status"] == "start_token_valuation_required"
 
 
 def test_reverting_loss_preserves_signed_delta_and_does_not_estimate_success_gas():
@@ -167,3 +172,16 @@ def test_committed_artifact_matches_solidity_sources():
         assert hashlib.sha256((root/'contracts'/name).read_bytes()).hexdigest() == expected
     assert artifact['compiler'] == '0.8.28+commit.7893614a'
     assert artifact['storage_layout']['isExecutor'] == {'slot': '2', 'offset': 0}
+
+
+def test_successful_execution_with_failed_fee_oracle_has_no_net_profit_claim():
+    rpc = FakeRpc()
+
+    async def unavailable(*args):
+        raise RpcError('fee oracle unavailable')
+
+    rpc.contract_call = unavailable
+    result = asyncio.run(simulate_finding(rpc, scan()))
+    assert result['status'] == 'success'
+    assert result['fee_budget']['status'] == 'unavailable'
+    assert result['net_profit_assessment']['status'] == 'fee_budget_unavailable'
