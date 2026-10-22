@@ -1,0 +1,67 @@
+{
+  "chain_id": 57073,
+  "quote_block_number": 59203443,
+  "quote_block_hash": "0xf016cebdf030e19831175d97d7fc70a5ed407d0e493902f1ae450be41c42c391",
+  "findings": [
+    {
+      "tokens": [
+        "0x0000000000000000000000000000000000000000",
+        "0x0200c29006150606b650577bbe7b6248f58470c1",
+        "0x0000000000000000000000000000000000000000"
+      ],
+      "pools": [
+        "0x60c6f21c43b62875a8d02c379afeb076205c4bf3b7e9414b9a17789e8f43f827",
+        "0x426354d494b48cc544076d4afe855b5bf224e6a5d4e403bbbf04cbc7f25790b0"
+      ],
+      "venues": [
+        "uniswap_v4",
+        "uniswap_v4"
+      ],
+      "steps": 2,
+      "amount_in": "52226071774735",
+      "amount_out": "52236881580829",
+      "gross_pnl": "10809806094",
+      "profitable_before_gas": true,
+      "initial_take_required": false,
+      "xarb2_execution_compatible": false,
+      "xarb2_incompatibility_reasons": [
+        "native_currency_unsupported_by_xarb2"
+      ],
+      "ink_execution_compatible": true,
+      "ink_incompatibility_reasons": [],
+      "simulation_route": {
+        "start_token": "0x0000000000000000000000000000000000000000",
+        "amount_in": "52226071774735",
+        "steps": [
+          {
+            "venue": "uniswap_v4",
+            "pool": {
+              "address": "0x60c6f21c43b62875a8d02c379afeb076205c4bf3b7e9414b9a17789e8f43f827",
+              "token0": "0x0000000000000000000000000000000000000000",
+              "token1": "0x0200c29006150606b650577bbe7b6248f58470c1",
+              "fee_pips": 75,
+              "tick_spacing": 1,
+              "hooks": "0x0000000000000000000000000000000000000000"
+            },
+            "token_in": "0x0000000000000000000000000000000000000000",
+            "token_out": "0x0200c29006150606b650577bbe7b6248f58470c1"
+          },
+          {
+            "venue": "uniswap_v4",
+            "pool": {
+              "address": "0x426354d494b48cc544076d4afe855b5bf224e6a5d4e403bbbf04cbc7f25790b0",
+              "token0": "0x0000000000000000000000000000000000000000",
+              "token1": "0x0200c29006150606b650577bbe7b6248f58470c1",
+              "fee_pips": 3000,
+              "tick_spacing": 60,
+              "hooks": "0x0000000000000000000000000000000000000000"
+            },
+            "token_in": "0x0200c29006150606b650577bbe7b6248f58470c1",
+            "token_out": "0x0000000000000000000000000000000000000000"
+          }
+        ]
+      }
+    }
+  ],
+  "source": "paper_peak_at_complete_sealed_block_boundary"
+}

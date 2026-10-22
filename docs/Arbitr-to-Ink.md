@@ -1191,3 +1191,42 @@ order против receipt map order, ошибку позднего событи
 source tampering, canonical log order, gaps, reorg и неверную сеть.
 Это post-hoc state reconstruction, не latency benchmark или исполнимый
 prefix trade. Local candidate search на границах ещё не подключён.
+
+
+## 35. Инкрементальный paper search и первый upper-budget-positive historical EVM результат
+
+`paper-subblock-search` считает local full-fill cycles над baseline snapshots
+и применяет проверенные captured pricing prefixes. Baseline block/hash и pricing
+должны совпадать с началом replay, а tracked endpoint — с canonical evidence.
+Сетевой проверки в offline команде нет. При изменении pricing пересчитываются
+только затронутые циклы; leg cache не переносится через обновления модели.
+Сохраняются новые/удалённые/изменённые кандидаты и timeline всех границ.
+Нулевые pricing изменения не запускают новый поиск.
+
+Реальный baseline block 59203420: 44 pools, 128 cycles. На 240 captured boundaries
+два pool updates затронули по 22 cycles. Число positive gross кандидатов
+изменилось 8→10→9, появились два новых и один затем исчез. CPU проход занял
+0,1671 seconds, без загрузки RPC и canonical verification. Две инкрементальные
+переоценки точно совпадают с полным пересчётом всех 128 cycles в тестах.
+
+Peak gross 10809806094 wei находится на block 59203443, subblock index 5 —
+последней границе этого блока. Для этой точки отдельно собран sealed scan
+и выполнена полная InkArb EVM симуляция без market overrides:
+- ETH→USDt0→ETH, input 52226071774735 wei;
+- success, gross 10809806094 wei, quote_difference=0;
+- gas estimate 109143, padded gas limit 130972;
+- L2 maximum 73606264 wei, L1 upper estimate 2484952547 wei, operator 0;
+- total upper fee budget 2558558811 wei, net +8251247283 wei ETH;
+- supplemental content-based net +9329810610 wei.
+
+Это первое в текущем исследовании положительное подтверждение после верхнего
+fee budget, но всего 0,000000008251247283 ETH. Результат исторический,
+hypothetical executor, priority fee 0; deployment и будущее inclusion не учтены.
+Ни подписи, ни отправки транзакции нет. Проверка применима только к этому
+полностью sealed блоку; другие prefix candidates остаются paper gross-only.
+
+Captures: `subblock-search-baseline-59203420.json[.gz]`,
+`subblock-paper-search-59203420.json[.gz]`, `paper-peak-scan-59203443.json`,
+`paper-peak-evm-59203443.json` в docs/validation. 218 Python-тестов проходят,
+включая сравнение incremental/full search, независимый EVM peak reference,
+обнаружение несовместимых snapshots, gaps, duplicates и endpoint tampering.
