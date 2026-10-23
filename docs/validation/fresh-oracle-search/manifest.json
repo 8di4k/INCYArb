@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "scope": "Independent historical eth_call states, no own fills persisted, no inclusion or daily-income proof. Includes selected sizing runs, so total positive calls are not frequency statistics.",
+  "compiler": "solc 0.8.28 optimize runs 200 evm cancun",
+  "source_dependencies": [
+    {
+      "path": "../flash-funded-oracle/FlashPairProbe.sol",
+      "sha256": "10f5cac39f33b4a9edef358c0e7536711d064b95ecbcf657a875cad557d0ae96"
+    }
+  ],
+  "files": [
+    {
+      "path": "FlashPairSearch.sol",
+      "bytes": 5079,
+      "sha256": "93ef02b60cf6938b476391d32270eb1057e73229a95076a13882a3b1b802e3bc"
+    },
+    {
+      "path": "best-block-matrix.json.gz",
+      "bytes": 19685,
+      "sha256": "068d94bd3aff847953f1a26c45f691457c9424135024143b4a581c1533c5a4b1"
+    },
+    {
+      "path": "best-sizing.json.gz",
+      "bytes": 14494,
+      "sha256": "292354a57fabdd7687d24e8bad48c2294d00cdc637bae04a78e10110ff90d8b1"
+    },
+    {
+      "path": "catalog.json.gz",
+      "bytes": 8369,
+      "sha256": "a25ffdab732400c39aa511c1c955815cb0ae15118b2b6265d9914ec081a5b114"
+    },
+    {
+      "path": "frontier-forward.json.gz",
+      "bytes": 1107555,
+      "sha256": "763a73bb57a2d6f86577a4cda499d8ea9266001036b81f14d3d6c88b008f5f11"
+    },
+    {
+      "path": "frontier-reverse.json.gz",
+      "bytes": 1103882,
+      "sha256": "3cc2788558166b493afbbe45d5b269a6f78b2bc5906db7710e5fedab4e9a228b"
+    },
+    {
+      "path": "initial-matrix.json.gz",
+      "bytes": 18138,
+      "sha256": "1c9ea91ecfea4439be3b21a1a030eab2e25acdb20e0d850662e601edbb4f3c04"
+    },
+    {
+      "path": "minimum-profit-verification.json.gz",
+      "bytes": 12705,
+      "sha256": "a60c0e4a93759efe9c7ff360c641fb9051a6883c81c75ed71277b9df0987efa0"
+    },
+    {
+      "path": "quote-and-boards.json.gz",
+      "bytes": 9465,
+      "sha256": "4cc8b9afcb503e7e749a76df089f577c9e3c9cfc73e1e7c663eb805c4ef0db9e"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 4829,
+      "sha256": "85ea7f5a563a88e88d1a8e4bc736d285b3271139944bcbc139441fd3e54753b0"
+    }
+  ]
+}

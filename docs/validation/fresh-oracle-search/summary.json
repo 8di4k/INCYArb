@@ -1,0 +1,167 @@
+{
+  "chain_id": 8453,
+  "windows": {
+    "initial-matrix.json.gz": {
+      "candidates": 135,
+      "successful_complete_and_scored": 16,
+      "positive_estimates": []
+    },
+    "frontier-forward.json.gz": {
+      "candidates": 128,
+      "successful_complete_and_scored": 17,
+      "positive_estimates": [
+        {
+          "block": 52962834,
+          "net_eth_wei": "5358321005626",
+          "amount_raw": "63350000000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962853,
+          "net_eth_wei": "2447187385323",
+          "amount_raw": "63350000000000000",
+          "priority_fee_wei": "1000000"
+        }
+      ]
+    },
+    "frontier-reverse.json.gz": {
+      "candidates": 128,
+      "successful_complete_and_scored": 5,
+      "positive_estimates": []
+    },
+    "best-block-matrix.json.gz": {
+      "candidates": 138,
+      "successful_complete_and_scored": 16,
+      "positive_estimates": [
+        {
+          "block": 52962834,
+          "net_eth_wei": "2088729159811",
+          "amount_raw": "41960782684956003",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "3638760472193",
+          "amount_raw": "52450978356195004",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "5189211392403",
+          "amount_raw": "62941174027434004",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "5155778607584",
+          "amount_raw": "62716500000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "5249330484307",
+          "amount_raw": "63350000000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "1287609159809",
+          "amount_raw": "100000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "2837556472192",
+          "amount_raw": "125000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "4388007392401",
+          "amount_raw": "150000000",
+          "priority_fee_wei": "1000000"
+        }
+      ]
+    },
+    "best-sizing.json.gz": {
+      "candidates": 16,
+      "successful_complete_and_scored": 14,
+      "positive_estimates": [
+        {
+          "block": 52962834,
+          "net_eth_wei": "677789914700",
+          "amount_raw": "31675000000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "3018265264076",
+          "amount_raw": "47512500000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "4422382630571",
+          "amount_raw": "57015000000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "4890561622012",
+          "amount_raw": "60182500000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "5171217252180",
+          "amount_raw": "62083000000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "5264769128903",
+          "amount_raw": "62716500000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "5311545067264",
+          "amount_raw": "63033250000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "5358321005626",
+          "amount_raw": "63350000000000000",
+          "priority_fee_wei": "1000000"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "6052241867000",
+          "amount_raw": "63350000000000000",
+          "priority_fee_wei": "0"
+        },
+        {
+          "block": 52962834,
+          "net_eth_wei": "4066633005626",
+          "amount_raw": "63350000000000000",
+          "priority_fee_wei": "3000000"
+        }
+      ]
+    },
+    "minimum-profit-verification.json.gz": {
+      "candidates": 2,
+      "successful_complete_and_scored": 1,
+      "positive_estimates": [
+        {
+          "block": 52962834,
+          "net_eth_wei": "5357883005626",
+          "amount_raw": "63350000000000000",
+          "priority_fee_wei": "1000000"
+        }
+      ]
+    }
+  },
+  "scope": "Independent historical eth_call states, no own fills persisted, no inclusion or daily-income proof. Includes selected sizing runs, so total positive calls are not frequency statistics.",
+  "total_candidate_calls": 547
+}
