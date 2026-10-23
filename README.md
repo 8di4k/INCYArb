@@ -12,6 +12,8 @@
 В отдельном исследовании Base [полный flash-funded круг Elfomo/Biconomy](docs/Flash-funded-oracle-proof-Base.md)
 дал положительную историческую оценку после возврата долга и сетевых расходов.
 Повторяемая live-доходность и рынок от $100/сутки пока не доказаны.
+[Свежий сетевой перебор](docs/Fresh-oracle-simulation-search-Base.md) сравнивает
+547 вариантов, оба направления и размеры с полным flash-финансированием.
 
 Observer не содержит private key, подписи, `eth_sendRawTransaction` или кода
 исполнения сделок.
