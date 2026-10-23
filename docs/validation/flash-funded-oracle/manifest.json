@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "scope": "Read-only historical Base financed propAMM research; no live or periodic-income proof.",
+  "compiler": "solc 0.8.28 optimize runs 200 evm cancun",
+  "source_sha256": "10f5cac39f33b4a9edef358c0e7536711d064b95ecbcf657a875cad557d0ae96",
+  "files": [
+    {
+      "path": "FlashPairProbe.sol",
+      "bytes": 5265,
+      "sha256": "10f5cac39f33b4a9edef358c0e7536711d064b95ecbcf657a875cad557d0ae96"
+    },
+    {
+      "path": "best-reproduction.json.gz",
+      "bytes": 15566,
+      "sha256": "0dad33384be1c20709817f65f79bf590b180eac258ebe542dc2220305c0b3c65"
+    },
+    {
+      "path": "cold-window-positives.json.gz",
+      "bytes": 21988,
+      "sha256": "521e87e13be420a666d5cdac57e99140b03b04c8488151405e7c465392afe2fb"
+    },
+    {
+      "path": "controls-and-fees.json.gz",
+      "bytes": 19910,
+      "sha256": "3274f36506bc61a336b422de009d3568e69af0368beefed947a6261848c342e1"
+    },
+    {
+      "path": "final-state-reads.json.gz",
+      "bytes": 79117,
+      "sha256": "77824b9031446ac2a4c22f990978c1072a9bb747e403466216fa91fdb0bc47c9"
+    },
+    {
+      "path": "route-size-matrix.json.gz",
+      "bytes": 60555,
+      "sha256": "4228e9bf6967748f6454c9c8710763d3f546389e5f077f872849b0402c21cce1"
+    },
+    {
+      "path": "window.json.gz",
+      "bytes": 1988621,
+      "sha256": "4fe4ef2be6a110241b59e8ce30184f08c18601f82d2f7532386ab6d8815078e6"
+    }
+  ]
+}
